@@ -2125,42 +2125,7 @@
             showNotification('✓ Решения группы экспортированы!', 'success');
         }
 
-        // Show notification
-        function showNotification(message, type = 'info') {
-            const notification = document.createElement('div');
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: ${type === 'success' ? 'rgba(0, 255, 0, 0.2)' : 
-                          type === 'error' ? 'rgba(255, 0, 0, 0.2)' : 
-                          'rgba(0, 212, 255, 0.2)'};
-                color: ${type === 'success' ? '#00ff00' : 
-                       type === 'error' ? '#ff4444' : 
-                       '#00d4ff'};
-                padding: 15px 20px;
-                border-radius: 10px;
-                border: 1px solid ${type === 'success' ? 'rgba(0, 255, 0, 0.4)' : 
-                                 type === 'error' ? 'rgba(255, 0, 0, 0.4)' : 
-                                 'rgba(0, 212, 255, 0.4)'};
-                z-index: 10000;
-                font-weight: bold;
-                backdrop-filter: blur(10px);
-                animation: slideIn 0.3s ease;
-            `;
-            notification.textContent = message;
-            
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.style.animation = 'slideOut 0.3s ease';
-                setTimeout(() => {
-                    document.body.removeChild(notification);
-                }, 300);
-            }, 3000);
-        }
-
-        // Add CSS animations
+         // Add CSS animations
         const style = document.createElement('style');
         style.textContent = `
             @keyframes slideIn {
@@ -2173,68 +2138,75 @@
             }
         `;
         document.head.appendChild(style);
+
         // 🔹 Автоподгрузка PNG из папки pure_symbols по схеме <element>_<NN>_<VV>.png
-function autoLoadExtraSymbols() {
-    // Проходим по всем строкам таблицы-символов
-    const rows = document.querySelectorAll('tr[data-symbol]');
+        function autoLoadExtraSymbols() {
+            const rows = document.querySelectorAll('tr[data-symbol]');
 
-    rows.forEach(row => {
-        const symbolId = row.dataset.symbol; // например, "earth34rootmark"
-        if (!symbolId) return;
+            rows.forEach(row => {
+                const symbolId = row.dataset.symbol; // например "earth34rootmark"
+                if (!symbolId) return;
 
-        // Определяем стихию по началу symbolId
-        let element = '';
-        if (symbolId.startsWith('air')) element = 'air';
-        else if (symbolId.startsWith('water')) element = 'water';
-        else if (symbolId.startsWith('fire')) element = 'fire';
-        else if (symbolId.startsWith('earth')) element = 'earth';
-        else if (symbolId.startsWith('aether')) element = 'aether';
-        else if (symbolId.startsWith('weaving')) element = 'weaving';
-        else return;
+                let element = '';
+                if (symbolId.startsWith('air')) element = 'air';
+                else if (symbolId.startsWith('water')) element = 'water';
+                else if (symbolId.startsWith('fire')) element = 'fire';
+                else if (symbolId.startsWith('earth')) element = 'earth';
+                else if (symbolId.startsWith('aether')) element = 'aether';
+                else if (symbolId.startsWith('weaving')) element = 'weaving';
+                else return;
 
-        // Достаём номер карты (первые цифры в symbolId)
-        const digitsMatch = symbolId.match(/\d+/);
-        if (!digitsMatch) return;
-        const num = digitsMatch[0].padStart(2, '0'); // "34" -> "34"
+                const digitsMatch = symbolId.match(/\d+/);
+                if (!digitsMatch) return;
+                const num = digitsMatch[0].padStart(2, '0'); // "34" -> "34"
 
-        // Префикс имени файлов: earth_34_, aether_45_ и т.п.
-        const prefix = `${element}_${num}_`;
+                const prefix = `${element}_${num}_`;        // earth_34_
+                const gallery = row.querySelector('.gallery-grid');
+                if (!gallery) return;
 
-        // Находим галерею в этой строке
-        const gallery = row.querySelector('.gallery-grid');
-        if (!gallery) return;
+                const existingSrcs = new Set(
+                    Array.from(gallery.querySelectorAll('img')).map(img =>
+                        img.getAttribute('src')
+                    )
+                );
 
-        // Уже существующие src, чтобы не дублировать
-        const existingSrcs = new Set(
-            Array.from(gallery.querySelectorAll('img')).map(img =>
-                img.getAttribute('src')
-            )
-        );
+                for (let i = 1; i <= 40; i++) {
+                    const variant = String(i).padStart(2, '0');      // 01..40
+                    const fileName = `${prefix}${variant}.png`;      // earth_34_01.png
+                    const src = `pure_symbols/${fileName}`;
 
-        // Перебираем возможные варианты файлов: prefix + 01..40
-        for (let i = 1; i <= 40; i++) {
-            const variant = String(i).padStart(2, '0'); // "1" -> "01"
-            const fileName = `${prefix}${variant}.png`; // например earth_34_01.png
-            const src = `pure_symbols/${fileName}`;
+                    if (existingSrcs.has(src)) continue;
 
-            if (existingSrcs.has(src)) continue;
+                    const img = new Image();
+                    img.onload = () => {
+                        const item = document.createElement('div');
+                        item.className = 'gallery-item';
+                        item.dataset.image = src;
+                        item.onclick = function () { openModal(item); };
 
-            const img = new Image();
-            img.onload = () => {
-                const item = document.createElement('div');
-                item.className = 'gallery-item';
-                item.dataset.image = src;
-                item.onclick = function () { openModal(item); };
+                        const imageEl = document.createElement('img');
+                        imageEl.src = src;
+                        imageEl.alt = symbolId;
 
-                const imageEl = document.createElement('img');
-                imageEl.src = src;
-                imageEl.alt = symbolId;
+                        const delBtn = document.createElement('button');
+                        delBtn.className = 'delete-btn';
+                        delBtn.textContent = '×';
+                        delBtn.onclick = function (event) {
+                            event.stopPropagation();
+                            removeImage(item, delBtn);
+                        };
 
-                const delBtn = document.createElement('button');
-                delBtn.className = 'delete-btn';
-                delBtn.textContent
+                        item.appendChild(imageEl);
+                        item.appendChild(delBtn);
+                        gallery.appendChild(item);
 
-
+                        existingSrcs.add(src);
+                    };
+                    img.onerror = () => {};
+                    img.src = src;
+                }
+            });
+        }
 
         // Double-click to approve
         document.addEventListener('dblclick', function(e) {
@@ -2244,6 +2216,12 @@ function autoLoadExtraSymbols() {
                 e.stopPropagation();
                 approveImage(galleryItem);
             }
+        });
+
+        // Load approved symbols и автоподгрузка при загрузке страницы
+        window.addEventListener('load', () => {
+            loadApprovedSymbols();
+            autoLoadExtraSymbols();
         });
     </script>
 </body>
