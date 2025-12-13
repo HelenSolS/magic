@@ -2173,91 +2173,67 @@
             }
         `;
         document.head.appendChild(style);
-// 🔹 Автоподгрузка SVG из папки puresymbols по схеме <element>_<NN>_*.svg
+        // 🔹 Автоподгрузка PNG из папки pure_symbols по схеме <element>_<NN>_<VV>.png
 function autoLoadExtraSymbols() {
-  // Проходим по всем строкам таблицы-символов
-  const rows = document.querySelectorAll('tr[data-symbol]');
+    // Проходим по всем строкам таблицы-символов
+    const rows = document.querySelectorAll('tr[data-symbol]');
 
-  rows.forEach(row => {
-    const symbolId = row.dataset.symbol; // например, "air01whisper"
-    if (!symbolId) return;
+    rows.forEach(row => {
+        const symbolId = row.dataset.symbol; // например, "earth34rootmark"
+        if (!symbolId) return;
 
-    // Определяем стихию по началу symbolId
-    let element = '';
-    if (symbolId.startsWith('air')) element = 'air';
-    else if (symbolId.startsWith('water')) element = 'water';
-    else if (symbolId.startsWith('fire')) element = 'fire';
-    else if (symbolId.startsWith('earth')) element = 'earth';
-    else if (symbolId.startsWith('aether')) element = 'aether';
-    else if (symbolId.startsWith('weaving')) element = 'weaving';
-    else return;
+        // Определяем стихию по началу symbolId
+        let element = '';
+        if (symbolId.startsWith('air')) element = 'air';
+        else if (symbolId.startsWith('water')) element = 'water';
+        else if (symbolId.startsWith('fire')) element = 'fire';
+        else if (symbolId.startsWith('earth')) element = 'earth';
+        else if (symbolId.startsWith('aether')) element = 'aether';
+        else if (symbolId.startsWith('weaving')) element = 'weaving';
+        else return;
 
-    // Достаём номер карты (первые цифры в symbolId)
-    const digitsMatch = symbolId.match(/\d+/);
-    if (!digitsMatch) return;
-    const num = digitsMatch[0].padStart(2, '0'); // "1" -> "01"
+        // Достаём номер карты (первые цифры в symbolId)
+        const digitsMatch = symbolId.match(/\d+/);
+        if (!digitsMatch) return;
+        const num = digitsMatch[0].padStart(2, '0'); // "34" -> "34"
 
-    // Префикс имени файлов: air_01_, water_12_ и т.п.
-    const prefix = `${element}_${num}_`;
+        // Префикс имени файлов: earth_34_, aether_45_ и т.п.
+        const prefix = `${element}_${num}_`;
 
-    // Находим галерею в этой строке
-    const gallery = row.querySelector('.gallery-grid');
-    if (!gallery) return;
+        // Находим галерею в этой строке
+        const gallery = row.querySelector('.gallery-grid');
+        if (!gallery) return;
 
-    // Сначала добавим все дефолтные картинки (они уже есть в HTML),
-    // чтобы не задвоить их в логике ниже
-    const existingSrcs = new Set(
-      Array.from(gallery.querySelectorAll('img')).map(img =>
-        img.getAttribute('src')
-      )
-    );
+        // Уже существующие src, чтобы не дублировать
+        const existingSrcs = new Set(
+            Array.from(gallery.querySelectorAll('img')).map(img =>
+                img.getAttribute('src')
+            )
+        );
 
-    // Перебираем возможные варианты файлов: prefix + 01..40
-    for (let i = 1; i <= 40; i++) {
-      const index = String(i).padStart(2, '0');
-      const candidateName = `${prefix}${index}.svg`;
-      const src = `puresymbols/${candidateName}`;
+        // Перебираем возможные варианты файлов: prefix + 01..40
+        for (let i = 1; i <= 40; i++) {
+            const variant = String(i).padStart(2, '0'); // "1" -> "01"
+            const fileName = `${prefix}${variant}.png`; // например earth_34_01.png
+            const src = `pure_symbols/${fileName}`;
 
-      // Если такой src уже есть – пропускаем
-      if (existingSrcs.has(src)) continue;
+            if (existingSrcs.has(src)) continue;
 
-      const img = new Image();
-      img.onload = () => {
-        // Создаём новый элемент галереи в том же формате, что и существующие
-        const item = document.createElement('div');
-        item.className = 'gallery-item';
-        item.dataset.image = src;
-        item.onclick = function () { openModal(item); };
+            const img = new Image();
+            img.onload = () => {
+                const item = document.createElement('div');
+                item.className = 'gallery-item';
+                item.dataset.image = src;
+                item.onclick = function () { openModal(item); };
 
-        const imageEl = document.createElement('img');
-        imageEl.src = src;
-        imageEl.alt = symbolId;
+                const imageEl = document.createElement('img');
+                imageEl.src = src;
+                imageEl.alt = symbolId;
 
-        const delBtn = document.createElement('button');
-        delBtn.className = 'delete-btn';
-        delBtn.textContent = '×';
-        delBtn.onclick = function (event) {
-          event.stopPropagation();
-          removeImage(item, delBtn);
-        };
+                const delBtn = document.createElement('button');
+                delBtn.className = 'delete-btn';
+                delBtn.textContent
 
-        item.appendChild(imageEl);
-        item.appendChild(delBtn);
-        gallery.appendChild(item);
-
-        existingSrcs.add(src);
-      };
-      img.onerror = () => {};
-      img.src = src;
-    }
-  });
-}
-
-// Load approved symbols and auto-load extra images on page load
-window.addEventListener('load', () => {
-  loadApprovedSymbols();     // как было
-  autoLoadExtraSymbols();    // 🔹 новое
-});
 
 
         // Double-click to approve
