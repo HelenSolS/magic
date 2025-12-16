@@ -47,6 +47,96 @@
             color: #888;
         }
 
+        /* Фильтры */
+        .filters {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .filters h3 {
+            color: #D4A574;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .filter-group {
+            margin-bottom: 15px;
+        }
+
+        .filter-group h4 {
+            color: #ccc;
+            margin-bottom: 8px;
+            font-size: 1em;
+        }
+
+        .filter-checkboxes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .filter-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 8px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-checkbox:hover {
+            background: rgba(212, 165, 116, 0.2);
+        }
+
+        .filter-checkbox input[type="checkbox"] {
+            margin: 0;
+        }
+
+        .filter-checkbox label {
+            color: #fff;
+            font-size: 0.9em;
+            cursor: pointer;
+        }
+
+        /* Столбик ауры */
+        .aura-cell {
+            padding: 10px 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .aura-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: bold;
+            text-align: center;
+            min-width: 80px;
+        }
+
+        .aura-blue { background: rgba(59, 130, 246, 0.3); color: #60a5fa; border: 1px solid #60a5fa; }
+        .aura-cyan { background: rgba(34, 197, 94, 0.3); color: #4ade80; border: 1px solid #4ade80; }
+        .aura-orange { background: rgba(249, 115, 22, 0.3); color: #fb923c; border: 1px solid #fb923c; }
+        .aura-yellow { background: rgba(245, 158, 11, 0.3); color: #fbbf24; border: 1px solid #fbbf24; }
+        .aura-green { background: rgba(34, 197, 94, 0.3); color: #22c55e; border: 1px solid #22c55e; }
+        .aura-gold { background: rgba(245, 158, 11, 0.3); color: #f59e0b; border: 1px solid #f59e0b; }
+        .aura-white { background: rgba(255, 255, 255, 0.3); color: #fff; border: 1px solid #fff; }
+        .aura-purple { background: rgba(147, 51, 234, 0.3); color: #a855f7; border: 1px solid #a855f7; }
+        .aura-red { background: rgba(239, 68, 68, 0.3); color: #f87171; border: 1px solid #f87171; }
+        .aura-pink { background: rgba(236, 72, 153, 0.3); color: #ec4899; border: 1px solid #ec4899; }
+        .aura-gray { background: rgba(107, 114, 128, 0.3); color: #9ca3af; border: 1px solid #9ca3af; }
+        .aura-neutral { background: rgba(156, 163, 175, 0.3); color: #d1d5db; border: 1px solid #d1d5db; }
+        .aura-light { background: rgba(156, 163, 175, 0.2); color: #e5e7eb; border: 1px solid #e5e7eb; }
+        .aura-dark { background: rgba(55, 65, 81, 0.3); color: #6b7280; border: 1px solid #6b7280; }
+        .aura-bright { background: rgba(255, 255, 0, 0.3); color: #fde047; border: 1px solid #fde047; }
+
         .table-container {
             background: rgba(255, 255, 255, 0.05);
             border-radius: 15px;
@@ -306,6 +396,58 @@
             Всего символов: 66 | Воздух: 11 | Вода: 11 | Огонь: 11 | Земля: 11 | Эфир: 11 | Переплетение: 11
         </div>
 
+        <!-- Фильтры -->
+        <div class="filters">
+            <h3>🔍 Фильтры</h3>
+            
+            <div class="filter-group">
+                <h4>Стихии:</h4>
+                <div class="filter-checkboxes">
+                    <div class="filter-checkbox">
+                        <input type="checkbox" id="filter-air" checked>
+                        <label for="filter-air">🌬️ Воздух</label>
+                    </div>
+                    <div class="filter-checkbox">
+                        <input type="checkbox" id="filter-water" checked>
+                        <label for="filter-water">🌊 Вода</label>
+                    </div>
+                    <div class="filter-checkbox">
+                        <input type="checkbox" id="filter-fire" checked>
+                        <label for="filter-fire">🔥 Огонь</label>
+                    </div>
+                    <div class="filter-checkbox">
+                        <input type="checkbox" id="filter-earth" checked>
+                        <label for="filter-earth">🌍 Земля</label>
+                    </div>
+                    <div class="filter-checkbox">
+                        <input type="checkbox" id="filter-aether" checked>
+                        <label for="filter-aether">✨ Эфир</label>
+                    </div>
+                    <div class="filter-checkbox">
+                        <input type="checkbox" id="filter-weaving" checked>
+                        <label for="filter-weaving">🌐 Переплетение</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <h4>Отображение:</h4>
+                <div class="filter-checkboxes">
+                    <div class="filter-checkbox">
+                        <input type="checkbox" id="filter-svg" checked>
+                        <label for="filter-svg">🎨 Скрыть SVG (по умолчанию включено)</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <h4>Цвета ауры:</h4>
+                <div class="filter-checkboxes" id="aura-colors-filters">
+                    <!-- Будет заполнено JavaScript -->
+                </div>
+            </div>
+        </div>
+
         <div class="table-container">
             <table class="symbols-table">
                 <thead>
@@ -313,6 +455,7 @@
                         <th>№</th>
                         <th>Имя символа</th>
                         <th>Стихия</th>
+                        <th>Цвет ауры</th>
                         <th>Краткое визуальное ТЗ</th>
                         <th>Результат</th>
                     </tr>
@@ -1002,24 +1145,152 @@
     </div>
 
     <script>
-        // Правильные диапазоны стихий по сквозной нумерации ID
-        const elementRanges = {
-            'air': { min: 1, max: 18 },
-            'water': { min: 19, max: 46 }, 
-            'fire': { min: 23, max: 33 }, // нужно уточнить
-            'earth': { min: 34, max: 44 }, // нужно уточнить
-            'aether': { min: 47, max: 55 },
-            'weaving': { min: 56, max: 66 }
+        // Карта цветов ауры для каждого символа
+        const auraColors = {
+            "air_01_whisper": "Голубая",
+            "air_02_gate_winds": "Голубая",
+            "air_03_signal": "Голубая",
+            "air_04_feather": "Голубая",
+            "air_05_twin_winds": "Голубая",
+            "air_06_messenger": "Голубая",
+            "air_07_echo": "Голубая",
+            "air_08_veil": "Голубая",
+            "air_09_turning_breath": "Голубая",
+            "air_10_calling": "Голубая",
+            "air_11_watcher": "Голубая",
+            
+            "water_12_ripple": "Аква-сине-зелёная",
+            "water_13_deep_tide": "Аква",
+            "water_14_mirror_water": "Аква",
+            "water_15_heartstream": "Аква",
+            "water_16_bond": "Аква",
+            "water_17_drift": "Аква",
+            "water_18_vessel": "Аква",
+            "water_19_undercurrent": "Аква",
+            "water_20_tearline": "Аква",
+            "water_21_resonance": "Аква",
+            "water_22_memory_pool": "Аква",
+            
+            "fire_23_spark": "Оранжевая",
+            "fire_24_strike": "Оранжевая",
+            "fire_25_ember_road": "Оранжевая",
+            "fire_26_phoenix_sign": "Оранжевая",
+            "fire_27_clash": "Оранжевая",
+            "fire_28_flare": "Оранжевая",
+            "fire_29_torch": "Оранжевая",
+            "fire_30_break": "Оранжевая",
+            "fire_31_stormfront": "Оранжевая",
+            "fire_32_burning_choice": "Оранжевая",
+            "fire_33_inferno_path": "Оранжевая",
+            
+            "earth_34_rootmark": "Золотисто-оливковая",
+            "earth_35_stone_gate": "Оливковая",
+            "earth_36_harvest_line": "Оливковая",
+            "earth_37_shelter": "Оливковая",
+            "earth_38_architect": "Оливковая",
+            "earth_39_anchor": "Оливковая",
+            "earth_40_summit_stone": "Оливковая",
+            "earth_41_burden": "Оливковая",
+            "earth_42_golden_vein": "Оливковая",
+            "earth_43_pact": "Оливковая",
+            "earth_44_foundation_shift": "Оливковая",
+            
+            "aether_45_thread_of_fate": "Бело-золотая",
+            "aether_46_convergence": "Бело-золотая",
+            "aether_47_chrono_gate": "Бело-золотая",
+            "aether_48_ancestral_echo": "Бело-золотая",
+            "aether_49_destiny_mark": "Бело-золотая",
+            "aether_50_veilbreaker": "Бело-золотая",
+            "aether_51_great_crossing": "Бело-золотая",
+            "aether_52_anchor_point": "Бело-золотая",
+            "aether_53_cosmic_breath": "Бело-золотая",
+            "aether_54_primordial_seed": "Бело-золотая",
+            "aether_55_first_light": "Бело-золотая",
+            
+            "weaving_56_mirror_key": "Нейтральная лёгкая",
+            "weaving_57_shadow_key": "Тёмная мягкая",
+            "weaving_58_light_key": "Белая",
+            "weaving_59_amplifier": "Золотистая",
+            "weaving_60_divider": "Нейтральная",
+            "weaving_61_delay_mark": "Холодная",
+            "weaving_62_acceleration_mark": "Яркая",
+            "weaving_63_inversion": "Нейтральная",
+            "weaving_64_echo_seal": "Нейтральная",
+            "weaving_65_bridge": "Нейтральная",
+            "weaving_66_catalyst": "Яркая"
         };
 
-        // Определяем стихию по ID
-        function getElementById(id) {
-            for (const [element, range] of Object.entries(elementRanges)) {
-                if (id >= range.min && id <= range.max) {
-                    return element;
-                }
+        // Фильтры
+        const filters = {
+            elements: {
+                air: true,
+                water: true,
+                fire: true,
+                earth: true,
+                aether: true,
+                weaving: true
+            },
+            hideSVG: true, // По умолчанию SVG скрыты
+            auraColors: {
+                'Голубая': true,
+                'Аква-сине-зелёная': true,
+                'Аква': true,
+                'Оранжевая': true,
+                'Золотисто-оливковая': true,
+                'Оливковая': true,
+                'Бело-золотая': true,
+                'Нейтральная лёгкая': true,
+                'Тёмная мягкая': true,
+                'Белая': true,
+                'Золотистая': true,
+                'Нейтральная': true,
+                'Холодная': true,
+                'Яркая': true
             }
-            return null;
+        };
+
+        // Функция применения фильтров
+        function applyFilters() {
+            const rows = document.querySelectorAll('tr[data-symbol]');
+            
+            rows.forEach(row => {
+                const symbolId = row.dataset.symbol;
+                const parts = symbolId.split('_');
+                const element = parts[0];
+                const auraColor = auraColors[symbolId];
+                
+                let show = true;
+                
+                // Фильтр по стихиям
+                if (!filters.elements[element]) {
+                    show = false;
+                }
+                
+                // Фильтр по цветам ауры
+                if (!filters.auraColors[auraColor]) {
+                    show = false;
+                }
+                
+                // Фильтр по SVG
+                if (filters.hideSVG) {
+                    const images = row.querySelectorAll('.gallery-item img');
+                    images.forEach(img => {
+                        if (img.src.endsWith('.svg')) {
+                            img.parentElement.style.display = 'none';
+                        }
+                    });
+                } else {
+                    const images = row.querySelectorAll('.gallery-item img');
+                    images.forEach(img => {
+                        if (img.src.endsWith('.svg')) {
+                            img.parentElement.style.display = 'block';
+                        }
+                    });
+                }
+                
+                // Показываем/скрываем строку
+                row.style.display = show ? 'table-row' : 'none';
+            });
         }
 
         // 🔹 ПРОСТАЯ АВТОПОДГРУЗКА ВСЕХ ФАЙЛОВ ПО ПРЕФИКСУ
@@ -1297,10 +1568,112 @@
             }
         });
 
+        // Функция добавления столбика ауры
+        function addAuraColumn() {
+            const rows = document.querySelectorAll('tr[data-symbol]');
+            
+            rows.forEach(row => {
+                const symbolId = row.dataset.symbol;
+                const auraColor = auraColors[symbolId];
+                const parts = symbolId.split('_');
+                const element = parts[0];
+                
+                // Найдем ячейку стихии
+                const elementCell = row.querySelector('.element-cell');
+                if (!elementCell) return;
+                
+                // Создаем новую ячейку ауры
+                const auraCell = document.createElement('td');
+                auraCell.className = 'aura-cell';
+                
+                // Определяем CSS класс для цвета
+                let auraClass = 'aura-gray';
+                switch(auraColor) {
+                    case 'Голубая': auraClass = 'aura-blue'; break;
+                    case 'Аква-сине-зелёная':
+                    case 'Аква': auraClass = 'aura-cyan'; break;
+                    case 'Оранжевая': auraClass = 'aura-orange'; break;
+                    case 'Золотисто-оливковая':
+                    case 'Оливковая': auraClass = 'aura-yellow'; break;
+                    case 'Бело-золотая': auraClass = 'aura-gold'; break;
+                    case 'Нейтральная лёгкая': auraClass = 'aura-light'; break;
+                    case 'Тёмная мягкая': auraClass = 'aura-dark'; break;
+                    case 'Белая': auraClass = 'aura-white'; break;
+                    case 'Золотистая': auraClass = 'aura-yellow'; break;
+                    case 'Нейтральная': auraClass = 'aura-neutral'; break;
+                    case 'Холодная': auraClass = 'aura-blue'; break;
+                    case 'Яркая': auraClass = 'aura-bright'; break;
+                }
+                
+                auraCell.innerHTML = `<span class="aura-badge ${auraClass}">${auraColor}</span>`;
+                
+                // Вставляем ячейку после ячейки стихии
+                elementCell.parentNode.insertBefore(auraCell, elementCell.nextSibling);
+            });
+        }
+
+        // Инициализация фильтров цветов ауры
+        function initAuraFilters() {
+            const container = document.getElementById('aura-colors-filters');
+            const uniqueColors = [...new Set(Object.values(auraColors))];
+            
+            uniqueColors.forEach(color => {
+                const id = `filter-aura-${color.replace(/\s+/g, '-').toLowerCase()}`;
+                const checkbox = document.createElement('div');
+                checkbox.className = 'filter-checkbox';
+                checkbox.innerHTML = `
+                    <input type="checkbox" id="${id}" checked>
+                    <label for="${id}">${color}</label>
+                `;
+                container.appendChild(checkbox);
+            });
+        }
+
+        // Инициализация обработчиков фильтров
+        function initFilters() {
+            // Обработчики для фильтров стихий
+            const elementFilters = ['air', 'water', 'fire', 'earth', 'aether', 'weaving'];
+            elementFilters.forEach(element => {
+                const checkbox = document.getElementById(`filter-${element}`);
+                if (checkbox) {
+                    checkbox.addEventListener('change', () => {
+                        filters.elements[element] = checkbox.checked;
+                        applyFilters();
+                    });
+                }
+            });
+
+            // Обработчик для фильтра SVG
+            const svgCheckbox = document.getElementById('filter-svg');
+            if (svgCheckbox) {
+                svgCheckbox.addEventListener('change', () => {
+                    filters.hideSVG = svgCheckbox.checked;
+                    applyFilters();
+                });
+            }
+
+            // Обработчики для фильтров цветов ауры
+            const uniqueColors = [...new Set(Object.values(auraColors))];
+            uniqueColors.forEach(color => {
+                const id = `filter-aura-${color.replace(/\s+/g, '-').toLowerCase()}`;
+                const checkbox = document.getElementById(id);
+                if (checkbox) {
+                    checkbox.addEventListener('change', () => {
+                        filters.auraColors[color] = checkbox.checked;
+                        applyFilters();
+                    });
+                }
+            });
+        }
+
         // Загрузка при старте страницы
         window.addEventListener('load', () => {
             autoLoadAllFiles();      // Сначала автоподгрузка
             loadApprovedSymbols();   // Потом одобренные символы
+            addAuraColumn();         // Добавляем столбик ауры
+            initAuraFilters();       // Инициализируем фильтры цветов
+            initFilters();           // Инициализируем обработчики
+            applyFilters();          // Применяем фильтры
         });
     </script>
 </body>
