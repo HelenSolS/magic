@@ -1623,28 +1623,23 @@
         `;
         document.head.appendChild(style);
 
-        // 🔹 Автоподгрузка изображений из папки pure_symbols (любой формат)
+        // 🔹 Автоподгрузка изображений по простому шаблону стихия_номер_*
         function autoLoadExtraSymbols() {
             const rows = document.querySelectorAll('tr[data-symbol]');
 
             rows.forEach(row => {
-                const symbolId = row.dataset.symbol; // например "earth34rootmark"
+                const symbolId = row.dataset.symbol; // например "aether_45_thread_of_fate"
                 if (!symbolId) return;
 
-                let element = '';
-                if (symbolId.startsWith('air')) element = 'air';
-                else if (symbolId.startsWith('water')) element = 'water';
-                else if (symbolId.startsWith('fire')) element = 'fire';
-                else if (symbolId.startsWith('earth')) element = 'earth';
-                else if (symbolId.startsWith('aether')) element = 'aether';
-                else if (symbolId.startsWith('weaving')) element = 'weaving';
-                else return;
+                // Извлекаем префикс стихия_номер из symbolId
+                // Например "aether_45_thread_of_fate" → "aether_45"
+                const match = symbolId.match(/(air|water|fire|earth|aether|weaving)_(\d+)_/);
+                if (!match) return;
 
-                const digitsMatch = symbolId.match(/\d+/);
-                if (!digitsMatch) return;
-                const num = digitsMatch[0].padStart(2, '0'); // "34" -> "34"
+                const element = match[1]; // "aether"
+                const num = match[2].padStart(2, '0'); // "45" → "45"
+                const prefix = `${element}_${num}`; // "aether_45"
 
-                const prefix = `${element}_${num}_`;        // earth_34_
                 const gallery = row.querySelector('.gallery-grid');
                 if (!gallery) return;
 
@@ -1654,13 +1649,9 @@
                     )
                 );
 
-                // Поддерживаемые форматы файлов
-                const formats = ['svg', 'png', 'jpg', 'jpeg', 'gif', 'webp'];
-                let loadedImages = new Set();
-
                 // Функция для добавления изображения в галерею
                 function addImageToGallery(src) {
-                    if (existingSrcs.has(src) || loadedImages.has(src)) return;
+                    if (existingSrcs.has(src)) return;
 
                     const img = new Image();
                     img.onload = () => {
@@ -1684,8 +1675,6 @@
                         item.appendChild(imageEl);
                         item.appendChild(delBtn);
                         gallery.appendChild(item);
-
-                        loadedImages.add(src);
                         
                         // Убираем "нет фото" если найдено изображение
                         const currentNoPhotoMsg = gallery.querySelector('.no-photo-message');
@@ -1696,44 +1685,6 @@
                     img.onerror = () => {};
                     img.src = src;
                 }
-
-                // 1. Поиск файлов с полным именем символа (например: earth_34_rootmark_final_v2.svg)
-                formats.forEach(format => {
-                    const variants = [
-                        'final_v2',
-                        'final',
-                        'variant',
-                        'alt',
-                        'test',
-                        'correct',
-                        '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'
-                    ];
-                    
-                    variants.forEach(variant => {
-                        const fileName = `${symbolId}_${variant}.${format}`;
-                        const src = `pure_symbols/${fileName}`;
-                        addImageToGallery(src);
-                    });
-                });
-
-                // 2. Поиск файлов по номеру (например: earth_34_final_v2.svg) - для обратной совместимости
-                formats.forEach(format => {
-                    const variants = [
-                        'final_v2',
-                        'final',
-                        'variant',
-                        'alt',
-                        'test',
-                        'correct',
-                        '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'
-                    ];
-                    
-                    variants.forEach(variant => {
-                        const fileName = `${prefix}${variant}.${format}`;
-                        const src = `pure_symbols/${fileName}`;
-                        addImageToGallery(src);
-                    });
-                });
 
                 // Сразу показываем "нет фото"
                 const noPhotoMsg = document.createElement('div');
@@ -1749,6 +1700,48 @@
                 `;
                 noPhotoMsg.textContent = 'нет фото';
                 gallery.appendChild(noPhotoMsg);
+
+                // Ищем файлы по простому шаблону: prefix_1.svg, prefix_2.png, prefix_3.jpg и т.д.
+                const formats = ['svg', 'png', 'jpg', 'jpeg', 'gif', 'webp'];
+                
+                // Ищем ВСЕ файлы, которые начинаются с prefix (например: "air_01", "earth_34", "aether_45")
+                // Загружаем все найденные варианты для этого номера карты
+                
+                // Список всех возможных префиксов для 66 символов
+                const allPrefixes = [
+                    'air_01', 'air_02', 'air_03', 'air_04', 'air_05', 'air_06', 'air_07', 'air_08', 'air_09', 'air_10', 'air_11',
+                    'water_12', 'water_13', 'water_14', 'water_15', 'water_16', 'water_17', 'water_18', 'water_19', 'water_20', 'water_21', 'water_22',
+                    'fire_23', 'fire_24', 'fire_25', 'fire_26', 'fire_27', 'fire_28', 'fire_29', 'fire_30', 'fire_31', 'fire_32', 'fire_33',
+                    'earth_34', 'earth_35', 'earth_36', 'earth_37', 'earth_38', 'earth_39', 'earth_40', 'earth_41', 'earth_42', 'earth_43', 'earth_44',
+                    'aether_45', 'aether_46', 'aether_47', 'aether_48', 'aether_49', 'aether_50', 'aether_51', 'aether_52', 'aether_53', 'aether_54', 'aether_55',
+                    'weaving_56', 'weaving_57', 'weaving_58', 'weaving_59', 'weaving_60', 'weaving_61', 'weaving_62', 'weaving_63', 'weaving_64', 'weaving_65', 'weaving_66'
+                ];
+
+                // Если текущий prefix есть в списке, пробуем загрузить все возможные варианты файлов для него
+                if (allPrefixes.includes(prefix)) {
+                    // Только SVG и PNG форматы
+                    const formats = ['svg', 'png'];
+                    const suffixes = ['correct', 'final', 'final_v2', 'variant', 'alt', 'test', '1', '2', '3', '4', '5', '', 'base64'];
+                    
+                    // Загружаем все возможные варианты файлов для этого префикса
+                    suffixes.forEach(suffix => {
+                        formats.forEach(format => {
+                            const fileName = suffix ? `${prefix}_${suffix}.${format}` : `${prefix}.${format}`;
+                            const src = `pure_symbols/${fileName}`;
+                            addImageToGallery(src);
+                        });
+                    });
+
+                    // Также пробуем файл с полным symbolId (если он длиннее простого prefix)
+                    if (symbolId !== prefix && symbolId.includes(prefix)) {
+                        const suffixes2 = ['correct', 'final', 'final_v2', 'variant', 'alt', 'test'];
+                        suffixes2.forEach(suffix => {
+                            const fileName = `${symbolId}_${suffix}.svg`;
+                            const src = `pure_symbols/${fileName}`;
+                            addImageToGallery(src);
+                        });
+                    }
+                }
             });
         }
 
