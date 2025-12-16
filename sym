@@ -1,0 +1,1774 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог Символов Стихий - ОРИГИНАЛЬНЫЕ 66 Символов</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f1419, #1a1a2e, #16213e);
+            color: #ffffff;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            color: #00d4ff;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+            color: #cccccc;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .symbols-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .symbols-table th {
+            background: rgba(0, 212, 255, 0.2);
+            padding: 15px 10px;
+            text-align: left;
+            font-weight: bold;
+            color: #00d4ff;
+            border-bottom: 2px solid rgba(0, 212, 255, 0.4);
+            font-size: 1em;
+        }
+
+        .symbols-table td {
+            padding: 15px 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            vertical-align: top;
+        }
+
+        .symbols-table tr:hover {
+            background: rgba(0, 212, 255, 0.1);
+        }
+
+        .element-section {
+            margin-bottom: 30px;
+        }
+
+        .element-title {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            text-align: left;
+            color: #00d4ff;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .number-cell {
+            font-weight: bold;
+            color: #00d4ff;
+            font-size: 1.1em;
+            width: 60px;
+        }
+
+        .name-cell {
+            font-weight: bold;
+            color: #ffffff;
+            font-size: 1.1em;
+        }
+
+        .name-cell .english {
+            display: block;
+            color: #00d4ff;
+            font-size: 0.9em;
+        }
+
+        .name-cell .russian {
+            display: block;
+            color: #cccccc;
+            font-size: 0.85em;
+            margin-top: 2px;
+        }
+
+        .element-badge {
+            background: rgba(0, 212, 255, 0.2);
+            color: #00d4ff;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            font-weight: bold;
+            border: 1px solid rgba(0, 212, 255, 0.4);
+        }
+
+        .description-cell {
+            color: #cccccc;
+            font-size: 0.95em;
+            max-width: 300px;
+            line-height: 1.4;
+        }
+
+        .gallery-cell {
+            min-width: 200px;
+        }
+
+        .approved-indicator {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 12px;
+            height: 12px;
+            background: #ff0064;
+            border-radius: 50%;
+            border: 2px solid #ffffff;
+            box-shadow: 0 0 10px rgba(255, 0, 100, 0.6);
+            z-index: 10;
+        }
+
+        .gallery-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: flex-start;
+        }
+
+        .gallery-item {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #050810;
+        }
+
+        .gallery-item:hover {
+            border-color: rgba(0, 212, 255, 0.6);
+            transform: scale(1.05);
+        }
+
+        .gallery-item.approved {
+            border-color: #ff0064 !important;
+            box-shadow: 0 0 15px rgba(255, 0, 100, 0.6) !important;
+            transform: scale(1.05);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 5px;
+        }
+
+        .delete-btn {
+            background: rgba(255, 0, 0, 0.8);
+            border: 1px solid #ffffff;
+            color: #ffffff;
+            padding: 0;
+            border-radius: 50%;
+            font-size: 0.7em;
+            cursor: pointer;
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            z-index: 15;
+            font-weight: bold;
+        }
+
+        .delete-btn:hover {
+            background: rgba(255, 0, 0, 1);
+        }
+
+        .gallery-item::after {
+            content: '👆 ДВОЙНОЙ КЛИК = УТВЕРДИТЬ';
+            position: absolute;
+            bottom: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 0, 100, 0.95);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.8em;
+            font-weight: bold;
+            opacity: 0;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(255, 0, 100, 0.4);
+        }
+
+        .gallery-item:hover::after {
+            opacity: 1;
+        }
+
+        .gallery-item.approved::after {
+            content: '✅ УТВЕРЖДЕНО ГРУППОЙ';
+            background: rgba(0, 255, 100, 0.95);
+            box-shadow: 0 4px 15px rgba(0, 255, 100, 0.4);
+        }
+
+        .gallery-controls {
+            margin-top: 8px;
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .control-btn {
+            background: rgba(0, 212, 255, 0.2);
+            border: 1px solid rgba(0, 212, 255, 0.4);
+            color: #00d4ff;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .control-btn:hover {
+            background: rgba(0, 212, 255, 0.3);
+        }
+
+        .add-image-input {
+            display: none;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+
+        .modal img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            color: #00d4ff;
+            font-size: 2em;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            background: rgba(0, 212, 255, 0.2);
+        }
+
+        .group-actions {
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .group-actions h3 {
+            color: #00d4ff;
+            margin-bottom: 10px;
+        }
+
+        .stats {
+            text-align: center;
+            margin: 30px 0;
+            font-size: 1.1em;
+            opacity: 0.8;
+            color: #cccccc;
+        }
+
+        @media (max-width: 1200px) {
+            .symbols-table th,
+            .symbols-table td {
+                padding: 10px 8px;
+                font-size: 0.9em;
+            }
+            
+            .description-cell {
+                max-width: 200px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .symbols-table {
+                font-size: 0.85em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💎 Каталог Символов Стихий</h1>
+            <p>Оригинальные 66 символов - Презентация для визуализации элементальной магии</p>
+        </div>
+
+        <div class="stats">
+            <strong>Всего символов: 66</strong> | 
+            Воздух: 11 | Вода: 11 | Огонь: 11 | Земля: 11 | Эфир: 11 | Переплетение: 11
+        </div>
+
+       
+        <!-- Air Section -->
+        <div class="element-section">
+            <h2 class="element-title">🌬 СТИХИЯ AIR (Воздух) — знаки восприятия, знаков и предвестий</h2>
+            <div class="table-container">
+                <table class="symbols-table">
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Имя символа</th>
+                            <th>Стихия</th>
+                            <th>Краткое визуальное ТЗ</th>
+                            <th>Результат</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-symbol="air_01_whisper">
+                            <td class="number-cell">1</td>
+                            <td class="name-cell">
+                                <span class="english">The Whisper</span>
+                                <span class="russian">(Шёпот)</span>
+                            </td>
+                            <td><span class="element-badge">AIR</span></td>
+                            <td class="description-cell">Изогнутая тонкая линия, мягко расходящаяся на две ветви</td>
+                            <td class="gallery-cell">
+                                <div class="gallery-grid">
+                                </div>
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('air_01_whisper', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="air_02_gate_winds">
+                            <td class="number-cell">2</td>
+                            <td class="name-cell">
+                                <span class="english">Gate of Winds</span>
+                                <span class="russian">(Врата Ветров)</span>
+                            </td>
+                            <td><span class="element-badge">AIR</span></td>
+                            <td class="description-cell">Две параллельные вертикальные линии, между ними вихревое смещение</td>
+                            <td class="gallery-cell">
+                                <div class="gallery-grid">
+
+                                </div>
+
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('air_02_gate_winds', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="air_03_signal">
+                            <td class="number-cell">3</td>
+                            <td class="name-cell">
+                                <span class="english">The Signal</span>
+                                <span class="russian">(Сигнал)</span>
+                            </td>
+                            <td><span class="element-badge">AIR</span></td>
+                            <td class="description-cell">Круг + 3 расходящиеся луча, как маяк</td>
+                            <td class="gallery-cell">
+                                <div class="gallery-grid">
+
+                                </div>
+
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('air_03_signal', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="air_04_feather">
+                            <td class="number-cell">4</td>
+                            <td class="name-cell">
+                                <span class="english">Feather of Direction</span>
+                                <span class="russian">(Перо)</span>
+                            </td>
+                            <td><span class="element-badge">AIR</span></td>
+                            <td class="description-cell">Стилизованное перо, тонкая линия, направленное в одну сторону</td>
+                            <td class="gallery-cell">
+ 
+                                <div class="gallery-grid">
+                                </div>
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('air_04_feather', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="air_05_twin_winds">
+                            <td class="number-cell">5</td>
+                            <td class="name-cell">
+                                <span class="english">Twin Winds</span>
+                                <span class="russian">(Двойные Ветры)</span>
+                            </td>
+                            <td><span class="element-badge">AIR</span></td>
+                            <td class="description-cell">Два симметричных вихря / две зеркальные линии</td>
+                            <td class="gallery-cell">
+                                <div class="gallery-grid">
+                                </div>
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('air_05_twin_winds', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="air_06_messenger">
+                            <td class="number-cell">6</td>
+                            <td class="name-cell">
+                                <span class="english">The Messenger</span>
+                                <span class="russian">(Посланник)</span>
+                            </td>
+                            <td><span class="element-badge">AIR</span></td>
+                            <td class="description-cell">Стрела света, пересекающая круг</td>
+                            <td class="gallery-cell">
+                                <div class="gallery-grid">
+                                </div>
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('air_06_messenger', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="air_07_echo">
+                            <td class="number-cell">7</td>
+                            <td class="name-cell">
+                                <span class="english">The Echo</span>
+                                <span class="russian">(Эхо)</span>
+                            </td>
+                            <td><span class="element-badge">AIR</span></td>
+                            <td class="description-cell">Три повторяющиеся дуги, уходящие наружу</td>
+                            <td class="gallery-cell">
+                                <div class="gallery-grid">
+                                </div>
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('air_07_echo', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="air_08_veil">
+                            <td class="number-cell">8</td>
+                            <td class="name-cell">
+                                <span class="english">The Veil</span>
+                                <span class="russian">(Покров)</span>
+                            </td>
+                            <td><span class="element-badge">AIR</span></td>
+                            <td class="description-cell">Мягкая полупрозрачная форма, скрывающая центральную точку</td>
+                            <td class="gallery-cell">
+                                <div class="gallery-grid">
+                                </div>
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('air_08_veil', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="air_09_turning_breath">
+                            <td class="number-cell">9</td>
+                            <td class="name-cell">
+                                <span class="english">Turning Breath</span>
+                                <span class="russian">(Разворот Ветра)</span>
+                            </td>
+                            <td><span class="element-badge">AIR</span></td>
+                            <td class="description-cell">Спираль, резко меняющая направление</td>
+                            <td class="gallery-cell">
+                                <div class="gallery-grid">
+                                </div>
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('air_09_turning_breath', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="air_10_calling">
+                            <td class="number-cell">10</td>
+                            <td class="name-cell">
+                                <span class="english">The Calling</span>
+                                <span class="russian">(Зов)</span>
+                            </td>
+                            <td><span class="element-badge">AIR</span></td>
+                            <td class="description-cell">Вертикальный луч, расширяющийся сверху</td>
+                            <td class="gallery-cell">
+                                <div class="gallery-grid">
+                                </div>
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('air_10_calling', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="air_11_watcher">
+                            <td class="number-cell">11</td>
+                            <td class="name-cell">
+                                <span class="english">The Watcher</span>
+                                <span class="russian">(Наблюдатель)</span>
+                            </td>
+                            <td><span class="element-badge">AIR</span></td>
+                            <td class="description-cell">Глаз без зрачка, только контур + дуга света</td>
+                            <td class="gallery-cell">
+                                <div class="gallery-grid">
+                                </div>
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('air_11_watcher', this)">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Water Section -->
+        <div class="element-section">
+            <h2 class="element-title">🌊 СТИХИЯ WATER (Вода) — эмоции, чувства, связи</h2>
+            <div class="table-container">
+                <table class="symbols-table">
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Имя символа</th>
+                            <th>Стихия</th>
+                            <th>Краткое визуальное ТЗ</th>
+                            <th>Результат</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-symbol="water_12_ripple">
+                            <td class="number-cell">12</td>
+                            <td class="name-cell">
+                                <span class="english">The Ripple</span>
+                                <span class="russian">(Рябь)</span>
+                            </td>
+                            <td><span class="element-badge">WATER</span></td>
+                            <td class="description-cell">Концентрические круги, расходящиеся от точки</td>
+                            <td class="gallery-cell">
+                               
+                                
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('water_12_ripple', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="water_13_deep_tide">
+                            <td class="number-cell">13</td>
+                            <td class="name-cell">
+                                <span class="english">Deep Tide</span>
+                                <span class="russian">(Глубокий Прилив)</span>
+                            </td>
+                            <td><span class="element-badge">WATER</span></td>
+                            <td class="description-cell">Две мягкие волны, одна за другой</td>
+                            <td class="gallery-cell">
+                                <div class="gallery-grid">
+                                    <div class="gallery-item" data-image="pure_symbols/water_13_deep_tide_correct.svg" onclick="openModal(this)">
+                                        <img src="pure_symbols/water_13_01.svg" alt="Deep Tide">
+                                         
+                                    </div>
+                                </div>
+
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('water_13_deep_tide', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="water_14_mirror_water">
+                            <td class="number-cell">14</td>
+                            <td class="name-cell">
+                                <span class="english">Mirror Water</span>
+                                <span class="russian">(Водное Зеркало)</span>
+                            </td>
+                            <td><span class="element-badge">WATER</span></td>
+                            <td class="description-cell">Горизонтальная линия + отражение</td>
+                            <td class="gallery-cell">
+                                <div class="gallery-grid">
+                                    
+                                    
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('water_14_mirror_water', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="water_15_heartstream">
+                            <td class="number-cell">15</td>
+                            <td class="name-cell">
+                                <span class="english">Heartstream</span>
+                                <span class="russian">(Поток Сердца)</span>
+                            </td>
+                            <td><span class="element-badge">WATER</span></td>
+                            <td class="description-cell">Вертикальная линия, плавно «текущая» вниз</td>
+                            <td class="gallery-cell">
+                                <div class="gallery-grid">
+                                   
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('water_15_heartstream', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="water_16_bond">
+                            <td class="number-cell">16</td>
+                            <td class="name-cell">
+                                <span class="english">The Bond</span>
+                                <span class="russian">(Узел)</span>
+                            </td>
+                            <td><span class="element-badge">WATER</span></td>
+                            <td class="description-cell">Две линии, переплетающиеся мягким узлом</td>
+                            <td class="gallery-cell">
+                                <div class="gallery-grid">
+                                    
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('water_16_bond', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="water_17_drift">
+                            <td class="number-cell">17</td>
+                            <td class="name-cell">
+                                <span class="english">The Drift</span>
+                                <span class="russian">(Снос Течения)</span>
+                            </td>
+                            <td><span class="element-badge">WATER</span></td>
+                            <td class="description-cell">Стрела, слегка отклонённая течением</td>
+                            <td class="gallery-cell">
+                               
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('water_17_drift', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="water_18_vessel">
+                            <td class="number-cell">18</td>
+                            <td class="name-cell">
+                                <span class="english">The Vessel</span>
+                                <span class="russian">(Чаша)</span>
+                            </td>
+                            <td><span class="element-badge">WATER</span></td>
+                            <td class="description-cell">Полукруг снизу, принимающая форма</td>
+                            <td class="gallery-cell">
+                                <div class="gallery-grid">
+                                   
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('water_18_vessel', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="water_19_undercurrent">
+                            <td class="number-cell">19</td>
+                            <td class="name-cell">
+                                <span class="english">Undercurrent</span>
+                                <span class="russian">(Подводное Течение)</span>
+                            </td>
+                            <td><span class="element-badge">WATER</span></td>
+                            <td class="description-cell">Волна под горизонтальной линией</td>
+                            <td class="gallery-cell">
+                                
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('water_19_undercurrent', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="water_20_tearline">
+                            <td class="number-cell">20</td>
+                            <td class="name-cell">
+                                <span class="english">Tearline</span>
+                                <span class="russian">(Линия Слёзы)</span>
+                            </td>
+                            <td><span class="element-badge">WATER</span></td>
+                            <td class="description-cell">Вытянутая вниз капля</td>
+                            <td class="gallery-cell">
+                                
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('water_20_tearline', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="water_21_resonance">
+                            <td class="number-cell">21</td>
+                            <td class="name-cell">
+                                <span class="english">Resonance</span>
+                                <span class="russian">(Резонанс)</span>
+                            </td>
+                            <td><span class="element-badge">WATER</span></td>
+                            <td class="description-cell">Две параллельные волны в унисон</td>
+                            <td class="gallery-cell">
+                                
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('water_21_resonance', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="water_22_memory_pool">
+                            <td class="number-cell">22</td>
+                            <td class="name-cell">
+                                <span class="english">Memory Pool</span>
+                                <span class="russian">(Озеро Памяти)</span>
+                            </td>
+                            <td><span class="element-badge">WATER</span></td>
+                            <td class="description-cell">Неглубокий овал с мягким отражением</td>
+                            <td class="gallery-cell">
+                               
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('water_22_memory_pool', this)">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Fire Section -->
+        <div class="element-section">
+            <h2 class="element-title">🔥 СТИХИЯ FIRE (Огонь) — события, повороты, судьба</h2>
+            <div class="table-container">
+                <table class="symbols-table">
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Имя символа</th>
+                            <th>Стихия</th>
+                            <th>Краткое визуальное ТЗ</th>
+                            <th>Результат</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-symbol="fire_23_spark">
+                            <td class="number-cell">23</td>
+                            <td class="name-cell">
+                                <span class="english">The Spark</span>
+                                <span class="russian">(Искра)</span>
+                            </td>
+                            <td><span class="element-badge">FIRE</span></td>
+                            <td class="description-cell">Маленькая вспышка: короткая линия + расщепление</td>
+                            <td class="gallery-cell">
+
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('fire_23_spark', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="fire_24_strike">
+                            <td class="number-cell">24</td>
+                            <td class="name-cell">
+                                <span class="english">The Strike</span>
+                                <span class="russian">(Удар)</span>
+                            </td>
+                            <td><span class="element-badge">FIRE</span></td>
+                            <td class="description-cell">Две стремительные линии сталкиваются в центре</td>
+                            <td class="gallery-cell">
+
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('fire_24_strike', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="fire_25_ember_road">
+                            <td class="number-cell">25</td>
+                            <td class="name-cell">
+                                <span class="english">Ember Road</span>
+                                <span class="russian">(Дорога Углей)</span>
+                            </td>
+                            <td><span class="element-badge">FIRE</span></td>
+                            <td class="description-cell">Прямая или диагональная линия + точечные "угли"</td>
+                            <td class="gallery-cell">
+
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('fire_25_ember_road', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="fire_26_phoenix_sign">
+                            <td class="number-cell">26</td>
+                            <td class="name-cell">
+                                <span class="english">Phoenix Sign</span>
+                                <span class="russian">(Феникс)</span>
+                            </td>
+                            <td><span class="element-badge">FIRE</span></td>
+                            <td class="description-cell">Линия, уходящая вверх дугой, как огненное перо</td>
+                            <td class="gallery-cell">
+
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('fire_26_phoenix_sign', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="fire_27_clash">
+                            <td class="number-cell">27</td>
+                            <td class="name-cell">
+                                <span class="english">The Clash</span>
+                                <span class="russian">(Столкновение)</span>
+                            </td>
+                            <td><span class="element-badge">FIRE</span></td>
+                            <td class="description-cell">Две пересекающиеся силы: X-подобная динамика</td>
+                            <td class="gallery-cell">
+
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('fire_27_clash', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="fire_28_flare">
+                            <td class="number-cell">28</td>
+                            <td class="name-cell">
+                                <span class="english">The Flare</span>
+                                <span class="russian">(Вспышка)</span>
+                            </td>
+                            <td><span class="element-badge">FIRE</span></td>
+                            <td class="description-cell">Луч, резко расширяющийся, яркий импульс</td>
+                            <td class="gallery-cell">
+                             <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('fire_28_flare', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="fire_29_torch">
+                            <td class="number-cell">29</td>
+                            <td class="name-cell">
+                                <span class="english">The Torch</span>
+                                <span class="russian">(Факел)</span>
+                            </td>
+                            <td><span class="element-badge">FIRE</span></td>
+                            <td class="description-cell">Вертикальная линия, сверху огненная «корона»</td>
+                            <td class="gallery-cell">
+                                
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('fire_29_torch', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="fire_30_break">
+                            <td class="number-cell">30</td>
+                            <td class="name-cell">
+                                <span class="english">The Break</span>
+                                <span class="russian">(Прорыв)</span>
+                            </td>
+                            <td><span class="element-badge">FIRE</span></td>
+                            <td class="description-cell">Разрыв линии, с выходом наружу</td>
+                            <td class="gallery-cell">
+                               
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('fire_30_break', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="fire_31_stormfront">
+                            <td class="number-cell">31</td>
+                            <td class="name-cell">
+                                <span class="english">Stormfront</span>
+                                <span class="russian">(Передовая Бури)</span>
+                            </td>
+                            <td><span class="element-badge">FIRE</span></td>
+                            <td class="description-cell">Волнистая линия, переходящая во всплеск</td>
+                            <td class="gallery-cell">
+                                
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('fire_31_stormfront', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="fire_32_burning_choice">
+                            <td class="number-cell">32</td>
+                            <td class="name-cell">
+                                <span class="english">Burning Choice</span>
+                                <span class="russian">(Обжигающий Выбор)</span>
+                            </td>
+                            <td><span class="element-badge">FIRE</span></td>
+                            <td class="description-cell">Две расходящиеся линии + центральная точка выбора</td>
+                            <td class="gallery-cell">
+                                
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('fire_32_burning_choice', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="fire_33_inferno_path">
+                            <td class="number-cell">33</td>
+                            <td class="name-cell">
+                                <span class="english">Inferno Path</span>
+                                <span class="russian">(Путь Пламени)</span>
+                            </td>
+                            <td><span class="element-badge">FIRE</span></td>
+                            <td class="description-cell">Сильный вертикальный столб, разделённый на сегменты</td>
+                            <td class="gallery-cell">
+                                
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('fire_33_inferno_path', this)">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Earth Section -->
+        <div class="element-section">
+            <h2 class="element-title">🌍 СТИХИЯ EARTH (Земля) — материя, деньги, здоровье, циклы</h2>
+            <div class="table-container">
+                <table class="symbols-table">
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Имя символа</th>
+                            <th>Стихия</th>
+                            <th>Краткое визуальное ТЗ</th>
+                            <th>Результат</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-symbol="earth_34_rootmark">
+                            <td class="number-cell">34</td>
+                            <td class="name-cell">
+                                <span class="english">Rootmark</span>
+                                <span class="russian">(Корень)</span>
+                            </td>
+                            <td><span class="element-badge">EARTH</span></td>
+                            <td class="description-cell">Y-образная или «корневая» линия</td>
+                            <td class="gallery-cell">
+                               
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('earth_34_rootmark', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="earth_35_stone_gate">
+                            <td class="number-cell">35</td>
+                            <td class="name-cell">
+                                <span class="english">Stone Gate</span>
+                                <span class="russian">(Каменные Врата)</span>
+                            </td>
+                            <td><span class="element-badge">EARTH</span></td>
+                            <td class="description-cell">Две вертикальные тяжёлые формы, как врата</td>
+                            <td class="gallery-cell">
+                                
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('earth_35_stone_gate', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="earth_36_harvest_line">
+                            <td class="number-cell">36</td>
+                            <td class="name-cell">
+                                <span class="english">Harvest Line</span>
+                                <span class="russian">(Линия Урожая)</span>
+                            </td>
+                            <td><span class="element-badge">EARTH</span></td>
+                            <td class="description-cell">Горизонтальная линия с несколькими короткими штрихами</td>
+                            <td class="gallery-cell">
+                                
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('earth_36_harvest_line', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="earth_37_shelter">
+                            <td class="number-cell">37</td>
+                            <td class="name-cell">
+                                <span class="english">The Shelter</span>
+                                <span class="russian">(Убежище)</span>
+                            </td>
+                            <td><span class="element-badge">EARTH</span></td>
+                            <td class="description-cell">Полукруг-накрытие, защитная форма</td>
+                            <td class="gallery-cell">
+                                
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('earth_37_shelter', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="earth_38_architect">
+                            <td class="number-cell">38</td>
+                            <td class="name-cell">
+                                <span class="english">The Architect</span>
+                                <span class="russian">(Архитектор)</span>
+                            </td>
+                            <td><span class="element-badge">EARTH</span></td>
+                            <td class="description-cell">Геометричная конструкция: прямые линии, устойчивость</td>
+                            <td class="gallery-cell">
+                                
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('earth_38_architect', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="earth_39_anchor">
+                            <td class="number-cell">39</td>
+                            <td class="name-cell">
+                                <span class="english">The Anchor</span>
+                                <span class="russian">(Якорь)</span>
+                            </td>
+                            <td><span class="element-badge">EARTH</span></td>
+                            <td class="description-cell">Вертикальная линия + расширение снизу</td>
+                            <td class="gallery-cell">
+                                
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('earth_39_anchor', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="earth_40_summit_stone">
+                            <td class="number-cell">40</td>
+                            <td class="name-cell">
+                                <span class="english">Summit Stone</span>
+                                <span class="russian">(Камень Вершины)</span>
+                            </td>
+                            <td><span class="element-badge">EARTH</span></td>
+                            <td class="description-cell">Пирамида/треугольник, вершина ярче</td>
+                            <td class="gallery-cell">
+                               
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('earth_40_summit_stone', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="earth_41_burden">
+                            <td class="number-cell">41</td>
+                            <td class="name-cell">
+                                <span class="english">The Burden</span>
+                                <span class="russian">(Ноша)</span>
+                            </td>
+                            <td><span class="element-badge">EARTH</span></td>
+                            <td class="description-cell">Линия + сверху "тяжёлая" форма</td>
+                            <td class="gallery-cell">
+                                
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('earth_41_burden', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="earth_42_golden_vein">
+                            <td class="number-cell">42</td>
+                            <td class="name-cell">
+                                <span class="english">Golden Vein</span>
+                                <span class="russian">(Золотая Жила)</span>
+                            </td>
+                            <td><span class="element-badge">EARTH</span></td>
+                            <td class="description-cell">Диагональная линия-«трещина» с разветвлениями</td>
+                            <td class="gallery-cell">
+                               
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('earth_42_golden_vein', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="earth_43_pact">
+                            <td class="number-cell">43</td>
+                            <td class="name-cell">
+                                <span class="english">The Pact</span>
+                                <span class="russian">(Пакт)</span>
+                            </td>
+                            <td><span class="element-badge">EARTH</span></td>
+                            <td class="description-cell">Две горизонтальные параллельные линии, соединённые точкой или дугой</td>
+                            <td class="gallery-cell">
+                                
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('earth_43_pact', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="earth_44_foundation_shift">
+                            <td class="number-cell">44</td>
+                            <td class="name-cell">
+                                <span class="english">Foundation Shift</span>
+                                <span class="russian">(Сдвиг Фундамента)</span>
+                            </td>
+                            <td><span class="element-badge">EARTH</span></td>
+                            <td class="description-cell">Горизонтальная линия, резкий излом</td>
+                            <td class="gallery-cell">
+                                
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('earth_44_foundation_shift', this)">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Aether Section -->
+        <div class="element-section">
+            <h2 class="element-title">✨ СТИХИЯ AETHER (Эфир) — судьба, линии времени, высшие силы</h2>
+            <div class="table-container">
+                <table class="symbols-table">
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Имя символа</th>
+                            <th>Стихия</th>
+                            <th>Краткое визуальное ТЗ</th>
+                            <th>Результат</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-symbol="aether_45_thread_of_fate">
+                            <td class="number-cell">45</td>
+                            <td class="name-cell">
+                                <span class="english">Thread of Fate</span>
+                                <span class="russian">(Нить Судьбы)</span>
+                            </td>
+                            <td><span class="element-badge">AETHER</span></td>
+                            <td class="description-cell">Одна вертикальная линия — ровная, "неизбежная"</td>
+                            <td class="gallery-cell">
+                                
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('aether_45_thread_of_fate', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="aether_46_convergence">
+                            <td class="number-cell">46</td>
+                            <td class="name-cell">
+                                <span class="english">Convergence</span>
+                                <span class="russian">(Схождение)</span>
+                            </td>
+                            <td><span class="element-badge">AETHER</span></td>
+                            <td class="description-cell">Две линии сходятся в одну точку</td>
+                            <td class="gallery-cell">
+                               
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('aether_46_convergence', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="aether_47_chrono_gate">
+                            <td class="number-cell">47</td>
+                            <td class="name-cell">
+                                <span class="english">Chrono Gate</span>
+                                <span class="russian">(Врата Времени)</span>
+                            </td>
+                            <td><span class="element-badge">AETHER</span></td>
+                            <td class="description-cell">Круг + вертикальная ось, как временная дверь</td>
+                            <td class="gallery-cell">
+                               
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('aether_47_chrono_gate', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="aether_48_ancestral_echo">
+                            <td class="number-cell">48</td>
+                            <td class="name-cell">
+                                <span class="english">Ancestral Echo</span>
+                                <span class="russian">(Эхо Предков)</span>
+                            </td>
+                            <td><span class="element-badge">AETHER</span></td>
+                            <td class="description-cell">Волнистая линия + параллельное "эхо"</td>
+                            <td class="gallery-cell">
+                                
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('aether_48_ancestral_echo', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="aether_49_destiny_mark">
+                            <td class="number-cell">49</td>
+                            <td class="name-cell">
+                                <span class="english">Destiny Mark</span>
+                                <span class="russian">(Знак Предназначения)</span>
+                            </td>
+                            <td><span class="element-badge">AETHER</span></td>
+                            <td class="description-cell">Символ-стрела вверх, тонкая, священная</td>
+                            <td class="gallery-cell">
+                                
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('aether_49_destiny_mark', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="aether_50_veilbreaker">
+                            <td class="number-cell">50</td>
+                            <td class="name-cell">
+                                <span class="english">Veilbreaker</span>
+                                <span class="russian">(Разрывающая Покров)</span>
+                            </td>
+                            <td><span class="element-badge">AETHER</span></td>
+                            <td class="description-cell">Разлом линии + световой "выход"</td>
+                            <td class="gallery-cell">
+                                
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('aether_50_veilbreaker', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="aether_51_great_crossing">
+                            <td class="number-cell">51</td>
+                            <td class="name-cell">
+                                <span class="english">Great Crossing</span>
+                                <span class="russian">(Великое Пересечение)</span>
+                            </td>
+                            <td><span class="element-badge">AETHER</span></td>
+                            <td class="description-cell">Перекрёсток двух основных линий, спокойный, не агрессивный</td>
+                            <td class="gallery-cell">
+                               
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('aether_51_great_crossing', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="aether_52_anchor_point">
+                            <td class="number-cell">52</td>
+                            <td class="name-cell">
+                                <span class="english">Anchor Point</span>
+                                <span class="russian">(Точка Якоря)</span>
+                            </td>
+                            <td><span class="element-badge">AETHER</span></td>
+                            <td class="description-cell">Маленький крестик + линия вниз, как "заземление"</td>
+                            <td class="gallery-cell">
+                                
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('aether_52_anchor_point', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="aether_53_cosmic_breath">
+                            <td class="number-cell">53</td>
+                            <td class="name-cell">
+                                <span class="english">Cosmic Breath</span>
+                                <span class="russian">(Космическое Дыхание)</span>
+                            </td>
+                            <td><span class="element-badge">AETHER</span></td>
+                            <td class="description-cell">Волнистая линия + "вдох-выдох", плавная</td>
+                            <td class="gallery-cell">
+                                
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('aether_53_cosmic_breath', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="aether_54_primordial_seed">
+                            <td class="number-cell">54</td>
+                            <td class="name-cell">
+                                <span class="english">Primordial Seed</span>
+                                <span class="russian">(Изначальное Семя)</span>
+                            </td>
+                            <td><span class="element-badge">AETHER</span></td>
+                            <td class="description-cell">Круг + точка выхода сверху</td>
+                            <td class="gallery-cell">
+                               
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('aether_54_primordial_seed', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="aether_55_first_light">
+                            <td class="number-cell">55</td>
+                            <td class="name-cell">
+                                <span class="english">First Light</span>
+                                <span class="russian">(Первый Свет)</span>
+                            </td>
+                            <td><span class="element-badge">AETHER</span></td>
+                            <td class="description-cell">Маленькая точка + расходящиеся лучи</td>
+                            <td class="gallery-cell">
+                                
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('aether_55_first_light', this)">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Weaving Section -->
+        <div class="element-section">
+            <h2 class="element-title">🌐 ПЕРЕПЛЕТЕНИЕ (Weaving) — мета-ключи</h2>
+            <div class="table-container">
+                <table class="symbols-table">
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Имя символа</th>
+                            <th>Стихия</th>
+                            <th>Краткое визуальное ТЗ</th>
+                            <th>Результат</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-symbol="weaving_56_mirror_key">
+                            <td class="number-cell">56</td>
+                            <td class="name-cell">
+                                <span class="english">Mirror Key</span>
+                                <span class="russian">(Ключ Зеркала)</span>
+                            </td>
+                            <td><span class="element-badge">WEAVING</span></td>
+                            <td class="description-cell">Две симметричные вертикальные линии</td>
+                            <td class="gallery-cell">
+                                
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('weaving_56_mirror_key', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="weaving_57_shadow_key">
+                            <td class="number-cell">57</td>
+                            <td class="name-cell">
+                                <span class="english">Shadow Key</span>
+                                <span class="russian">(Ключ Тени)</span>
+                            </td>
+                            <td><span class="element-badge">WEAVING</span></td>
+                            <td class="description-cell">Символ в виде перевёрнутой дуги/теневого отражения</td>
+                            <td class="gallery-cell">
+                                
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('weaving_57_shadow_key', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="weaving_58_light_key">
+                            <td class="number-cell">58</td>
+                            <td class="name-cell">
+                                <span class="english">Light Key</span>
+                                <span class="russian">(Ключ Света)</span>
+                            </td>
+                            <td><span class="element-badge">WEAVING</span></td>
+                            <td class="description-cell">Маленький крестик света или вспышка</td>
+                            <td class="gallery-cell">
+                                
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('weaving_58_light_key', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="weaving_59_amplifier">
+                            <td class="number-cell">59</td>
+                            <td class="name-cell">
+                                <span class="english">Amplifier</span>
+                                <span class="russian">(Усилитель)</span>
+                            </td>
+                            <td><span class="element-badge">WEAVING</span></td>
+                            <td class="description-cell">Две расходящиеся параллельные линии</td>
+                            <td class="gallery-cell">
+                                
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('weaving_59_amplifier', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="weaving_60_divider">
+                            <td class="number-cell">60</td>
+                            <td class="name-cell">
+                                <span class="english">Divider</span>
+                                <span class="russian">(Разделитель)</span>
+                            </td>
+                            <td><span class="element-badge">WEAVING</span></td>
+                            <td class="description-cell">Вертикальная линия, делящая пространство</td>
+                            <td class="gallery-cell">
+                                
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('weaving_60_divider', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="weaving_61_delay_mark">
+                            <td class="number-cell">61</td>
+                            <td class="name-cell">
+                                <span class="english">Delay Mark</span>
+                                <span class="russian">(Задержка)</span>
+                            </td>
+                            <td><span class="element-badge">WEAVING</span></td>
+                            <td class="description-cell">Короткая линия + "стоп"-точка</td>
+                            <td class="gallery-cell">
+                                
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('weaving_61_delay_mark', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="weaving_62_acceleration_mark">
+                            <td class="number-cell">62</td>
+                            <td class="name-cell">
+                                <span class="english">Acceleration Mark</span>
+                                <span class="russian">(Ускорение)</span>
+                            </td>
+                            <td><span class="element-badge">WEAVING</span></td>
+                            <td class="description-cell">Линия, сужающаяся к концу, как ускорение</td>
+                            <td class="gallery-cell">
+                               
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('weaving_62_acceleration_mark', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="weaving_63_inversion">
+                            <td class="number-cell">63</td>
+                            <td class="name-cell">
+                                <span class="english">Inversion</span>
+                                <span class="russian">(Инверсия)</span>
+                            </td>
+                            <td><span class="element-badge">WEAVING</span></td>
+                            <td class="description-cell">Символ изогнутой зеркальной формы</td>
+                            <td class="gallery-cell">
+                                
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('weaving_63_inversion', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="weaving_64_echo_seal">
+                            <td class="number-cell">64</td>
+                            <td class="name-cell">
+                                <span class="english">Echo Seal</span>
+                                <span class="russian">(Печать Эха)</span>
+                            </td>
+                            <td><span class="element-badge">WEAVING</span></td>
+                            <td class="description-cell">Две слегка смещённые повторяющиеся линии</td>
+                            <td class="gallery-cell">
+                               
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('weaving_64_echo_seal', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="weaving_65_bridge">
+                            <td class="number-cell">65</td>
+                            <td class="name-cell">
+                                <span class="english">Bridge</span>
+                                <span class="russian">(Мост)</span>
+                            </td>
+                            <td><span class="element-badge">WEAVING</span></td>
+                            <td class="description-cell">Две точки/линии, соединённые дугой</td>
+                            <td class="gallery-cell">
+                                
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('weaving_65_bridge', this)">
+                            </td>
+                        </tr>
+                        <tr data-symbol="weaving_66_catalyst">
+                            <td class="number-cell">66</td>
+                            <td class="name-cell">
+                                <span class="english">Catalyst</span>
+                                <span class="russian">(Катализатор)</span>
+                            </td>
+                            <td><span class="element-badge">WEAVING</span></td>
+                            <td class="description-cell">Центральная точка + расходящиеся короткие лучи</td>
+                            <td class="gallery-cell">
+                                
+                                <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('weaving_66_catalyst', this)">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="modal" id="imageModal" onclick="closeModal()">
+            <div class="modal-content" onclick="event.stopPropagation()">
+                <span class="modal-close" onclick="closeModal()">&times;</span>
+                <img id="modalImage" src="" alt="Просмотр изображения">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load approved symbols from localStorage
+        function loadApprovedSymbols() {
+            const approved = localStorage.getItem('approved_symbols');
+            if (approved) {
+                const approvedData = JSON.parse(approved);
+                Object.keys(approvedData).forEach(symbolId => {
+                    const approvedImage = approvedData[symbolId];
+                    const symbolRow = document.querySelector(`[data-symbol="${symbolId}"]`);
+                    if (symbolRow) {
+                        const galleryItems = symbolRow.querySelectorAll('.gallery-item');
+                        galleryItems.forEach(item => {
+                            if (item.dataset.image === approvedImage) {
+                                item.classList.add('approved');
+                                if (!item.querySelector('.approved-indicator')) {
+                                    const indicator = document.createElement('div');
+                                    indicator.className = 'approved-indicator';
+                                    item.appendChild(indicator);
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+        }
+
+        // Approve an image for a symbol
+        function approveImage(imageElement) {
+            const symbolRow = imageElement.closest('tr');
+            const symbolId = symbolRow.dataset.symbol;
+            const galleryItems = symbolRow.querySelectorAll('.gallery-item');
+            
+            // Clear previous approvals for this symbol
+            galleryItems.forEach(item => {
+                item.classList.remove('approved');
+                const indicator = item.querySelector('.approved-indicator');
+                if (indicator) indicator.remove();
+            });
+            
+            // Approve the clicked image
+            imageElement.classList.add('approved');
+            
+            const indicator = document.createElement('div');
+            indicator.className = 'approved-indicator';
+            imageElement.appendChild(indicator);
+            
+            // Save to localStorage
+            saveApprovedSymbol(symbolId, imageElement.dataset.image);
+            
+            // Show confirmation
+            showNotification('✓ Изображение утверждено группой!', 'success');
+        }
+
+        // Save approved symbol to localStorage
+        function saveApprovedSymbol(symbolId, imagePath) {
+            let approved = localStorage.getItem('approved_symbols');
+            if (!approved) {
+                approved = {};
+            } else {
+                approved = JSON.parse(approved);
+            }
+            
+            approved[symbolId] = imagePath;
+            localStorage.setItem('approved_symbols', JSON.stringify(approved));
+        }
+
+        // Add image to symbol gallery
+        function addImage(symbolId, button) {
+            const symbolRow = button.closest('tr');
+            const input = symbolRow.querySelector('.add-image-input');
+            input.click();
+        }
+
+        // Handle image upload
+        function handleImageUpload(symbolId, input) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const symbolRow = input.closest('tr');
+                    const galleryGrid = symbolRow.querySelector('.gallery-grid');
+                    
+                    const newItem = document.createElement('div');
+                    newItem.className = 'gallery-item';
+                    newItem.dataset.image = e.target.result;
+                    newItem.onclick = function() { openModal(this); };
+                    
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.alt = 'Новое изображение';
+                    
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.className = 'delete-btn';
+                    deleteBtn.textContent = '×';
+                    deleteBtn.onclick = function(event) {
+                        event.stopPropagation();
+                        removeImage(newItem, deleteBtn);
+                    };
+                    
+                    newItem.appendChild(img);
+                    newItem.appendChild(deleteBtn);
+                    galleryGrid.appendChild(newItem);
+                    
+                    showNotification('✓ Изображение добавлено!', 'success');
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Remove specific image from symbol gallery
+        function removeImage(galleryItem, button) {
+            const symbolRow = galleryItem.closest('tr');
+            const galleryItems = symbolRow.querySelectorAll('.gallery-item');
+            
+            if (galleryItems.length <= 1) {
+                showNotification('❌ Нельзя удалить последнее изображение!', 'error');
+                return;
+            }
+            
+            // Check if this is the approved image
+            if (galleryItem.classList.contains('approved')) {
+                showNotification('❌ Нельзя удалить утвержденное изображение!', 'error');
+                return;
+            }
+            
+            // Remove the specific gallery item
+            galleryItem.remove();
+            
+            showNotification('✓ Изображение удалено!', 'success');
+        }
+
+        // Open image modal
+        function openModal(element) {
+            const modal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+            modalImage.src = element.dataset.image;
+            modal.style.display = 'flex';
+        }
+
+        // Close image modal
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        // Show all approved symbols
+        function showAllApproved() {
+            const approved = localStorage.getItem('approved_symbols');
+            if (!approved) {
+                showNotification('Нет утвержденных символов', 'info');
+                return;
+            }
+            
+            const approvedData = JSON.parse(approved);
+            let count = 0;
+            Object.keys(approvedData).forEach(symbolId => count++);
+            
+            showNotification(`Найдено ${count} утвержденных символов`, 'success');
+        }
+
+        // Show all symbols (reset filter)
+        function showAllSymbols() {
+            const rows = document.querySelectorAll('.symbols-table tbody tr');
+            rows.forEach(row => {
+                row.style.display = '';
+            });
+            showNotification('Показаны все символы', 'info');
+        }
+
+        // Clear all approvals
+        function clearAllApprovals() {
+            if (confirm('Удалить все утверждения группы?')) {
+                localStorage.removeItem('approved_symbols');
+                
+                // Remove all approval indicators
+                document.querySelectorAll('.approved-indicator').forEach(indicator => {
+                    indicator.remove();
+                });
+                document.querySelectorAll('.gallery-item').forEach(item => {
+                    item.classList.remove('approved');
+                });
+                
+                showNotification('✓ Все утверждения очищены', 'success');
+            }
+        }
+
+        // Export group decisions
+        function exportApprovals() {
+            const approved = localStorage.getItem('approved_symbols');
+            if (!approved) {
+                showNotification('Нет данных для экспорта', 'info');
+                return;
+            }
+            
+            const approvedData = JSON.parse(approved);
+            const exportData = {
+                timestamp: new Date().toISOString(),
+                total_approved: Object.keys(approvedData).length,
+                approved_symbols: approvedData
+            };
+            
+            const dataStr = JSON.stringify(exportData, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(dataBlob);
+            link.download = `group_decisions_${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+            
+            showNotification('✓ Решения группы экспортированы!', 'success');
+        }
+
+         // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // 🔹 Автоподгрузка изображений из папки pure_symbols (любой формат)
+        function autoLoadExtraSymbols() {
+            const rows = document.querySelectorAll('tr[data-symbol]');
+
+            rows.forEach(row => {
+                const symbolId = row.dataset.symbol; // например "earth34rootmark"
+                if (!symbolId) return;
+
+                let element = '';
+                if (symbolId.startsWith('air')) element = 'air';
+                else if (symbolId.startsWith('water')) element = 'water';
+                else if (symbolId.startsWith('fire')) element = 'fire';
+                else if (symbolId.startsWith('earth')) element = 'earth';
+                else if (symbolId.startsWith('aether')) element = 'aether';
+                else if (symbolId.startsWith('weaving')) element = 'weaving';
+                else return;
+
+                const digitsMatch = symbolId.match(/\d+/);
+                if (!digitsMatch) return;
+                const num = digitsMatch[0].padStart(2, '0'); // "34" -> "34"
+
+                const prefix = `${element}_${num}_`;        // earth_34_
+                const gallery = row.querySelector('.gallery-grid');
+                if (!gallery) return;
+
+                const existingSrcs = new Set(
+                    Array.from(gallery.querySelectorAll('img')).map(img =>
+                        img.getAttribute('src')
+                    )
+                );
+
+                // Поддерживаемые форматы файлов
+                const formats = ['svg', 'png', 'jpg', 'jpeg', 'gif', 'webp'];
+                let loadedImages = new Set();
+
+                // Функция для добавления изображения в галерею
+                function addImageToGallery(src) {
+                    if (existingSrcs.has(src) || loadedImages.has(src)) return;
+
+                    const img = new Image();
+                    img.onload = () => {
+                        const item = document.createElement('div');
+                        item.className = 'gallery-item';
+                        item.dataset.image = src;
+                        item.onclick = function () { openModal(item); };
+
+                        const imageEl = document.createElement('img');
+                        imageEl.src = src;
+                        imageEl.alt = symbolId;
+
+                        const delBtn = document.createElement('button');
+                        delBtn.className = 'delete-btn';
+                        delBtn.textContent = '×';
+                        delBtn.onclick = function (event) {
+                            event.stopPropagation();
+                            removeImage(item, delBtn);
+                        };
+
+                        item.appendChild(imageEl);
+                        item.appendChild(delBtn);
+                        gallery.appendChild(item);
+
+                        loadedImages.add(src);
+                        
+                        // Убираем "нет фото" если найдено изображение
+                        const currentNoPhotoMsg = gallery.querySelector('.no-photo-message');
+                        if (currentNoPhotoMsg) {
+                            currentNoPhotoMsg.remove();
+                        }
+                    };
+                    img.onerror = () => {};
+                    img.src = src;
+                }
+
+                // 1. Поиск файлов с полным именем символа (например: earth_34_rootmark_final_v2.svg)
+                formats.forEach(format => {
+                    const variants = [
+                        'final_v2',
+                        'final',
+                        'variant',
+                        'alt',
+                        'test',
+                        'correct',
+                        '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'
+                    ];
+                    
+                    variants.forEach(variant => {
+                        const fileName = `${symbolId}_${variant}.${format}`;
+                        const src = `pure_symbols/${fileName}`;
+                        addImageToGallery(src);
+                    });
+                });
+
+                // 2. Поиск файлов по номеру (например: earth_34_final_v2.svg) - для обратной совместимости
+                formats.forEach(format => {
+                    const variants = [
+                        'final_v2',
+                        'final',
+                        'variant',
+                        'alt',
+                        'test',
+                        'correct',
+                        '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'
+                    ];
+                    
+                    variants.forEach(variant => {
+                        const fileName = `${prefix}${variant}.${format}`;
+                        const src = `pure_symbols/${fileName}`;
+                        addImageToGallery(src);
+                    });
+                });
+
+                // Сразу показываем "нет фото"
+                const noPhotoMsg = document.createElement('div');
+                noPhotoMsg.className = 'no-photo-message';
+                noPhotoMsg.style.cssText = `
+                    color: #888;
+                    font-style: italic;
+                    padding: 10px;
+                    text-align: center;
+                    background: rgba(255, 255, 255, 0.05);
+                    border-radius: 4px;
+                    border: 1px dashed rgba(136, 136, 136, 0.3);
+                `;
+                noPhotoMsg.textContent = 'нет фото';
+                gallery.appendChild(noPhotoMsg);
+            });
+        }
+
+        // Double-click to approve
+        document.addEventListener('dblclick', function(e) {
+            const galleryItem = e.target.closest('.gallery-item');
+            if (galleryItem) {
+                e.preventDefault();
+                e.stopPropagation();
+                approveImage(galleryItem);
+            }
+        });
+
+        // Load approved symbols и автоподгрузка при загрузке страницы
+        window.addEventListener('load', () => {
+            // Сначала автоподгрузка
+            autoLoadExtraSymbols();
+            // Потом одобренные символы
+            loadApprovedSymbols();
+        });
+    </script>
+</body>
+</html>
