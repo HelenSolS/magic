@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0f1419, #1a1a2e, #16213e);ƒ
+            background: linear-gradient(135deg, #0f1419, #1a1a2e, #16213e);
             color: #ffffff;
             line-height: 1.6;
             padding: 20px;
@@ -409,7 +409,8 @@
                             <td><span class="element-badge">AIR</span></td>
                             <td class="description-cell">Изогнутая тонкая линия, мягко расходящаяся на две ветви</td>
                             <td class="gallery-cell">
-
+                                <div class="gallery-grid">
+                                </div>
                                 <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('air_01_whisper', this)">
                             </td>
                         </tr>
@@ -455,6 +456,8 @@
                             <td class="description-cell">Стилизованное перо, тонкая линия, направленное в одну сторону</td>
                             <td class="gallery-cell">
  
+                                <div class="gallery-grid">
+                                </div>
                                 <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('air_04_feather', this)">
                             </td>
                         </tr>
@@ -467,7 +470,8 @@
                             <td><span class="element-badge">AIR</span></td>
                             <td class="description-cell">Два симметричных вихря / две зеркальные линии</td>
                             <td class="gallery-cell">
-
+                                <div class="gallery-grid">
+                                </div>
                                 <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('air_05_twin_winds', this)">
                             </td>
                         </tr>
@@ -480,7 +484,8 @@
                             <td><span class="element-badge">AIR</span></td>
                             <td class="description-cell">Стрела света, пересекающая круг</td>
                             <td class="gallery-cell">
-
+                                <div class="gallery-grid">
+                                </div>
                                 <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('air_06_messenger', this)">
                             </td>
                         </tr>
@@ -493,7 +498,8 @@
                             <td><span class="element-badge">AIR</span></td>
                             <td class="description-cell">Три повторяющиеся дуги, уходящие наружу</td>
                             <td class="gallery-cell">
-
+                                <div class="gallery-grid">
+                                </div>
                                 <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('air_07_echo', this)">
                             </td>
                         </tr>
@@ -506,8 +512,8 @@
                             <td><span class="element-badge">AIR</span></td>
                             <td class="description-cell">Мягкая полупрозрачная форма, скрывающая центральную точку</td>
                             <td class="gallery-cell">
-  
-                                
+                                <div class="gallery-grid">
+                                </div>
                                 <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('air_08_veil', this)">
                             </td>
                         </tr>
@@ -520,7 +526,8 @@
                             <td><span class="element-badge">AIR</span></td>
                             <td class="description-cell">Спираль, резко меняющая направление</td>
                             <td class="gallery-cell">
-
+                                <div class="gallery-grid">
+                                </div>
                                 <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('air_09_turning_breath', this)">
                             </td>
                         </tr>
@@ -533,8 +540,8 @@
                             <td><span class="element-badge">AIR</span></td>
                             <td class="description-cell">Вертикальный луч, расширяющийся сверху</td>
                             <td class="gallery-cell">
-
-                                
+                                <div class="gallery-grid">
+                                </div>
                                 <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('air_10_calling', this)">
                             </td>
                         </tr>
@@ -547,8 +554,8 @@
                             <td><span class="element-badge">AIR</span></td>
                             <td class="description-cell">Глаз без зрачка, только контур + дуга света</td>
                             <td class="gallery-cell">
-
-                                
+                                <div class="gallery-grid">
+                                </div>
                                 <input type="file" class="add-image-input" accept="image/*" onchange="handleImageUpload('air_11_watcher', this)">
                             </td>
                         </tr>
@@ -1616,7 +1623,7 @@
         `;
         document.head.appendChild(style);
 
-        // 🔹 Автоподгрузка PNG из папки pure_symbols по схеме <element>_<NN>_<VV>.png
+        // 🔹 Автоподгрузка изображений из папки pure_symbols (любой формат)
         function autoLoadExtraSymbols() {
             const rows = document.querySelectorAll('tr[data-symbol]');
 
@@ -1647,12 +1654,13 @@
                     )
                 );
 
-                for (let i = 1; i <= 40; i++) {
-                    const variant = String(i).padStart(2, '0');      // 01..40
-                    const fileName = `${prefix}${variant}.png`;      // earth_34_01.png
-                    const src = `pure_symbols/${fileName}`;
+                // Поддерживаемые форматы файлов
+                const formats = ['svg', 'png', 'jpg', 'jpeg', 'gif', 'webp'];
+                let loadedImages = new Set();
 
-                    if (existingSrcs.has(src)) continue;
+                // Функция для добавления изображения в галерею
+                function addImageToGallery(src) {
+                    if (existingSrcs.has(src) || loadedImages.has(src)) return;
 
                     const img = new Image();
                     img.onload = () => {
@@ -1677,11 +1685,70 @@
                         item.appendChild(delBtn);
                         gallery.appendChild(item);
 
-                        existingSrcs.add(src);
+                        loadedImages.add(src);
+                        
+                        // Убираем "нет фото" если найдено изображение
+                        const currentNoPhotoMsg = gallery.querySelector('.no-photo-message');
+                        if (currentNoPhotoMsg) {
+                            currentNoPhotoMsg.remove();
+                        }
                     };
                     img.onerror = () => {};
                     img.src = src;
                 }
+
+                // 1. Поиск файлов с полным именем символа (например: earth_34_rootmark_final_v2.svg)
+                formats.forEach(format => {
+                    const variants = [
+                        'final_v2',
+                        'final',
+                        'variant',
+                        'alt',
+                        'test',
+                        'correct',
+                        '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'
+                    ];
+                    
+                    variants.forEach(variant => {
+                        const fileName = `${symbolId}_${variant}.${format}`;
+                        const src = `pure_symbols/${fileName}`;
+                        addImageToGallery(src);
+                    });
+                });
+
+                // 2. Поиск файлов по номеру (например: earth_34_final_v2.svg) - для обратной совместимости
+                formats.forEach(format => {
+                    const variants = [
+                        'final_v2',
+                        'final',
+                        'variant',
+                        'alt',
+                        'test',
+                        'correct',
+                        '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'
+                    ];
+                    
+                    variants.forEach(variant => {
+                        const fileName = `${prefix}${variant}.${format}`;
+                        const src = `pure_symbols/${fileName}`;
+                        addImageToGallery(src);
+                    });
+                });
+
+                // Сразу показываем "нет фото"
+                const noPhotoMsg = document.createElement('div');
+                noPhotoMsg.className = 'no-photo-message';
+                noPhotoMsg.style.cssText = `
+                    color: #888;
+                    font-style: italic;
+                    padding: 10px;
+                    text-align: center;
+                    background: rgba(255, 255, 255, 0.05);
+                    border-radius: 4px;
+                    border: 1px dashed rgba(136, 136, 136, 0.3);
+                `;
+                noPhotoMsg.textContent = 'нет фото';
+                gallery.appendChild(noPhotoMsg);
             });
         }
 
@@ -1697,8 +1764,10 @@
 
         // Load approved symbols и автоподгрузка при загрузке страницы
         window.addEventListener('load', () => {
-            loadApprovedSymbols();
+            // Сначала автоподгрузка
             autoLoadExtraSymbols();
+            // Потом одобренные символы
+            loadApprovedSymbols();
         });
     </script>
 </body>
