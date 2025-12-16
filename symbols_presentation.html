@@ -1002,6 +1002,26 @@
     </div>
 
     <script>
+        // Правильные диапазоны стихий по сквозной нумерации ID
+        const elementRanges = {
+            'air': { min: 1, max: 18 },
+            'water': { min: 19, max: 46 }, 
+            'fire': { min: 23, max: 33 }, // нужно уточнить
+            'earth': { min: 34, max: 44 }, // нужно уточнить
+            'aether': { min: 47, max: 55 },
+            'weaving': { min: 56, max: 66 }
+        };
+
+        // Определяем стихию по ID
+        function getElementById(id) {
+            for (const [element, range] of Object.entries(elementRanges)) {
+                if (id >= range.min && id <= range.max) {
+                    return element;
+                }
+            }
+            return null;
+        }
+
         // 🔹 ПРОСТАЯ АВТОПОДГРУЗКА ВСЕХ ФАЙЛОВ ПО ПРЕФИКСУ
         
         // Загружаем одобренные символы
@@ -1077,7 +1097,7 @@
             document.getElementById('imageModal').style.display = 'none';
         }
 
-        // 🔹 ПРОСТАЯ АВТОПОДГРУЗКА - ИЩЕТ ВСЕ ФАЙЛЫ ПО ПРЕФИКСУ
+        // 🔹 ПРОСТАЯ АВТОПОДГРУЗКА - ИЩЕТ ВСЕ ФАЙЛЫ ПО ПРЕФИКСУ element_id_
         function autoLoadAllFiles() {
             const rows = document.querySelectorAll('tr[data-symbol]');
 
@@ -1085,14 +1105,16 @@
                 const symbolId = row.dataset.symbol;
                 if (!symbolId) return;
 
-                // Извлекаем префикс (стихия_номер)
-                const match = symbolId.match(/(air|water|fire|earth|aether|weaving)_(\d+)_/);
-                if (!match) return;
-
-                const element = match[1]; // "air"
-                const num = match[2].padStart(2, '0'); // "01"
-                const prefix = `${element}_${num}`; // "air_01"
-
+                // Извлекаем элемент и ID из symbolId
+                const parts = symbolId.split('_');
+                if (parts.length < 3) {
+                    console.log(`⚠️ Неправильный формат symbolId: ${symbolId}`);
+                    return;
+                }
+                
+                const element = parts[0]; // "air", "water", etc.
+                const id = parts[1]; // "01", "12", etc.
+                
                 const gallery = row.querySelector('.gallery-grid');
                 if (!gallery) return;
 
@@ -1106,8 +1128,11 @@
                 function addImage(src) {
                     if (existingSrcs.has(src)) return;
 
+                    console.log(`🔍 ${element}_${id}: Пробуем ${src}`);
+
                     const img = new Image();
                     img.onload = () => {
+                        console.log(`✅ ${element}_${id}: Успешно загружен ${src}`);
                         const item = document.createElement('div');
                         item.className = 'gallery-item';
                         item.dataset.image = src;
@@ -1120,47 +1145,133 @@
                         item.appendChild(imageEl);
                         gallery.appendChild(item);
                         
-                        // Убираем "нет фото" если найдено изображение
                         const noPhotoMsg = gallery.querySelector('.no-photo-message');
                         if (noPhotoMsg) {
                             noPhotoMsg.remove();
                         }
                     };
-                    img.onerror = () => {};
+                    img.onerror = () => {
+                        // Не логируем ошибки для всех попыток, чтобы не засорять консоль
+                    };
                     img.src = src;
                 }
 
-                // Ищем ВСЕ возможные варианты файлов для этого префикса
-                const allVariants = [
-                    '', 'correct', 'final', 'final_v2', 'variant', 'alt', 'test', 
-                    '1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
-                    'new', 'old', 'v1', 'v2', 'v3', 'backup', 'draft', 'clean', 'basic', 'advanced', 'base64'
-                ];
+                console.log(`🎯 ${symbolId} -> ищем все файлы с префиксом ${element}_${id}_`);
 
-                // Пробуем все комбинации для SVG
-                allVariants.forEach(variant => {
-                    const svgFile = variant ? `${prefix}_${variant}.svg` : `${prefix}.svg`;
-                    addImage(`pure_symbols/${svgFile}`);
-                });
+                // Специальные паттерны для разных диапазонов
+                const searchPatterns = [];
 
-                // Пробуем все комбинации для PNG
-                allVariants.forEach(variant => {
-                    const pngFile = variant ? `${prefix}_${variant}.png` : `${prefix}.png`;
-                    addImage(`pure_symbols/${pngFile}`);
-                });
+                // Основные варианты с _correct
+                searchPatterns.push(
+                    `pure_symbols/${element}_${id}_correct.svg`,
+                    `pure_symbols/${element}_${id}_correct.png`
+                );
 
-                // Если symbolId длиннее prefix (например: air_01_whisper), пробуем полное имя
-                if (symbolId !== prefix && symbolId.includes(prefix)) {
-                    allVariants.forEach(variant => {
-                        const svgFile = variant ? `${symbolId}_${variant}.svg` : `${symbolId}.svg`;
-                        addImage(`pure_symbols/${svgFile}`);
-                        
-                        const pngFile = variant ? `${symbolId}_${variant}.png` : `${symbolId}.png`;
-                        addImage(`pure_symbols/${pngFile}`);
+                // Варианты без суффикса
+                searchPatterns.push(
+                    `pure_symbols/${element}_${id}.svg`,
+                    `pure_symbols/${element}_${id}.png`
+                );
+
+                // Варианты с _final и _final_v2
+                searchPatterns.push(
+                    `pure_symbols/${element}_${id}_final.svg`,
+                    `pure_symbols/${element}_${id}_final.png`,
+                    `pure_symbols/${element}_${id}_final_v2.svg`,
+                    `pure_symbols/${element}_${id}_final_v2.png`
+                );
+
+                // Варианты с номерами кадров (для сложных символов)
+                for (let frame = 1; frame <= 6; frame++) {
+                    const frameStr = frame.toString().padStart(2, '0');
+                    searchPatterns.push(
+                        `pure_symbols/${element}_${id}_${frameStr}.svg`,
+                        `pure_symbols/${element}_${id}_${frameStr}.png`
+                    );
+                }
+
+                // Варианты с названиями (для тех, что не попадают в _correct)
+                if (element === 'air') {
+                    const airVariants = [
+                        'diagonal_tool', 'ripple_waves', 'tempest', 'feather_plume', 'hurricane',
+                        'glowing_feather', 'sky', 'stellar_feather', 'wind_beacon_5', 'wind_beacon_6',
+                        'aerial_threads_1', 'aerial_threads_2', 'aerial_threads_3', 'aerial_threads_4', 
+                        'aerial_threads_5', 'aerial_threads_6', 'storm_resonance_1', 'storm_resonance_2',
+                        'storm_resonance_3', 'storm_resonance_4', 'whisper_spiral_1', 'whisper_spiral_2',
+                        'whisper_spiral_3', 'celestial_dance_1', 'celestial_dance_2', 'celestial_dance_3',
+                        'cosmic_flow_1', 'cosmic_flow_2', 'cosmic_flow_3', 'veil_1', 'veil_2', 'veil_3',
+                        'twin_winds_1', 'twin_winds_2', 'twin_winds_3', 'twin_winds_4'
+                    ];
+                    airVariants.forEach(variant => {
+                        searchPatterns.push(
+                            `pure_symbols/${element}_${id}_${variant}.svg`,
+                            `pure_symbols/${element}_${id}_${variant}.png`
+                        );
                     });
                 }
 
-                // После попыток загрузки показываем "нет фото" если ничего не нашли
+                if (element === 'aether') {
+                    const aetherVariants = [
+                        'cosmic_threading', 'luminous_x', 'cosmic_glyph', 'cosmic_glyph_2', 'star',
+                        'moon', 'void', 'soul', 'spirit', 'aura', 'echo', 'dream', 'memory', 'infinity'
+                    ];
+                    aetherVariants.forEach(variant => {
+                        searchPatterns.push(
+                            `pure_symbols/${element}_${id}_${variant}.svg`,
+                            `pure_symbols/${element}_${id}_${variant}.png`
+                        );
+                    });
+                }
+
+                if (element === 'earth') {
+                    const earthVariants = ['root', 'stone_gate', 'harvest_line', 'shelter', 'architect'];
+                    earthVariants.forEach(variant => {
+                        searchPatterns.push(
+                            `pure_symbols/${element}_${id}_${variant}.svg`,
+                            `pure_symbols/${element}_${id}_${variant}.png`
+                        );
+                    });
+                }
+
+                if (element === 'water') {
+                    const waterVariants = ['deep_tide', 'mirror_water_2', 'heartstream_2', 'heartstream_3'];
+                    waterVariants.forEach(variant => {
+                        searchPatterns.push(
+                            `pure_symbols/${element}_${id}_${variant}.svg`,
+                            `pure_symbols/${element}_${id}_${variant}.png`
+                        );
+                    });
+                }
+
+                // Специальные сопоставления для weaving символов (используют aether файлы)
+                if (element === 'weaving') {
+                    const weavingToAether = {
+                        '56': 'cosmic_threading',
+                        '57': 'star', 
+                        '58': 'moon',
+                        '59': 'void',
+                        '60': 'soul',
+                        '61': 'spirit',
+                        '62': 'aura',
+                        '63': 'echo',
+                        '64': 'dream',
+                        '65': 'memory',
+                        '66': 'infinity'
+                    };
+                    
+                    if (weavingToAether[id]) {
+                        const aetherFile = weavingToAether[id];
+                        searchPatterns.push(
+                            `pure_symbols/aether_${id}_${aetherFile}.svg`,
+                            `pure_symbols/aether_${id}_${aetherFile}.png`
+                        );
+                    }
+                }
+
+                // Загружаем все файлы
+                searchPatterns.forEach(src => addImage(src));
+
+                // Показываем "нет фото" если ничего не загрузилось
                 setTimeout(() => {
                     const currentImages = gallery.querySelectorAll('img');
                     const existingNoPhoto = gallery.querySelector('.no-photo-message');
@@ -1170,6 +1281,7 @@
                         noPhotoMsg.className = 'no-photo-message';
                         noPhotoMsg.textContent = 'нет фото';
                         gallery.appendChild(noPhotoMsg);
+                        console.log(`🖼️ ${element}_${id}: Показано "нет фото"`);
                     }
                 }, 500);
             });
