@@ -1090,14 +1090,33 @@
         // Массив для хранения нераспознанных файлов
         let unrecognizedFiles = [];
 
-        // Функция для поиска изображений по номеру (упрощенная)
+        // Функция для поиска изображений по номеру символа (правильная логика)
         function findImagesByNumber(files, number) {
-            // Ищем номер в имени файла, окруженный разделителями
-            const regex = new RegExp(`[^0-9]${number}[^0-9]|^${number}[^0-9]|[^0-9]${number}$|^${number}$`);
-            return files.filter(f => regex.test(f));
+            return files.filter(filename => {
+                const lowerName = filename.toLowerCase();
+                
+                // Паттерны: стихия_НОМЕР_что-то или стихия-НОМЕР-что-то
+                const patterns = [
+                    `air_${number}_`,
+                    `air-${number}-`,
+                    `water_${number}_`, 
+                    `water-${number}-`,
+                    `fire_${number}_`,
+                    `fire-${number}-`, 
+                    `earth_${number}_`,
+                    `earth-${number}-`,
+                    `aether_${number}_`,
+                    `aether-${number}-`,
+                    `weaving_${number}_`,
+                    `weaving-${number}-`
+                ];
+                
+                // Проверяем, начинается ли файл с любого из паттернов
+                return patterns.some(pattern => lowerName.includes(pattern.toLowerCase()));
+            });
         }
 
-        // Функция для рендеринга миниатюр (показываем ВСЕ картинки)
+        // Функция для рендеринга миниатюр (исправленное отображение)
         function renderThumbnails(cell, images, symbolNumber) {
             if (!cell) return;
             
@@ -1108,14 +1127,17 @@
                 return;
             }
 
-            // Создаем контейнер для всех картинок
+            // Создаем контейнер для всех картинок в ряд
             const container = document.createElement('div');
             container.style.cssText = `
                 display: flex;
+                flex-direction: row;
                 flex-wrap: wrap;
                 gap: 5px;
                 justify-content: center;
                 align-items: center;
+                width: 100%;
+                min-height: 80px;
             `;
 
             images.forEach((imageUrl, index) => {
@@ -1123,15 +1145,16 @@
                 thumb.src = imageUrl;
                 thumb.className = "symbol-image";
                 thumb.style.cssText = `
-                    width: 70px;
-                    height: 70px;
+                    width: 60px;
+                    height: 60px;
                     object-fit: contain;
                     cursor: pointer;
                     border: 1px solid rgba(255,255,255,0.2);
                     border-radius: 5px;
                     background: rgba(255,255,255,0.05);
+                    flex-shrink: 0;
                 `;
-                thumb.title = `Символ ${symbolNumber} - вариант ${index + 1}`;
+                thumb.title = `Символ ${symbolNumber} - ${imageUrl.split('/').pop()}`;
                 thumb.addEventListener("click", () => openImageModal(imageUrl, `Символ ${symbolNumber}`));
                 container.appendChild(thumb);
             });
@@ -1199,6 +1222,11 @@
                     const matchedFiles = findImagesByNumber(allFiles.map(f => f.name), symbolNumber);
                     const imageUrls = [];
                     
+                    // Показываем только для первых 5 символов, чтобы не засорять консоль
+                    if (symbolNumber <= 5) {
+                        console.log(`🔍 Символ ${symbolNumber}: найдено файлов - ${matchedFiles.length}:`, matchedFiles);
+                    }
+                    
                     // Проверяем доступность файлов и собираем URLs
                     for (const fileName of matchedFiles) {
                         const fileObj = allFiles.find(f => f.name === fileName);
@@ -1209,7 +1237,10 @@
                                     imageUrls.push(fileObj.url);
                                     usedFiles.add(fileName);
                                     loadedCount++;
-                                    console.log(`✅ ${fileName} → символ ${symbolNumber}`);
+                                    // Показываем только для первых 5 символов
+                                    if (symbolNumber <= 5) {
+                                        console.log(`✅ ${fileName} → символ ${symbolNumber}`);
+                                    }
                                 }
                             } catch (error) {
                                 // Игнорируем недоступные файлы
