@@ -359,7 +359,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>НОВЫЙ Каталог 66 Символов Стихий</h1>
+            <h1>Каталог 66 Символов Стихий</h1>
             <p>Полная коллекция символов для визуализации и дальнейшего использования</p>
         </div>
 
@@ -407,7 +407,7 @@
                 <div class="checkbox-container">
                     <div class="checkbox-item">
                         <input type="checkbox" id="filter-svg" class="file-type-filter" onchange="applyFileTypeFilters()">
-                        <label for="filter-svg" class="file-type-label">📐 SVG файлы  </label>
+                        <label for="filter-svg" class="file-type-label">📐 SVG файлы</label>
                     </div>
                     <div class="checkbox-item">
                         <input type="checkbox" id="filter-png" class="file-type-filter" onchange="applyFileTypeFilters()">
@@ -988,17 +988,42 @@
         // Массив для хранения нераспознанных файлов
         let unrecognizedFiles = [];
 
-        // ПРАВИЛЬНЫЙ поиск - только в начале имени файла
+        // УНИВЕРСАЛЬНЫЙ поиск - точно распознает номера любого формата
         function findImagesByNumber(files, number) {
             return files.filter(filename => {
                 const lowerName = filename.toLowerCase();
-                // Ищем ТОЛЬКО в начале файла: element_number_
-                return lowerName.startsWith(`air_${number}_`) ||
-                       lowerName.startsWith(`water_${number}_`) ||
-                       lowerName.startsWith(`fire_${number}_`) ||
-                       lowerName.startsWith(`earth_${number}_`) ||
-                       lowerName.startsWith(`aether_${number}_`) ||
-                       lowerName.startsWith(`weaving_${number}_`);
+                const paddedNumber = number.toString().padStart(2, '0'); // 1 -> '01', 12 -> '12'
+                const triplePadded = number.toString().padStart(3, '0'); // 1 -> '001', 12 -> '012'
+                
+                // Создаем регулярные выражения для точного поиска
+                const patterns = [
+                    new RegExp(`^air_${number}_`),           // air_1_    (символ 1)
+                    new RegExp(`^air_${paddedNumber}_`),     // air_01_   (символ 1)
+                    new RegExp(`^air_${triplePadded}_`),     // air_001_  (символ 1)
+                    
+                    new RegExp(`^water_${number}_`),         // water_12_   (символ 12)
+                    new RegExp(`^water_${paddedNumber}_`),   // water_12_   (символ 12)
+                    new RegExp(`^water_${triplePadded}_`),   // water_012_  (символ 12)
+                    
+                    new RegExp(`^fire_${number}_`),          // fire_23_    (символ 23)
+                    new RegExp(`^fire_${paddedNumber}_`),    // fire_23_    (символ 23)
+                    new RegExp(`^fire_${triplePadded}_`),    // fire_023_   (символ 23)
+                    
+                    new RegExp(`^earth_${number}_`),         // earth_34_   (символ 34)
+                    new RegExp(`^earth_${paddedNumber}_`),   // earth_34_   (символ 34)
+                    new RegExp(`^earth_${triplePadded}_`),   // earth_034_  (символ 34)
+                    
+                    new RegExp(`^aether_${number}_`),        // aether_45_  (символ 45)
+                    new RegExp(`^aether_${paddedNumber}_`),  // aether_45_  (символ 45)
+                    new RegExp(`^aether_${triplePadded}_`),  // aether_045_ (символ 45)
+                    
+                    new RegExp(`^weaving_${number}_`),       // weaving_56_ (символ 56)
+                    new RegExp(`^weaving_${paddedNumber}_`), // weaving_56_ (символ 56)
+                    new RegExp(`^weaving_${triplePadded}_`)  // weaving_056_ (символ 56)
+                ];
+                
+                // Проверяем все паттерны
+                return patterns.some(pattern => pattern.test(lowerName));
             });
         }
 
@@ -1152,30 +1177,44 @@
             applyFilters(); // Применяем фильтры после загрузки
         }
 
-        // Функция для отображения нераспознанных файлов (миниатюры в линию)
+        // Функция для отображения нераспознанных файлов (с читаемыми названиями)
         function displayUnrecognizedFiles() {
             if (unrecognizedFiles.length > 0) {
                 const section = document.getElementById('unrecognized-section');
                 const container = document.getElementById('unrecognized-files');
                 
-                let html = '<div style="display: flex; flex-wrap: wrap; gap: 8px; margin: 20px 0; justify-content: flex-start;">';
+                // Создаем миниатюры с читаемыми названиями
+                let thumbnailsHtml = '<div style="display: flex; flex-wrap: wrap; gap: 12px; margin: 20px 0; justify-content: flex-start;">';
                 unrecognizedFiles.forEach(filename => {
                     const fileUrl = 'https://helensols.github.io/magic/pure_symbols/' + filename;
-                    html += `
-                        <div style="text-align: center;">
+                    // Показываем более длинные названия (до 25 символов)
+                    const displayName = filename.length > 25 ? filename.substring(0, 22) + '...' : filename;
+                    thumbnailsHtml += `
+                        <div style="text-align: center; max-width: 80px;">
                             <img src="${fileUrl}" 
-                                 style="width: 50px; height: 50px; object-fit: contain; cursor: pointer; border: 1px solid rgba(255,193,7,0.5); border-radius: 4px; background: rgba(255,193,7,0.1);"
+                                 style="width: 60px; height: 60px; object-fit: contain; cursor: pointer; border: 2px solid rgba(255,193,7,0.6); border-radius: 6px; background: rgba(255,193,7,0.1); margin-bottom: 4px;"
                                  onclick="openImageModal('${fileUrl}', '${filename}')"
                                  title="${filename}"
                                  alt="${filename}">
-                            <div style="font-size: 10px; color: #ffc107; margin-top: 2px; max-width: 50px; word-wrap: break-word;">${filename.split('.')[0].substring(0,8)}...</div>
+                            <div style="font-size: 11px; color: #ffc107; font-weight: 500; word-wrap: break-word; line-height: 1.2;">${displayName}</div>
                         </div>`;
                 });
-                html += '</div>';
+                thumbnailsHtml += '</div>';
+                
+                // Создаем полный список названий для справки
+                let fullListHtml = '<div style="margin-top: 20px; padding: 15px; background: rgba(255,193,7,0.1); border-radius: 8px; border-left: 4px solid #ffc107;">';
+                fullListHtml += '<h4 style="color: #ffc107; margin-bottom: 10px; font-size: 14px;">📋 Полный список нераспознанных файлов:</h4>';
+                fullListHtml += '<div style="font-family: monospace; font-size: 12px; color: #ffffff; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 4px; max-height: 150px; overflow-y: auto;">';
+                unrecognizedFiles.forEach((filename, index) => {
+                    fullListHtml += `${index + 1}. ${filename}\n`;
+                });
+                fullListHtml += '</div></div>';
                 
                 container.innerHTML = `
-                    <p style="margin-bottom: 15px; color: #ffc107;">📂 Найдено ${unrecognizedFiles.length} нераспознанных файлов:</p>
-                    ${html}
+                    <p style="margin-bottom: 15px; color: #ffc107; font-size: 16px; font-weight: 600;">⚠️ Найдено ${unrecognizedFiles.length} нераспознанных файлов:</p>
+                    <p style="margin-bottom: 20px; color: #ffffff; font-size: 14px; opacity: 0.9;">Файлы, которые не попали ни в один символ. Нажмите на изображение для просмотра.</p>
+                    ${thumbnailsHtml}
+                    ${fullListHtml}
                 `;
                 
                 section.style.display = 'block';
