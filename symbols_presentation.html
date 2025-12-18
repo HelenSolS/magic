@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Простая Таблица Символов - 66 Символов</title>
+    <title>Каталог 66 Символов Стихий</title>
     <style>
         * {
             margin: 0;
@@ -13,361 +13,271 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0a0a0a, #1a1a2e, #16213e);
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
             color: #ffffff;
-            min-height: 100vh;
-            padding: 20px;
+            line-height: 1.6;
         }
 
         .container {
             max-width: 1400px;
             margin: 0 auto;
+            padding: 20px;
         }
 
         .header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .header h1 {
             font-size: 2.5em;
-            color: #D4A574;
-            text-shadow: 0 0 20px rgba(212, 165, 116, 0.5);
             margin-bottom: 10px;
+            background: linear-gradient(45deg, #4fc3f7, #29b6f6, #03a9f4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .header p {
-            color: #cccccc;
-            font-size: 1.1em;
-        }
-
-        .stats {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #888;
-        }
-
-        /* Фильтры */
-        .filters {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .filters h3 {
-            color: #D4A574;
-            margin-bottom: 15px;
             font-size: 1.2em;
+            opacity: 0.8;
+        }
+
+        .filters {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .filter-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 10px;
         }
 
         .filter-group {
             margin-bottom: 15px;
         }
 
-        .filter-group h4 {
-            color: #ccc;
+        .filter-group-title {
+            font-size: 0.85em;
+            opacity: 0.7;
             margin-bottom: 8px;
-            font-size: 1em;
+            font-weight: 500;
         }
 
-        .filter-checkboxes {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .filter-checkbox {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 8px 12px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .filter-checkbox:hover {
-            background: rgba(212, 165, 116, 0.2);
-        }
-
-        .filter-checkbox input[type="checkbox"] {
-            margin: 0;
-        }
-
-        .filter-checkbox label {
-            color: #fff;
+        .filter-button {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            padding: 12px 24px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 25px;
             font-size: 0.9em;
             cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
         }
 
-        /* Столбик ауры */
-        .aura-cell {
-            padding: 10px 8px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            vertical-align: middle;
-            text-align: center;
+        .filter-button:hover {
+            background: rgba(79, 195, 247, 0.2);
+            border-color: #4fc3f7;
+            transform: translateY(-2px);
         }
 
-        .aura-badge {
-            display: inline-block;
-            padding: 4px 8px;
-            border-radius: 12px;
+        .filter-button.active {
+            background: linear-gradient(45deg, #4fc3f7, #03a9f4);
+            border-color: #4fc3f7;
+            color: #000;
+        }
+
+        .filter-button.file-type {
+            background: rgba(255, 255, 255, 0.08);
             font-size: 0.8em;
-            font-weight: bold;
-            text-align: center;
-            min-width: 80px;
+            padding: 8px 16px;
         }
 
-        .aura-blue { background: rgba(59, 130, 246, 0.3); color: #60a5fa; border: 1px solid #60a5fa; }
-        .aura-cyan { background: rgba(34, 197, 94, 0.3); color: #4ade80; border: 1px solid #4ade80; }
-        .aura-orange { background: rgba(249, 115, 22, 0.3); color: #fb923c; border: 1px solid #fb923c; }
-        .aura-yellow { background: rgba(245, 158, 11, 0.3); color: #fbbf24; border: 1px solid #fbbf24; }
-        .aura-green { background: rgba(34, 197, 94, 0.3); color: #22c55e; border: 1px solid #22c55e; }
-        .aura-gold { background: rgba(245, 158, 11, 0.3); color: #f59e0b; border: 1px solid #f59e0b; }
-        .aura-white { background: rgba(255, 255, 255, 0.3); color: #fff; border: 1px solid #fff; }
-        .aura-purple { background: rgba(147, 51, 234, 0.3); color: #a855f7; border: 1px solid #a855f7; }
-        .aura-red { background: rgba(239, 68, 68, 0.3); color: #f87171; border: 1px solid #f87171; }
-        .aura-pink { background: rgba(236, 72, 153, 0.3); color: #ec4899; border: 1px solid #ec4899; }
-        .aura-gray { background: rgba(107, 114, 128, 0.3); color: #9ca3af; border: 1px solid #9ca3af; }
-        .aura-neutral { background: rgba(156, 163, 175, 0.3); color: #d1d5db; border: 1px solid #d1d5db; }
-        .aura-light { background: rgba(156, 163, 175, 0.2); color: #e5e7eb; border: 1px solid #e5e7eb; }
-        .aura-dark { background: rgba(55, 65, 81, 0.3); color: #6b7280; border: 1px solid #6b7280; }
-        .aura-bright { background: rgba(255, 255, 0, 0.3); color: #fde047; border: 1px solid #fde047; }
+        .filter-button.file-type.active {
+            background: linear-gradient(45deg, #ab47bc, #8e24aa);
+            border-color: #ab47bc;
+            color: #fff;
+        }
 
-        .table-container {
+        .element-section {
+            margin-bottom: 50px;
             background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            padding: 20px;
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .element-section.hidden {
+            display: none;
+        }
+
+        .element-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .element-icon {
+            font-size: 2.5em;
+            margin-right: 15px;
+        }
+
+        .element-title {
+            font-size: 1.8em;
+            font-weight: 600;
+        }
+
+        .element-subtitle {
+            font-size: 0.9em;
+            opacity: 0.7;
+            margin-top: 5px;
         }
 
         .symbols-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.9em;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
         .symbols-table th {
-            background: rgba(212, 165, 116, 0.2);
-            color: #D4A574;
-            padding: 12px 8px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px 12px;
             text-align: left;
-            font-weight: bold;
-            border-bottom: 2px solid rgba(212, 165, 116, 0.4);
+            font-weight: 600;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .symbols-table td {
-            padding: 10px 8px;
+            padding: 15px 12px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             vertical-align: top;
         }
 
-        .symbols-table tr:hover {
-            background: rgba(212, 165, 116, 0.05);
-        }
-
-        .number-cell {
-            font-weight: bold;
-            color: #D4A574;
-            width: 60px;
-            text-align: center;
-        }
-
-        .name-cell {
-            font-weight: bold;
-            color: #ffffff;
-            width: 200px;
-        }
-
-        .name-cell .english {
-            display: block;
-            font-size: 1em;
-        }
-
-        .name-cell .russian {
-            display: block;
-            color: #cccccc;
-            font-size: 0.85em;
-            margin-top: 2px;
-        }
-
-        .element-cell {
-            text-align: center;
-            width: 80px;
-        }
-
-        .element-badge {
-            background: rgba(212, 165, 116, 0.2);
-            color: #D4A574;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 0.8em;
-            font-weight: bold;
-            border: 1px solid rgba(212, 165, 116, 0.4);
-        }
-
-        .description-cell {
-            color: #cccccc;
-            font-size: 0.85em;
-            max-width: 250px;
-            line-height: 1.3;
-        }
-
-        .gallery-cell {
-            min-width: 300px;
-        }
-
-        .gallery-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            align-items: flex-start;
-        }
-
-        .gallery-item {
-            position: relative;
-            width: 50px;
-            height: 50px;
-            border-radius: 6px;
-            overflow: hidden;
-            border: 2px solid rgba(212, 165, 116, 0.3);
-            cursor: pointer;
+        .symbols-table tbody tr {
             transition: all 0.3s ease;
-            background: #050810;
         }
 
-        .gallery-item:hover {
-            border-color: rgba(212, 165, 116, 0.6);
-            transform: scale(1.05);
-        }
-
-        .gallery-item.approved {
-            border-color: #ff0064 !important;
-            box-shadow: 0 0 15px rgba(255, 0, 100, 0.6) !important;
-            transform: scale(1.05);
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            padding: 2px;
-        }
-
-        .approved-indicator {
-            position: absolute;
-            top: -3px;
-            right: -3px;
-            width: 10px;
-            height: 10px;
-            background: #ff0064;
-            border-radius: 50%;
-            border: 1px solid #ffffff;
-            box-shadow: 0 0 8px rgba(255, 0, 100, 0.6);
-            z-index: 10;
-        }
-
-        .gallery-item::after {
-            content: '👆 ДВОЙНОЙ КЛИК = УТВЕРДИТЬ';
-            position: absolute;
-            bottom: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(255, 0, 100, 0.95);
-            color: white;
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-size: 0.7em;
-            opacity: 0;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(255, 0, 100, 0.4);
-        }
-
-        .gallery-item:hover::after {
-            opacity: 1;
-        }
-
-        .gallery-item.approved::after {
-            content: '✅ УТВЕРЖДЕНО ГРУППОЙ';
-            background: rgba(0, 255, 100, 0.95);
-            box-shadow: 0 2px 10px rgba(0, 255, 100, 0.4);
-        }
-
-        .no-photo-message {
-            color: #888;
-            font-style: italic;
-            padding: 8px;
-            text-align: center;
+        .symbols-table tbody tr:hover {
             background: rgba(255, 255, 255, 0.05);
-            border-radius: 4px;
-            border: 1px dashed rgba(136, 136, 136, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .symbol-number {
+            font-weight: 600;
+            color: #4fc3f7;
+            font-size: 1.1em;
+        }
+
+        .symbol-name {
+            font-weight: 500;
+            color: #ffffff;
+        }
+
+        .element-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
             font-size: 0.8em;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
+        .air { background: linear-gradient(45deg, #81d4fa, #4fc3f7); color: #000; }
+        .water { background: linear-gradient(45deg, #4dd0e1, #26c6da); color: #000; }
+        .fire { background: linear-gradient(45deg, #ff8a65, #ff5722); color: #fff; }
+        .earth { background: linear-gradient(45deg, #a5d6a7, #66bb6a); color: #000; }
+        .aether { background: linear-gradient(45deg, #ffd54f, #ffeb3b); color: #000; }
+        .weaving { background: linear-gradient(45deg, #ce93d8, #ab47bc); color: #fff; }
+
+        .aura-color {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
-        .modal-content {
-            background: rgba(0, 0, 0, 0.9);
-            border: 1px solid rgba(212, 165, 116, 0.3);
+        .aura-blue { background: rgba(79, 195, 247, 0.2); color: #81d4fa; }
+        .aura-cyan { background: rgba(38, 198, 218, 0.2); color: #4dd0e1; }
+        .aura-orange { background: rgba(255, 138, 101, 0.2); color: #ff8a65; }
+        .aura-olive { background: rgba(165, 214, 167, 0.2); color: #a5d6a7; }
+        .aura-gold { background: rgba(255, 213, 79, 0.2); color: #ffd54f; }
+        .aura-neutral { background: rgba(206, 147, 216, 0.2); color: #ce93d8; }
+
+        .result-cell {
+            width: 120px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .image-placeholder {
+            width: 100px;
+            height: 80px;
+            border: 2px dashed rgba(255, 255, 255, 0.3);
             border-radius: 10px;
-            padding: 20px;
-            max-width: 90%;
-            max-height: 90%;
-            position: relative;
-        }
-
-        .modal img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            color: #D4A574;
-            font-size: 2em;
-            cursor: pointer;
-            background: rgba(0, 0, 0, 0.7);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.8em;
+            text-align: center;
+            transition: all 0.3s ease;
         }
 
-        .modal-close:hover {
-            background: rgba(212, 165, 116, 0.2);
+        .image-placeholder:hover {
+            border-color: #4fc3f7;
+            background: rgba(79, 195, 247, 0.1);
+            color: #4fc3f7;
         }
 
-        @media (max-width: 1200px) {
-            .symbols-table th,
-            .symbols-table td {
-                padding: 8px 6px;
-                font-size: 0.85em;
-            }
-            
-            .description-cell {
-                max-width: 180px;
-            }
+        .symbol-image {
+            width: 100px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .symbol-image:hover {
+            transform: scale(1.05);
+            border-color: #4fc3f7;
+        }
+
+        .status-bar {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(76, 175, 80, 0.1);
+            border-radius: 15px;
+            border-left: 4px solid #4caf50;
+            text-align: center;
+        }
+
+        .status-text {
+            font-size: 1.1em;
+            color: #4caf50;
         }
 
         @media (max-width: 768px) {
@@ -375,12 +285,22 @@
                 padding: 10px;
             }
             
-            .header h1 {
-                font-size: 2em;
+            .symbols-table {
+                font-size: 0.85em;
             }
             
-            .symbols-table {
-                font-size: 0.8em;
+            .symbols-table th,
+            .symbols-table td {
+                padding: 10px 8px;
+            }
+            
+            .element-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .element-icon {
+                margin-bottom: 10px;
             }
         }
     </style>
@@ -388,1292 +308,958 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>💎 Простая Таблица Символов</h1>
-            <p>66 символов с автоподгрузкой всех файлов по префиксу</p>
+            <h1>Каталог 66 Символов Стихий</h1>
+            <p>Полная коллекция символов для визуализации и дальнейшего использования</p>
         </div>
 
-        <div class="stats">
-            Всего символов: 66 | Воздух: 11 | Вода: 11 | Огонь: 11 | Земля: 11 | Эфир: 11 | Переплетение: 11
+        <div class="status-bar">
+            <div class="status-text" id="status-text">
+                🔍 Автоматически загружаются символы из репозитория...
+            </div>
         </div>
 
-        <!-- Фильтры -->
         <div class="filters">
-            <h3>🔍 Фильтры</h3>
+            <!-- Фильтры по стихиям -->
+            <div class="filter-group">
+                <div class="filter-group-title">🎭 Стихии</div>
+                <div class="filter-buttons">
+                    <button class="filter-button active" onclick="showAllElements()">🌟 Все стихии</button>
+                    <button class="filter-button" onclick="showElement('air')">🌬 Воздух (1-11)</button>
+                    <button class="filter-button" onclick="showElement('water')">🌊 Вода (12-22)</button>
+                    <button class="filter-button" onclick="showElement('fire')">🔥 Огонь (23-33)</button>
+                    <button class="filter-button" onclick="showElement('earth')">🌍 Земля (34-44)</button>
+                    <button class="filter-button" onclick="showElement('aether')">✨ Эфир (45-55)</button>
+                    <button class="filter-button" onclick="showElement('weaving')">🌐 Переплетение (56-66)</button>
+                </div>
+            </div>
             
+            <!-- Фильтры по типу файлов -->
             <div class="filter-group">
-                <h4>Стихии:</h4>
-                <div class="filter-checkboxes">
-                    <div class="filter-checkbox">
-                        <input type="checkbox" id="filter-air" checked>
-                        <label for="filter-air">🌬️ Воздух</label>
-                    </div>
-                    <div class="filter-checkbox">
-                        <input type="checkbox" id="filter-water" checked>
-                        <label for="filter-water">🌊 Вода</label>
-                    </div>
-                    <div class="filter-checkbox">
-                        <input type="checkbox" id="filter-fire" checked>
-                        <label for="filter-fire">🔥 Огонь</label>
-                    </div>
-                    <div class="filter-checkbox">
-                        <input type="checkbox" id="filter-earth" checked>
-                        <label for="filter-earth">🌍 Земля</label>
-                    </div>
-                    <div class="filter-checkbox">
-                        <input type="checkbox" id="filter-aether" checked>
-                        <label for="filter-aether">✨ Эфир</label>
-                    </div>
-                    <div class="filter-checkbox">
-                        <input type="checkbox" id="filter-weaving" checked>
-                        <label for="filter-weaving">🌐 Переплетение</label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="filter-group">
-                <h4>Отображение:</h4>
-                <div class="filter-checkboxes">
-                    <div class="filter-checkbox">
-                        <input type="checkbox" id="filter-svg" checked>
-                        <label for="filter-svg">🎨 Скрыть SVG (по умолчанию включено)</label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="filter-group">
-                <h4>Цвета ауры:</h4>
-                <div class="filter-checkboxes" id="aura-colors-filters">
-                    <!-- Будет заполнено JavaScript -->
+                <div class="filter-group-title">📁 Тип файлов</div>
+                <div class="filter-buttons">
+                    <button class="filter-button file-type active" onclick="filterByFileType('all')">🗂️ Все файлы</button>
+                    <button class="filter-button file-type" onclick="filterByFileType('svg')">📐 SVG файлы</button>
+                    <button class="filter-button file-type" onclick="filterByFileType('png')">🖼️ PNG файлы</button>
                 </div>
             </div>
         </div>
 
-        <div class="table-container">
+        <!-- AIR Section -->
+        <div class="element-section" data-element="air">
+            <div class="element-header">
+                <div class="element-icon">🌬</div>
+                <div>
+                    <div class="element-title">СТИХИЯ AIR (Воздух)</div>
+                    <div class="element-subtitle">Знаки восприятия, знаков и предвестий</div>
+                </div>
+            </div>
+            
             <table class="symbols-table">
                 <thead>
                     <tr>
                         <th>№</th>
                         <th>Имя символа</th>
                         <th>Стихия</th>
-                        <th>Цвет ауры</th>
                         <th>Краткое визуальное ТЗ</th>
+                        <th>Цвет ауры</th>
                         <th>Результат</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Air (1-11) -->
-                    <tr data-symbol="air_01_whisper">
-                        <td class="number-cell">1</td>
-                        <td class="name-cell">
-                            <span class="english">The Whisper</span>
-                            <span class="russian">(Шёпот)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">AIR</span></td>
-                        <td class="description-cell">Изогнутая тонкая линия, мягко расходящаяся на две ветви</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">1</td>
+                        <td class="symbol-name">The Whisper (Шёпот)</td>
+                        <td><span class="element-tag air">Air</span></td>
+                        <td>Изогнутая тонкая линия, мягко расходящаяся на две ветви</td>
+                        <td><span class="aura-color aura-blue">Голубая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="air-1"></div></td>
                     </tr>
-                    <tr data-symbol="air_02_gate_winds">
-                        <td class="number-cell">2</td>
-                        <td class="name-cell">
-                            <span class="english">Gate of Winds</span>
-                            <span class="russian">(Врата Ветров)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">AIR</span></td>
-                        <td class="description-cell">Две параллельные вертикальные линии, между ними вихревое смещение</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">2</td>
+                        <td class="symbol-name">Gate of Winds (Врата Ветров)</td>
+                        <td><span class="element-tag air">Air</span></td>
+                        <td>Две параллельные вертикальные линии, между ними вихревое смещение</td>
+                        <td><span class="aura-color aura-blue">Голубая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="air-2"></div></td>
                     </tr>
-                    <tr data-symbol="air_03_signal">
-                        <td class="number-cell">3</td>
-                        <td class="name-cell">
-                            <span class="english">The Signal</span>
-                            <span class="russian">(Сигнал)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">AIR</span></td>
-                        <td class="description-cell">Круг + 3 расходящиеся луча, как маяк</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">3</td>
+                        <td class="symbol-name">The Signal (Сигнал)</td>
+                        <td><span class="element-tag air">Air</span></td>
+                        <td>Круг + 3 расходящиеся луча, как маяк</td>
+                        <td><span class="aura-color aura-blue">Голубая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="air-3"></div></td>
                     </tr>
-                    <tr data-symbol="air_04_feather">
-                        <td class="number-cell">4</td>
-                        <td class="name-cell">
-                            <span class="english">Feather of Direction</span>
-                            <span class="russian">(Перо)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">AIR</span></td>
-                        <td class="description-cell">Стилизованное перо, тонкая линия, направленное в одну сторону</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">4</td>
+                        <td class="symbol-name">Feather of Direction (Перо)</td>
+                        <td><span class="element-tag air">Air</span></td>
+                        <td>Стилизованное перо, тонкая линия, направленное в одну сторону</td>
+                        <td><span class="aura-color aura-blue">Голубая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="air-4"></div></td>
                     </tr>
-                    <tr data-symbol="air_05_twin_winds">
-                        <td class="number-cell">5</td>
-                        <td class="name-cell">
-                            <span class="english">Twin Winds</span>
-                            <span class="russian">(Двойные Ветры)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">AIR</span></td>
-                        <td class="description-cell">Два симметричных вихря / две зеркальные линии</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">5</td>
+                        <td class="symbol-name">Twin Winds (Двойные Ветры)</td>
+                        <td><span class="element-tag air">Air</span></td>
+                        <td>Два симметричных вихря / две зеркальные линии</td>
+                        <td><span class="aura-color aura-blue">Голубая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="air-5"></div></td>
                     </tr>
-                    <tr data-symbol="air_06_messenger">
-                        <td class="number-cell">6</td>
-                        <td class="name-cell">
-                            <span class="english">The Messenger</span>
-                            <span class="russian">(Посланник)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">AIR</span></td>
-                        <td class="description-cell">Стрела света, пересекающая круг</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">6</td>
+                        <td class="symbol-name">The Messenger (Посланник)</td>
+                        <td><span class="element-tag air">Air</span></td>
+                        <td>Стрела света, пересекающая круг</td>
+                        <td><span class="aura-color aura-blue">Голубая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="air-6"></div></td>
                     </tr>
-                    <tr data-symbol="air_07_echo">
-                        <td class="number-cell">7</td>
-                        <td class="name-cell">
-                            <span class="english">The Echo</span>
-                            <span class="russian">(Эхо)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">AIR</span></td>
-                        <td class="description-cell">Три повторяющиеся дуги, уходящие наружу</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">7</td>
+                        <td class="symbol-name">The Echo (Эхо)</td>
+                        <td><span class="element-tag air">Air</span></td>
+                        <td>Три повторяющиеся дуги, уходящие наружу</td>
+                        <td><span class="aura-color aura-blue">Голубая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="air-7"></div></td>
                     </tr>
-                    <tr data-symbol="air_08_veil">
-                        <td class="number-cell">8</td>
-                        <td class="name-cell">
-                            <span class="english">The Veil</span>
-                            <span class="russian">(Покров)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">AIR</span></td>
-                        <td class="description-cell">Мягкая полупрозрачная форма, скрывающая центральную точку</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">8</td>
+                        <td class="symbol-name">The Veil (Покров)</td>
+                        <td><span class="element-tag air">Air</span></td>
+                        <td>Мягкая полупрозрачная форма, скрывающая центральную точку</td>
+                        <td><span class="aura-color aura-blue">Голубая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="air-8"></div></td>
                     </tr>
-                    <tr data-symbol="air_09_turning_breath">
-                        <td class="number-cell">9</td>
-                        <td class="name-cell">
-                            <span class="english">Turning Breath</span>
-                            <span class="russian">(Разворот Ветра)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">AIR</span></td>
-                        <td class="description-cell">Спираль, резко меняющая направление</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">9</td>
+                        <td class="symbol-name">Turning Breath (Разворот Ветра)</td>
+                        <td><span class="element-tag air">Air</span></td>
+                        <td>Спираль, резко меняющая направление</td>
+                        <td><span class="aura-color aura-blue">Голубая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="air-9"></div></td>
                     </tr>
-                    <tr data-symbol="air_10_calling">
-                        <td class="number-cell">10</td>
-                        <td class="name-cell">
-                            <span class="english">The Calling</span>
-                            <span class="russian">(Зов)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">AIR</span></td>
-                        <td class="description-cell">Вертикальный луч, расширяющийся сверху</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">10</td>
+                        <td class="symbol-name">The Calling (Зов)</td>
+                        <td><span class="element-tag air">Air</span></td>
+                        <td>Вертикальный луч, расширяющийся сверху</td>
+                        <td><span class="aura-color aura-blue">Голубая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="air-10"></div></td>
                     </tr>
-                    <tr data-symbol="air_11_watcher">
-                        <td class="number-cell">11</td>
-                        <td class="name-cell">
-                            <span class="english">The Watcher</span>
-                            <span class="russian">(Наблюдатель)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">AIR</span></td>
-                        <td class="description-cell">Глаз без зрачка, только контур + дуга света</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">11</td>
+                        <td class="symbol-name">The Watcher (Наблюдатель)</td>
+                        <td><span class="element-tag air">Air</span></td>
+                        <td>Глаз без зрачка, только контур + дуга света</td>
+                        <td><span class="aura-color aura-blue">Голубая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="air-11"></div></td>
                     </tr>
+                </tbody>
+            </table>
+        </div>
 
-                    <!-- Water (12-22) -->
-                    <tr data-symbol="water_12_ripple">
-                        <td class="number-cell">12</td>
-                        <td class="name-cell">
-                            <span class="english">The Ripple</span>
-                            <span class="russian">(Рябь)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">WATER</span></td>
-                        <td class="description-cell">Концентрические круги, расходящиеся от точки</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+        <!-- WATER Section -->
+        <div class="element-section" data-element="water">
+            <div class="element-header">
+                <div class="element-icon">🌊</div>
+                <div>
+                    <div class="element-title">СТИХИЯ WATER (Вода)</div>
+                    <div class="element-subtitle">Эмоции, чувства, связи</div>
+                </div>
+            </div>
+            
+            <table class="symbols-table">
+                <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>Имя символа</th>
+                        <th>Стихия</th>
+                        <th>Краткое визуальное ТЗ</th>
+                        <th>Цвет ауры</th>
+                        <th>Результат</th>
                     </tr>
-                    <tr data-symbol="water_13_deep_tide">
-                        <td class="number-cell">13</td>
-                        <td class="name-cell">
-                            <span class="english">Deep Tide</span>
-                            <span class="russian">(Глубокий Прилив)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">WATER</span></td>
-                        <td class="description-cell">Две мягкие волны, одна за другой</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="symbol-number">12</td>
+                        <td class="symbol-name">The Ripple (Рябь)</td>
+                        <td><span class="element-tag water">Water</span></td>
+                        <td>Концентрические круги, расходящиеся от точки</td>
+                        <td><span class="aura-color aura-cyan">Аква-сине-зелёная</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="water-12"></div></td>
                     </tr>
-                    <tr data-symbol="water_14_mirror_water">
-                        <td class="number-cell">14</td>
-                        <td class="name-cell">
-                            <span class="english">Mirror Water</span>
-                            <span class="russian">(Водное Зеркало)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">WATER</span></td>
-                        <td class="description-cell">Горизонтальная линия + отражение</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">13</td>
+                        <td class="symbol-name">Deep Tide (Глубокий Прилив)</td>
+                        <td><span class="element-tag water">Water</span></td>
+                        <td>Две мягкие волны, одна за другой</td>
+                        <td><span class="aura-color aura-cyan">Аква</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="water-13"></div></td>
                     </tr>
-                    <tr data-symbol="water_15_heartstream">
-                        <td class="number-cell">15</td>
-                        <td class="name-cell">
-                            <span class="english">Heartstream</span>
-                            <span class="russian">(Поток Сердца)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">WATER</span></td>
-                        <td class="description-cell">Вертикальная линия, плавно «текущая» вниз</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">14</td>
+                        <td class="symbol-name">Mirror Water (Водное Зеркало)</td>
+                        <td><span class="element-tag water">Water</span></td>
+                        <td>Горизонтальная линия + отражение</td>
+                        <td><span class="aura-color aura-cyan">Аква</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="water-14"></div></td>
                     </tr>
-                    <tr data-symbol="water_16_bond">
-                        <td class="number-cell">16</td>
-                        <td class="name-cell">
-                            <span class="english">The Bond</span>
-                            <span class="russian">(Узел)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">WATER</span></td>
-                        <td class="description-cell">Две линии, переплетающиеся мягким узлом</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">15</td>
+                        <td class="symbol-name">Heartstream (Поток Сердца)</td>
+                        <td><span class="element-tag water">Water</span></td>
+                        <td>Вертикальная линия, плавно «текущая» вниз</td>
+                        <td><span class="aura-color aura-cyan">Аква</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="water-15"></div></td>
                     </tr>
-                    <tr data-symbol="water_17_drift">
-                        <td class="number-cell">17</td>
-                        <td class="name-cell">
-                            <span class="english">The Drift</span>
-                            <span class="russian">(Снос Течения)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">WATER</span></td>
-                        <td class="description-cell">Стрела, слегка отклонённая течением</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">16</td>
+                        <td class="symbol-name">The Bond (Узел)</td>
+                        <td><span class="element-tag water">Water</span></td>
+                        <td>Две линии, переся мягкимплетающие узлом</td>
+                        <td><span class="aura-color aura-cyan">Аква</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="water-16"></div></td>
                     </tr>
-                    <tr data-symbol="water_18_vessel">
-                        <td class="number-cell">18</td>
-                        <td class="name-cell">
-                            <span class="english">The Vessel</span>
-                            <span class="russian">(Чаша)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">WATER</span></td>
-                        <td class="description-cell">Полукруг снизу, принимающая форма</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">17</td>
+                        <td class="symbol-name">The Drift (Снос Течения)</td>
+                        <td><span class="element-tag water">Water</span></td>
+                        <td>Стрела, слегка отклонённая течением</td>
+                        <td><span class="aura-color aura-cyan">Аква</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="water-17"></div></td>
                     </tr>
-                    <tr data-symbol="water_19_undercurrent">
-                        <td class="number-cell">19</td>
-                        <td class="name-cell">
-                            <span class="english">Undercurrent</span>
-                            <span class="russian">(Подводное Течение)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">WATER</span></td>
-                        <td class="description-cell">Волна под горизонтальной линией</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">18</td>
+                        <td class="symbol-name">The Vessel (Чаша)</td>
+                        <td><span class="element-tag water">Water</span></td>
+                        <td>Полукруг снизу, принимающая форма</td>
+                        <td><span class="aura-color aura-cyan">Аква</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="water-18"></div></td>
                     </tr>
-                    <tr data-symbol="water_20_tearline">
-                        <td class="number-cell">20</td>
-                        <td class="name-cell">
-                            <span class="english">Tearline</span>
-                            <span class="russian">(Линия Слёзы)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">WATER</span></td>
-                        <td class="description-cell">Вытянутая вниз капля</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">19</td>
+                        <td class="symbol-name">Undercurrent (Подводное Течение)</td>
+                        <td><span class="element-tag water">Water</span></td>
+                        <td>Волна под горизонтальной линией</td>
+                        <td><span class="aura-color aura-cyan">Аква</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="water-19"></div></td>
                     </tr>
-                    <tr data-symbol="water_21_resonance">
-                        <td class="number-cell">21</td>
-                        <td class="name-cell">
-                            <span class="english">Resonance</span>
-                            <span class="russian">(Резонанс)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">WATER</span></td>
-                        <td class="description-cell">Две параллельные волны в унисон</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">20</td>
+                        <td class="symbol-name">Tearline (Линия Слёзы)</td>
+                        <td><span class="element-tag water">Water</span></td>
+                        <td>Вытянутая вниз капля</td>
+                        <td><span class="aura-color aura-cyan">Аква</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="water-20"></div></td>
                     </tr>
-                    <tr data-symbol="water_22_memory_pool">
-                        <td class="number-cell">22</td>
-                        <td class="name-cell">
-                            <span class="english">Memory Pool</span>
-                            <span class="russian">(Озеро Памяти)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">WATER</span></td>
-                        <td class="description-cell">Неглубокий овал с мягким отражением</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">21</td>
+                        <td class="symbol-name">Resonance (Резонанс)</td>
+                        <td><span class="element-tag water">Water</span></td>
+                        <td>Две параллельные волны в унисон</td>
+                        <td><span class="aura-color aura-cyan">Аква</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="water-21"></div></td>
                     </tr>
+                    <tr>
+                        <td class="symbol-number">22</td>
+                        <td class="symbol-name">Memory Pool (Озеро Памяти)</td>
+                        <td><span class="element-tag water">Water</span></td>
+                        <td>Неглубокий овал с мягким отражением</td>
+                        <td><span class="aura-color aura-cyan">Аква</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="water-22"></div></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-                    <!-- Fire (23-33) -->
-                    <tr data-symbol="fire_23_spark">
-                        <td class="number-cell">23</td>
-                        <td class="name-cell">
-                            <span class="english">The Spark</span>
-                            <span class="russian">(Искра)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">FIRE</span></td>
-                        <td class="description-cell">Маленькая вспышка: короткая линия + расщепление</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+        <!-- FIRE Section -->
+        <div class="element-section" data-element="fire">
+            <div class="element-header">
+                <div class="element-icon">🔥</div>
+                <div>
+                    <div class="element-title">СТИХИЯ FIRE (Огонь)</div>
+                    <div class="element-subtitle">События, повороты, судьба</div>
+                </div>
+            </div>
+            
+            <table class="symbols-table">
+                <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>Имя символа</th>
+                        <th>Стихия</th>
+                        <th>Краткое визуальное ТЗ</th>
+                        <th>Цвет ауры</th>
+                        <th>Результат</th>
                     </tr>
-                    <tr data-symbol="fire_24_strike">
-                        <td class="number-cell">24</td>
-                        <td class="name-cell">
-                            <span class="english">The Strike</span>
-                            <span class="russian">(Удар)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">FIRE</span></td>
-                        <td class="description-cell">Две стремительные линии сталкиваются в центре</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="symbol-number">23</td>
+                        <td class="symbol-name">The Spark (Искра)</td>
+                        <td><span class="element-tag fire">Fire</span></td>
+                        <td>Маленькая вспышка: короткая линия + расщепление</td>
+                        <td><span class="aura-color aura-orange">Оранжевая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="fire-23"></div></td>
                     </tr>
-                    <tr data-symbol="fire_25_ember_road">
-                        <td class="number-cell">25</td>
-                        <td class="name-cell">
-                            <span class="english">Ember Road</span>
-                            <span class="russian">(Дорога Углей)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">FIRE</span></td>
-                        <td class="description-cell">Прямая или диагональная линия + точечные "угли"</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">24</td>
+                        <td class="symbol-name">The Strike (Удар)</td>
+                        <td><span class="element-tag fire">Fire</span></td>
+                        <td>Две стремительные линии сталкиваются в центре</td>
+                        <td><span class="aura-color aura-orange">Оранжевая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="fire-24"></div></td>
                     </tr>
-                    <tr data-symbol="fire_26_phoenix_sign">
-                        <td class="number-cell">26</td>
-                        <td class="name-cell">
-                            <span class="english">Phoenix Sign</span>
-                            <span class="russian">(Феникс)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">FIRE</span></td>
-                        <td class="description-cell">Линия, уходящая вверх дугой, как огненное перо</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">25</td>
+                        <td class="symbol-name">Ember Road (Дорога Углей)</td>
+                        <td><span class="element-tag fire">Fire</span></td>
+                        <td>Прямая или диагональная линия + точечные "угли"</td>
+                        <td><span class="aura-color aura-orange">Оранжевая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="fire-25"></div></td>
                     </tr>
-                    <tr data-symbol="fire_27_clash">
-                        <td class="number-cell">27</td>
-                        <td class="name-cell">
-                            <span class="english">The Clash</span>
-                            <span class="russian">(Столкновение)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">FIRE</span></td>
-                        <td class="description-cell">Две пересекающиеся силы: X-подобная динамика</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">26</td>
+                        <td class="symbol-name">Phoenix Sign (Феникс)</td>
+                        <td><span class="element-tag fire">Fire</span></td>
+                        <td>Линия, уходящая вверх дугой, как огненное перо</td>
+                        <td><span class="aura-color aura-orange">Оранжевая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="fire-26"></div></td>
                     </tr>
-                    <tr data-symbol="fire_28_flare">
-                        <td class="number-cell">28</td>
-                        <td class="name-cell">
-                            <span class="english">The Flare</span>
-                            <span class="russian">(Вспышка)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">FIRE</span></td>
-                        <td class="description-cell">Луч, резко расширяющийся, яркий импульс</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">27</td>
+                        <td class="symbol-name">The Clash (Столкновение)</td>
+                        <td><span class="element-tag fire">Fire</span></td>
+                        <td>Две пересекающиеся силы: X-подобная динамика</td>
+                        <td><span class="aura-color aura-orange">Оранжевая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="fire-27"></div></td>
                     </tr>
-                    <tr data-symbol="fire_29_torch">
-                        <td class="number-cell">29</td>
-                        <td class="name-cell">
-                            <span class="english">The Torch</span>
-                            <span class="russian">(Факел)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">FIRE</span></td>
-                        <td class="description-cell">Вертикальная линия, сверху огненная «корона»</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">28</td>
+                        <td class="symbol-name">The Flare (Вспышка)</td>
+                        <td><span class="element-tag fire">Fire</span></td>
+                        <td>Луч, резко расширяющийся, яркий импульс</td>
+                        <td><span class="aura-color aura-orange">Оранжевая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="fire-28"></div></td>
                     </tr>
-                    <tr data-symbol="fire_30_break">
-                        <td class="number-cell">30</td>
-                        <td class="name-cell">
-                            <span class="english">The Break</span>
-                            <span class="russian">(Прорыв)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">FIRE</span></td>
-                        <td class="description-cell">Разрыв линии, с выходом наружу</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">29</td>
+                        <td class="symbol-name">The Torch (Факел)</td>
+                        <td><span class="element-tag fire">Fire</span></td>
+                        <td>Вертикальная линия, сверху огненная «корона»</td>
+                        <td><span class="aura-color aura-orange">Оранжевая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="fire-29"></div></td>
                     </tr>
-                    <tr data-symbol="fire_31_stormfront">
-                        <td class="number-cell">31</td>
-                        <td class="name-cell">
-                            <span class="english">Stormfront</span>
-                            <span class="russian">(Передовая Бури)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">FIRE</span></td>
-                        <td class="description-cell">Волнистая линия, переходящая во всплеск</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">30</td>
+                        <td class="symbol-name">The Break (Прорыв)</td>
+                        <td><span class="element-tag fire">Fire</span></td>
+                        <td>Разрыв линии, с выходом наружу</td>
+                        <td><span class="aura-color aura-orange">Оранжевая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="fire-30"></div></td>
                     </tr>
-                    <tr data-symbol="fire_32_burning_choice">
-                        <td class="number-cell">32</td>
-                        <td class="name-cell">
-                            <span class="english">Burning Choice</span>
-                            <span class="russian">(Обжигающий Выбор)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">FIRE</span></td>
-                        <td class="description-cell">Две расходящиеся линии + центральная точка выбора</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">31</td>
+                        <td class="symbol-name">Stormfront (Передовая Бури)</td>
+                        <td><span class="element-tag fire">Fire</span></td>
+                        <td>Волнистая линия, переходящая во всплеск</td>
+                        <td><span class="aura-color aura-orange">Оранжевая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="fire-31"></div></td>
                     </tr>
-                    <tr data-symbol="fire_33_inferno_path">
-                        <td class="number-cell">33</td>
-                        <td class="name-cell">
-                            <span class="english">Inferno Path</span>
-                            <span class="russian">(Путь Пламени)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">FIRE</span></td>
-                        <td class="description-cell">Сильный вертикальный столб, разделённый на сегменты</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">32</td>
+                        <td class="symbol-name">Burning Choice (Обжигающий Выбор)</td>
+                        <td><span class="element-tag fire">Fire</span></td>
+                        <td>Две расходящиеся линии + центральная точка выбора</td>
+                        <td><span class="aura-color aura-orange">Оранжевая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="fire-32"></div></td>
                     </tr>
+                    <tr>
+                        <td class="symbol-number">33</td>
+                        <td class="symbol-name">Inferno Path (Путь Пламени)</td>
+                        <td><span class="element-tag fire">Fire</span></td>
+                        <td>Сильный вертикальный столб, разделённый на сегменты</td>
+                        <td><span class="aura-color aura-orange">Оранжевая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="fire-33"></div></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-                    <!-- Earth (34-44) -->
-                    <tr data-symbol="earth_34_rootmark">
-                        <td class="number-cell">34</td>
-                        <td class="name-cell">
-                            <span class="english">Rootmark</span>
-                            <span class="russian">(Корень)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">EARTH</span></td>
-                        <td class="description-cell">Y-образная или «корневая» линия</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+        <!-- EARTH Section -->
+        <div class="element-section" data-element="earth">
+            <div class="element-header">
+                <div class="element-icon">🌍</div>
+                <div>
+                    <div class="element-title">СТИХИЯ EARTH (Земля)</div>
+                    <div class="element-subtitle">Материя, деньги, здоровье, циклы</div>
+                </div>
+            </div>
+            
+            <table class="symbols-table">
+                <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>Имя символа</th>
+                        <th>Стихия</th>
+                        <th>Краткое визуальное ТЗ</th>
+                        <th>Цвет ауры</th>
+                        <th>Результат</th>
                     </tr>
-                    <tr data-symbol="earth_35_stone_gate">
-                        <td class="number-cell">35</td>
-                        <td class="name-cell">
-                            <span class="english">Stone Gate</span>
-                            <span class="russian">(Каменные Врата)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">EARTH</span></td>
-                        <td class="description-cell">Две вертикальные тяжёлые формы, как врата</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="symbol-number">34</td>
+                        <td class="symbol-name">Rootmark (Корень)</td>
+                        <td><span class="element-tag earth">Earth</span></td>
+                        <td>Y-образная или «корневая» линия</td>
+                        <td><span class="aura-color aura-olive">Золотисто-оливковая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="earth-34"></div></td>
                     </tr>
-                    <tr data-symbol="earth_36_harvest_line">
-                        <td class="number-cell">36</td>
-                        <td class="name-cell">
-                            <span class="english">Harvest Line</span>
-                            <span class="russian">(Линия Урожая)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">EARTH</span></td>
-                        <td class="description-cell">Горизонтальная линия с несколькими короткими штрихами</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">35</td>
+                        <td class="symbol-name">Stone Gate (Каменные Врата)</td>
+                        <td><span class="element-tag earth">Earth</span></td>
+                        <td>Две вертикальные тяжёлые формы, как врата</td>
+                        <td><span class="aura-color aura-olive">Оливковая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="earth-35"></div></td>
                     </tr>
-                    <tr data-symbol="earth_37_shelter">
-                        <td class="number-cell">37</td>
-                        <td class="name-cell">
-                            <span class="english">The Shelter</span>
-                            <span class="russian">(Убежище)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">EARTH</span></td>
-                        <td class="description-cell">Полукруг-накрытие, защитная форма</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">36</td>
+                        <td class="symbol-name">Harvest Line (Линия Урожая)</td>
+                        <td><span class="element-tag earth">Earth</span></td>
+                        <td>Горизонтальная линия с несколькими короткими штрихами</td>
+                        <td><span class="aura-color aura-olive">Оливковая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="earth-36"></div></td>
                     </tr>
-                    <tr data-symbol="earth_38_architect">
-                        <td class="number-cell">38</td>
-                        <td class="name-cell">
-                            <span class="english">The Architect</span>
-                            <span class="russian">(Архитектор)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">EARTH</span></td>
-                        <td class="description-cell">Геометричная конструкция: прямые линии, устойчивость</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">37</td>
+                        <td class="symbol-name">The Shelter (Убежище)</td>
+                        <td><span class="element-tag earth">Earth</span></td>
+                        <td>Полукруг-накрытие, защитная форма</td>
+                        <td><span class="aura-color aura-olive">Оливковая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="earth-37"></div></td>
                     </tr>
-                    <tr data-symbol="earth_39_anchor">
-                        <td class="number-cell">39</td>
-                        <td class="name-cell">
-                            <span class="english">The Anchor</span>
-                            <span class="russian">(Якорь)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">EARTH</span></td>
-                        <td class="description-cell">Вертикальная линия + расширение снизу</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">38</td>
+                        <td class="symbol-name">The Architect (Архитектор)</td>
+                        <td><span class="element-tag earth">Earth</span></td>
+                        <td>Геометричная конструкция: прямые линии, устойчивость</td>
+                        <td><span class="aura-color aura-olive">Оливковая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="earth-38"></div></td>
                     </tr>
-                    <tr data-symbol="earth_40_summit_stone">
-                        <td class="number-cell">40</td>
-                        <td class="name-cell">
-                            <span class="english">Summit Stone</span>
-                            <span class="russian">(Камень Вершины)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">EARTH</span></td>
-                        <td class="description-cell">Пирамида/треугольник, вершина ярче</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">39</td>
+                        <td class="symbol-name">The Anchor (Якорь)</td>
+                        <td><span class="element-tag earth">Earth</span></td>
+                        <td>Вертикальная линия + расширение снизу</td>
+                        <td><span class="aura-color aura-olive">Оливковая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="earth-39"></div></td>
                     </tr>
-                    <tr data-symbol="earth_41_burden">
-                        <td class="number-cell">41</td>
-                        <td class="name-cell">
-                            <span class="english">The Burden</span>
-                            <span class="russian">(Ноша)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">EARTH</span></td>
-                        <td class="description-cell">Линия + сверху "тяжёлая" форма</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">40</td>
+                        <td class="symbol-name">Summit Stone (Камень Вершины)</td>
+                        <td><span class="element-tag earth">Earth</span></td>
+                        <td>Пирамида/треугольник, вершина ярче</td>
+                        <td><span class="aura-color aura-olive">Оливковая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="earth-40"></div></td>
                     </tr>
-                    <tr data-symbol="earth_42_golden_vein">
-                        <td class="number-cell">42</td>
-                        <td class="name-cell">
-                            <span class="english">Golden Vein</span>
-                            <span class="russian">(Золотая Жила)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">EARTH</span></td>
-                        <td class="description-cell">Диагональная линия-«трещина» с разветвлениями</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">41</td>
+                        <td class="symbol-name">The Burden (Ноша)</td>
+                        <td><span class="element-tag earth">Earth</span></td>
+                        <td>Линия + сверху "тяжёлая" форма</td>
+                        <td><span class="aura-color aura-olive">Оливковая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="earth-41"></div></td>
                     </tr>
-                    <tr data-symbol="earth_43_pact">
-                        <td class="number-cell">43</td>
-                        <td class="name-cell">
-                            <span class="english">The Pact</span>
-                            <span class="russian">(Пакт)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">EARTH</span></td>
-                        <td class="description-cell">Две горизонтальные параллельные линии, соединённые точкой или дугой</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">42</td>
+                        <td class="symbol-name">Golden Vein (Золотая Жила)</td>
+                        <td><span class="element-tag earth">Earth</span></td>
+                        <td>Диагональная линия-«трещина» с разветвлениями</td>
+                        <td><span class="aura-color aura-olive">Оливковая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="earth-42"></div></td>
                     </tr>
-                    <tr data-symbol="earth_44_foundation_shift">
-                        <td class="number-cell">44</td>
-                        <td class="name-cell">
-                            <span class="english">Foundation Shift</span>
-                            <span class="russian">(Сдвиг Фундамента)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">EARTH</span></td>
-                        <td class="description-cell">Горизонтальная линия, резкий излом</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">43</td>
+                        <td class="symbol-name">The Pact (Пакт)</td>
+                        <td><span class="element-tag earth">Earth</span></td>
+                        <td>Две горизонтальные параллельные линии, соединённые точкой или дугой</td>
+                        <td><span class="aura-color aura-olive">Оливковая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="earth-43"></div></td>
                     </tr>
+                    <tr>
+                        <td class="symbol-number">44</td>
+                        <td class="symbol-name">Foundation Shift (Сдвиг Фундамента)</td>
+                        <td><span class="element-tag earth">Earth</span></td>
+                        <td>Горизонтальная линия, резкий излом</td>
+                        <td><span class="aura-color aura-olive">Оливковая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="earth-44"></div></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-                    <!-- Aether (45-55) -->
-                    <tr data-symbol="aether_45_thread_of_fate">
-                        <td class="number-cell">45</td>
-                        <td class="name-cell">
-                            <span class="english">Thread of Fate</span>
-                            <span class="russian">(Нить Судьбы)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">AETHER</span></td>
-                        <td class="description-cell">Одна вертикальная линия — ровная, "неизбежная"</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+        <!-- AETHER Section -->
+        <div class="element-section" data-element="aether">
+            <div class="element-header">
+                <div class="element-icon">✨</div>
+                <div>
+                    <div class="element-title">СТИХИЯ AETHER (Эфир)</div>
+                    <div class="element-subtitle">Судьба, линии времени, высшие силы</div>
+                </div>
+            </div>
+            
+            <table class="symbols-table">
+                <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>Имя символа</th>
+                        <th>Стихия</th>
+                        <th>Краткое визуальное ТЗ</th>
+                        <th>Цвет ауры</th>
+                        <th>Результат</th>
                     </tr>
-                    <tr data-symbol="aether_46_convergence">
-                        <td class="number-cell">46</td>
-                        <td class="name-cell">
-                            <span class="english">Convergence</span>
-                            <span class="russian">(Схождение)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">AETHER</span></td>
-                        <td class="description-cell">Две линии сходятся в одну точку</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="symbol-number">45</td>
+                        <td class="symbol-name">Thread of Fate (Нить Судьбы)</td>
+                        <td><span class="element-tag aether">Aether</span></td>
+                        <td>Одна вертикальная линия — ровная, "неизбежная"</td>
+                        <td><span class="aura-color aura-gold">Бело-золотая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="aether-45"></div></td>
                     </tr>
-                    <tr data-symbol="aether_47_chrono_gate">
-                        <td class="number-cell">47</td>
-                        <td class="name-cell">
-                            <span class="english">Chrono Gate</span>
-                            <span class="russian">(Врата Времени)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">AETHER</span></td>
-                        <td class="description-cell">Круг + вертикальная ось, как временная дверь</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">46</td>
+                        <td class="symbol-name">Convergence (Схождение)</td>
+                        <td><span class="element-tag aether">Aether</span></td>
+                        <td>Две линии сходятся в одну точку</td>
+                        <td><span class="aura-color aura-gold">Бело-золотая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="aether-46"></div></td>
                     </tr>
-                    <tr data-symbol="aether_48_ancestral_echo">
-                        <td class="number-cell">48</td>
-                        <td class="name-cell">
-                            <span class="english">Ancestral Echo</span>
-                            <span class="russian">(Эхо Предков)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">AETHER</span></td>
-                        <td class="description-cell">Волнистая линия + параллельное "эхо"</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">47</td>
+                        <td class="symbol-name">Chrono Gate (Врата Времени)</td>
+                        <td><span class="element-tag aether">Aether</span></td>
+                        <td>Круг + вертикальная ось, как временная дверь</td>
+                        <td><span class="aura-color aura-gold">Бело-золотая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="aether-47"></div></td>
                     </tr>
-                    <tr data-symbol="aether_49_destiny_mark">
-                        <td class="number-cell">49</td>
-                        <td class="name-cell">
-                            <span class="english">Destiny Mark</span>
-                            <span class="russian">(Знак Предназначения)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">AETHER</span></td>
-                        <td class="description-cell">Символ-стрела вверх, тонкая, священная</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">48</td>
+                        <td class="symbol-name">Ancestral Echo (Эхо Предков)</td>
+                        <td><span class="element-tag aether">Aether</span></td>
+                        <td>Волнистая линия + параллельное "эхо"</td>
+                        <td><span class="aura-color aura-gold">Бело-золотая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="aether-48"></div></td>
                     </tr>
-                    <tr data-symbol="aether_50_veilbreaker">
-                        <td class="number-cell">50</td>
-                        <td class="name-cell">
-                            <span class="english">Veilbreaker</span>
-                            <span class="russian">(Разрывающая Покров)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">AETHER</span></td>
-                        <td class="description-cell">Разлом линии + световой "выход"</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">49</td>
+                        <td class="symbol-name">Destiny Mark (Знак Предназначения)</td>
+                        <td><span class="element-tag aether">Aether</span></td>
+                        <td>Символ-стрела вверх, тонкая, священная</td>
+                        <td><span class="aura-color aura-gold">Бело-золотая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="aether-49"></div></td>
                     </tr>
-                    <tr data-symbol="aether_51_great_crossing">
-                        <td class="number-cell">51</td>
-                        <td class="name-cell">
-                            <span class="english">Great Crossing</span>
-                            <span class="russian">(Великое Пересечение)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">AETHER</span></td>
-                        <td class="description-cell">Перекрёсток двух основных линий, спокойный, не агрессивный</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">50</td>
+                        <td class="symbol-name">Veilbreaker (Разрывающая Покров)</td>
+                        <td><span class="element-tag aether">Aether</span></td>
+                        <td>Разлом линии + световой "выход"</td>
+                        <td><span class="aura-color aura-gold">Бело-золотая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="aether-50"></div></td>
                     </tr>
-                    <tr data-symbol="aether_52_anchor_point">
-                        <td class="number-cell">52</td>
-                        <td class="name-cell">
-                            <span class="english">Anchor Point</span>
-                            <span class="russian">(Точка Якоря)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">AETHER</span></td>
-                        <td class="description-cell">Маленький крестик + линия вниз, как "заземление"</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">51</td>
+                        <td class="symbol-name">Great Crossing (Великое Пересечение)</td>
+                        <td><span class="element-tag aether">Aether</span></td>
+                        <td>Перекрёсток двух основных линий, спокойный, не агрессивный</td>
+                        <td><span class="aura-color aura-gold">Бело-золотая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="aether-51"></div></td>
                     </tr>
-                    <tr data-symbol="aether_53_cosmic_breath">
-                        <td class="number-cell">53</td>
-                        <td class="name-cell">
-                            <span class="english">Cosmic Breath</span>
-                            <span class="russian">(Космическое Дыхание)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">AETHER</span></td>
-                        <td class="description-cell">Волнистая линия + "вдох-выдох", плавная</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">52</td>
+                        <td class="symbol-name">Origin Flame (Изначённое Пламя)</td>
+                        <td><span class="element-tag aether">Aether</span></td>
+                        <td>Небольшой вертикальный огненный "язык", мягкий</td>
+                        <td><span class="aura-color aura-gold">Бело-золотая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="aether-52"></div></td>
                     </tr>
-                    <tr data-symbol="aether_54_primordial_seed">
-                        <td class="number-cell">54</td>
-                        <td class="name-cell">
-                            <span class="english">Primordial Seed</span>
-                            <span class="russian">(Изначальное Семя)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">AETHER</span></td>
-                        <td class="description-cell">Круг + точка выхода сверху</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">53</td>
+                        <td class="symbol-name">The Keeper (Хранитель)</td>
+                        <td><span class="element-tag aether">Aether</span></td>
+                        <td>Округлый "щит", минимальный символ защиты</td>
+                        <td><span class="aura-color aura-gold">Бело-золотая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="aether-53"></div></td>
                     </tr>
-                    <tr data-symbol="aether_55_first_light">
-                        <td class="number-cell">55</td>
-                        <td class="name-cell">
-                            <span class="english">First Light</span>
-                            <span class="russian">(Первый Свет)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">AETHER</span></td>
-                        <td class="description-cell">Маленькая точка + расходящиеся лучи</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">54</td>
+                        <td class="symbol-name">Final Sign (Последний Знак)</td>
+                        <td><span class="element-tag aether">Aether</span></td>
+                        <td>Круг + точка выхода сверху</td>
+                        <td><span class="aura-color aura-gold">Бело-золотая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="aether-54"></div></td>
                     </tr>
+                    <tr>
+                        <td class="symbol-number">55</td>
+                        <td class="symbol-name">First Light (Первый Свет)</td>
+                        <td><span class="element-tag aether">Aether</span></td>
+                        <td>Маленькая точка + расходящиеся лучи</td>
+                        <td><span class="aura-color aura-gold">Бело-золотая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="aether-55"></div></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-                    <!-- Weaving (56-66) -->
-                    <tr data-symbol="weaving_56_mirror_key">
-                        <td class="number-cell">56</td>
-                        <td class="name-cell">
-                            <span class="english">Mirror Key</span>
-                            <span class="russian">(Ключ Зеркала)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">WEAVING</span></td>
-                        <td class="description-cell">Две симметричные вертикальные линии</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+        <!-- WEAVING Section -->
+        <div class="element-section" data-element="weaving">
+            <div class="element-header">
+                <div class="element-icon">🌐</div>
+                <div>
+                    <div class="element-title">СИМВОЛЫ ПЕРЕПЛЕТЕНИЯ (Weaving)</div>
+                    <div class="element-subtitle">Мета-ключи</div>
+                </div>
+            </div>
+            
+            <table class="symbols-table">
+                <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>Имя символа</th>
+                        <th>Тип</th>
+                        <th>Краткое визуальное ТЗ</th>
+                        <th>Цвет ауры</th>
+                        <th>Результат</th>
                     </tr>
-                    <tr data-symbol="weaving_57_shadow_key">
-                        <td class="number-cell">57</td>
-                        <td class="name-cell">
-                            <span class="english">Shadow Key</span>
-                            <span class="russian">(Ключ Тени)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">WEAVING</span></td>
-                        <td class="description-cell">Символ в виде перевёрнутой дуги/теневого отражения</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="symbol-number">56</td>
+                        <td class="symbol-name">Mirror Key (Ключ Зеркала)</td>
+                        <td><span class="element-tag weaving">Weaving</span></td>
+                        <td>Две симметричные вертикальные линии</td>
+                        <td><span class="aura-color aura-neutral">Нейтральная лёгкая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="weaving-56"></div></td>
                     </tr>
-                    <tr data-symbol="weaving_58_light_key">
-                        <td class="number-cell">58</td>
-                        <td class="name-cell">
-                            <span class="english">Light Key</span>
-                            <span class="russian">(Ключ Света)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">WEAVING</span></td>
-                        <td class="description-cell">Маленький крестик света или вспышка</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">57</td>
+                        <td class="symbol-name">Shadow Key (Ключ Тени)</td>
+                        <td><span class="element-tag weaving">Weaving</span></td>
+                        <td>Символ в виде перевёрнутой дуги/теневого отражения</td>
+                        <td><span class="aura-color aura-neutral">Тёмная мягкая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="weaving-57"></div></td>
                     </tr>
-                    <tr data-symbol="weaving_59_amplifier">
-                        <td class="number-cell">59</td>
-                        <td class="name-cell">
-                            <span class="english">Amplifier</span>
-                            <span class="russian">(Усилитель)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">WEAVING</span></td>
-                        <td class="description-cell">Две расходящиеся параллельные линии</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">58</td>
+                        <td class="symbol-name">Light Key (Ключ Света)</td>
+                        <td><span class="element-tag weaving">Weaving</span></td>
+                        <td>Маленький крестик света или вспышка</td>
+                        <td><span class="aura-color aura-neutral">Белая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="weaving-58"></div></td>
                     </tr>
-                    <tr data-symbol="weaving_60_divider">
-                        <td class="number-cell">60</td>
-                        <td class="name-cell">
-                            <span class="english">Divider</span>
-                            <span class="russian">(Разделитель)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">WEAVING</span></td>
-                        <td class="description-cell">Вертикальная линия, делящая пространство</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">59</td>
+                        <td class="symbol-name">Amplifier (Усилитель)</td>
+                        <td><span class="element-tag weaving">Weaving</span></td>
+                        <td>Две расходящиеся параллельные линии</td>
+                        <td><span class="aura-color aura-neutral">Золотистая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="weaving-59"></div></td>
                     </tr>
-                    <tr data-symbol="weaving_61_delay_mark">
-                        <td class="number-cell">61</td>
-                        <td class="name-cell">
-                            <span class="english">Delay Mark</span>
-                            <span class="russian">(Задержка)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">WEAVING</span></td>
-                        <td class="description-cell">Короткая линия + "стоп"-точка</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">60</td>
+                        <td class="symbol-name">Divider (Разделитель)</td>
+                        <td><span class="element-tag weaving">Weaving</span></td>
+                        <td>Вертикальная линия, делящая пространство</td>
+                        <td><span class="aura-color aura-neutral">Нейтральная</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="weaving-60"></div></td>
                     </tr>
-                    <tr data-symbol="weaving_62_acceleration_mark">
-                        <td class="number-cell">62</td>
-                        <td class="name-cell">
-                            <span class="english">Acceleration Mark</span>
-                            <span class="russian">(Ускорение)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">WEAVING</span></td>
-                        <td class="description-cell">Линия, сужающаяся к концу, как ускорение</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">61</td>
+                        <td class="symbol-name">Delay Mark (Задержка)</td>
+                        <td><span class="element-tag weaving">Weaving</span></td>
+                        <td>Короткая линия + "стоп"-точка</td>
+                        <td><span class="aura-color aura-neutral">Холодная</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="weaving-61"></div></td>
                     </tr>
-                    <tr data-symbol="weaving_63_inversion">
-                        <td class="number-cell">63</td>
-                        <td class="name-cell">
-                            <span class="english">Inversion</span>
-                            <span class="russian">(Инверсия)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">WEAVING</span></td>
-                        <td class="description-cell">Символ изогнутой зеркальной формы</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">62</td>
+                        <td class="symbol-name">Acceleration Mark (Ускорение)</td>
+                        <td><span class="element-tag weaving">Weaving</span></td>
+                        <td>Линия, сужающаяся к концу, как ускорение</td>
+                        <td><span class="aura-color aura-neutral">Яркая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="weaving-62"></div></td>
                     </tr>
-                    <tr data-symbol="weaving_64_echo_seal">
-                        <td class="number-cell">64</td>
-                        <td class="name-cell">
-                            <span class="english">Echo Seal</span>
-                            <span class="russian">(Печать Эха)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">WEAVING</span></td>
-                        <td class="description-cell">Две слегка смещённые повторяющиеся линии</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">63</td>
+                        <td class="symbol-name">Inversion (Инверсия)</td>
+                        <td><span class="element-tag weaving">Weaving</span></td>
+                        <td>Символ изогнутой зеркальной формы</td>
+                        <td><span class="aura-color aura-neutral">Нейтральная</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="weaving-63"></div></td>
                     </tr>
-                    <tr data-symbol="weaving_65_bridge">
-                        <td class="number-cell">65</td>
-                        <td class="name-cell">
-                            <span class="english">Bridge</span>
-                            <span class="russian">(Мост)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">WEAVING</span></td>
-                        <td class="description-cell">Две точки/линии, соединённые дугой</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">64</td>
+                        <td class="symbol-name">Echo Seal (Печать Эха)</td>
+                        <td><span class="element-tag weaving">Weaving</span></td>
+                        <td>Две слегка смещённые повторяющиеся линии</td>
+                        <td><span class="aura-color aura-neutral">Нейтральная</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="weaving-64"></div></td>
                     </tr>
-                    <tr data-symbol="weaving_66_catalyst">
-                        <td class="number-cell">66</td>
-                        <td class="name-cell">
-                            <span class="english">Catalyst</span>
-                            <span class="russian">(Катализатор)</span>
-                        </td>
-                        <td class="element-cell"><span class="element-badge">WEAVING</span></td>
-                        <td class="description-cell">Центральная точка + расходящиеся короткие лучи</td>
-                        <td class="gallery-cell"><div class="gallery-grid"></div></td>
+                    <tr>
+                        <td class="symbol-number">65</td>
+                        <td class="symbol-name">Bridge (Мост)</td>
+                        <td><span class="element-tag weaving">Weaving</span></td>
+                        <td>Две точки/линии, соединённые дугой</td>
+                        <td><span class="aura-color aura-neutral">Нейтральная</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="weaving-65"></div></td>
+                    </tr>
+                    <tr>
+                        <td class="symbol-number">66</td>
+                        <td class="symbol-name">Catalyst (Катализатор)</td>
+                        <td><span class="element-tag weaving">Weaving</span></td>
+                        <td>Центральная точка + расходящиеся короткие лучи</td>
+                        <td><span class="aura-color aura-neutral">Яркая</span></td>
+                        <td class="result-cell"><div class="image-placeholder" data-symbol="weaving-66"></div></td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
 
-    <div class="modal" id="imageModal" onclick="closeModal()">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <span class="modal-close" onclick="closeModal()">&times;</span>
-            <img id="modalImage" src="" alt="Просмотр изображения">
-        </div>
-    </div>
-
     <script>
-        // Карта цветов ауры для каждого символа
-        const auraColors = {
-            "air_01_whisper": "Голубая",
-            "air_02_gate_winds": "Голубая",
-            "air_03_signal": "Голубая",
-            "air_04_feather": "Голубая",
-            "air_05_twin_winds": "Голубая",
-            "air_06_messenger": "Голубая",
-            "air_07_echo": "Голубая",
-            "air_08_veil": "Голубая",
-            "air_09_turning_breath": "Голубая",
-            "air_10_calling": "Голубая",
-            "air_11_watcher": "Голубая",
+        // Функция для парсинга имени файла
+        function parseFileName(filename) {
+            const nameWithoutExt = filename.replace(/\.(png|svg|jpg|jpeg|webp)$/i, '');
+            const validElements = ['air', 'water', 'fire', 'earth', 'aether', 'weaving'];
+            const pattern = new RegExp(`^(${validElements.join('|')})[-_\\s]+?(\\d+)`, 'i');
+            const match = nameWithoutExt.match(pattern);
             
-            "water_12_ripple": "Аква-сине-зелёная",
-            "water_13_deep_tide": "Аква",
-            "water_14_mirror_water": "Аква",
-            "water_15_heartstream": "Аква",
-            "water_16_bond": "Аква",
-            "water_17_drift": "Аква",
-            "water_18_vessel": "Аква",
-            "water_19_undercurrent": "Аква",
-            "water_20_tearline": "Аква",
-            "water_21_resonance": "Аква",
-            "water_22_memory_pool": "Аква",
-            
-            "fire_23_spark": "Оранжевая",
-            "fire_24_strike": "Оранжевая",
-            "fire_25_ember_road": "Оранжевая",
-            "fire_26_phoenix_sign": "Оранжевая",
-            "fire_27_clash": "Оранжевая",
-            "fire_28_flare": "Оранжевая",
-            "fire_29_torch": "Оранжевая",
-            "fire_30_break": "Оранжевая",
-            "fire_31_stormfront": "Оранжевая",
-            "fire_32_burning_choice": "Оранжевая",
-            "fire_33_inferno_path": "Оранжевая",
-            
-            "earth_34_rootmark": "Золотисто-оливковая",
-            "earth_35_stone_gate": "Оливковая",
-            "earth_36_harvest_line": "Оливковая",
-            "earth_37_shelter": "Оливковая",
-            "earth_38_architect": "Оливковая",
-            "earth_39_anchor": "Оливковая",
-            "earth_40_summit_stone": "Оливковая",
-            "earth_41_burden": "Оливковая",
-            "earth_42_golden_vein": "Оливковая",
-            "earth_43_pact": "Оливковая",
-            "earth_44_foundation_shift": "Оливковая",
-            
-            "aether_45_thread_of_fate": "Бело-золотая",
-            "aether_46_convergence": "Бело-золотая",
-            "aether_47_chrono_gate": "Бело-золотая",
-            "aether_48_ancestral_echo": "Бело-золотая",
-            "aether_49_destiny_mark": "Бело-золотая",
-            "aether_50_veilbreaker": "Бело-золотая",
-            "aether_51_great_crossing": "Бело-золотая",
-            "aether_52_anchor_point": "Бело-золотая",
-            "aether_53_cosmic_breath": "Бело-золотая",
-            "aether_54_primordial_seed": "Бело-золотая",
-            "aether_55_first_light": "Бело-золотая",
-            
-            "weaving_56_mirror_key": "Нейтральная лёгкая",
-            "weaving_57_shadow_key": "Тёмная мягкая",
-            "weaving_58_light_key": "Белая",
-            "weaving_59_amplifier": "Золотистая",
-            "weaving_60_divider": "Нейтральная",
-            "weaving_61_delay_mark": "Холодная",
-            "weaving_62_acceleration_mark": "Яркая",
-            "weaving_63_inversion": "Нейтральная",
-            "weaving_64_echo_seal": "Нейтральная",
-            "weaving_65_bridge": "Нейтральная",
-            "weaving_66_catalyst": "Яркая"
-        };
-
-        // Фильтры
-        const filters = {
-            elements: {
-                air: true,
-                water: true,
-                fire: true,
-                earth: true,
-                aether: true,
-                weaving: true
-            },
-            hideSVG: true, // По умолчанию SVG скрыты
-            auraColors: {
-                'Голубая': true,
-                'Аква-сине-зелёная': true,
-                'Аква': true,
-                'Оранжевая': true,
-                'Золотисто-оливковая': true,
-                'Оливковая': true,
-                'Бело-золотая': true,
-                'Нейтральная лёгкая': true,
-                'Тёмная мягкая': true,
-                'Белая': true,
-                'Золотистая': true,
-                'Нейтральная': true,
-                'Холодная': true,
-                'Яркая': true
+            if (match) {
+                return { element: match[1].toLowerCase(), number: parseInt(match[2], 10) };
             }
-        };
-
-        // Функция применения фильтров
-        function applyFilters() {
-            const rows = document.querySelectorAll('tr[data-symbol]');
-            
-            rows.forEach(row => {
-                const symbolId = row.dataset.symbol;
-                const parts = symbolId.split('_');
-                const element = parts[0];
-                const auraColor = auraColors[symbolId];
-                
-                let show = true;
-                
-                // Фильтр по стихиям
-                if (!filters.elements[element]) {
-                    show = false;
-                }
-                
-                // Фильтр по цветам ауры
-                if (!filters.auraColors[auraColor]) {
-                    show = false;
-                }
-                
-                // Фильтр по SVG
-                if (filters.hideSVG) {
-                    const images = row.querySelectorAll('.gallery-item img');
-                    images.forEach(img => {
-                        if (img.src.endsWith('.svg')) {
-                            img.parentElement.style.display = 'none';
-                        }
-                    });
-                } else {
-                    const images = row.querySelectorAll('.gallery-item img');
-                    images.forEach(img => {
-                        if (img.src.endsWith('.svg')) {
-                            img.parentElement.style.display = 'block';
-                        }
-                    });
-                }
-                
-                // Показываем/скрываем строку
-                row.style.display = show ? 'table-row' : 'none';
-            });
+            return null;
         }
 
-        // 🔹 ПРОСТАЯ АВТОПОДГРУЗКА ВСЕХ ФАЙЛОВ ПО ПРЕФИКСУ
-        
-        // Загружаем одобренные символы
-        function loadApprovedSymbols() {
-            const approved = localStorage.getItem('approved_symbols');
-            if (approved) {
-                const approvedData = JSON.parse(approved);
-                Object.keys(approvedData).forEach(symbolId => {
-                    const approvedImage = approvedData[symbolId];
-                    const symbolRow = document.querySelector(`[data-symbol="${symbolId}"]`);
-                    if (symbolRow) {
-                        const galleryItems = symbolRow.querySelectorAll('.gallery-item');
-                        galleryItems.forEach(item => {
-                            if (item.dataset.image === approvedImage) {
-                                item.classList.add('approved');
-                                if (!item.querySelector('.approved-indicator')) {
-                                    const indicator = document.createElement('div');
-                                    indicator.className = 'approved-indicator';
-                                    item.appendChild(indicator);
-                                }
+        // Функция для загрузки изображения в ячейку
+        function loadImageIntoCell(cell, imageSrc, altText) {
+            if (cell && cell.classList.contains('image-placeholder')) {
+                cell.innerHTML = `<img src="${imageSrc}" class="symbol-image" alt="${altText}" title="${altText}">`;
+                cell.classList.remove('image-placeholder');
+            }
+        }
+
+        // Автоматическое сканирование и загрузка символов
+        async function autoLoadSymbols() {
+            const repositoryUrl = 'https://helensols.github.io/magic/pure_symbols/';
+            const symbolFiles = [];
+            
+            console.log('🔍 Автоматическое сканирование папки symbols...');
+            
+            // Пытаемся получить полный список файлов из GitHub API
+            try {
+                const response = await fetch('https://api.github.com/repos/HelenSolS/symbols/contents/pure_symbols');
+                if (response.ok) {
+                    const files = await response.json();
+                    
+                    files.forEach(file => {
+                        if (file.type === 'file' && file.name.match(/\.(png|svg|jpg|jpeg|webp)$/i)) {
+                            const parsed = parseFileName(file.name);
+                            if (parsed) {
+                                const priority = file.name.toLowerCase().includes('final') ? 1 : 0;
+                                symbolFiles.push({ filename: file.name, parsed, priority });
                             }
-                        });
-                    }
+                        }
+                    });
+                    
+                    symbolFiles.sort((a, b) => b.priority - a.priority);
+                }
+            } catch (error) {
+                console.log('GitHub API недоступен, используем резервный список...');
+                
+                // Резервный список приоритетных файлов
+                const priorityFiles = [
+                    'air_01_whisper_final_v2.svg', 'air_02_gate_of_winds_final_v2.svg', 'air_03_signal_final_v2.svg',
+                    'water_12_ripple_final_v2.svg', 'water_13_river_path_final_v2.svg', 'water_14_ocean_wave_final_v2.svg',
+                    'fire_23_spark_final_v2.svg', 'fire_24_flame_dance_final_v2.svg', 'fire_25_ember_core_final_v2.svg',
+                    'earth_34_rootmark_final_v2.svg', 'earth_35_stone_circle_final_v2.svg', 'earth_36_mountain_peak_final_v2.svg',
+                    'aether_45_thread_of_fate_final_v2.svg', 'aether_46_celestial_gate_final_v2.svg', 'aether_47_star_crown_final_v2.svg',
+                    'weaving_56_mirror_key_final_v2.svg', 'weaving_60_spiral_loom_final_v2.svg', 'weaving_66_eternal_knot_final_v2.svg'
+                ];
+                
+                priorityFiles.forEach(filename => {
+                    const parsed = parseFileName(filename);
+                    if (parsed) symbolFiles.push({ filename, parsed, priority: 1 });
                 });
             }
-        }
-
-        // Утверждение изображения
-        function approveImage(imageElement) {
-            const symbolRow = imageElement.closest('tr');
-            const symbolId = symbolRow.dataset.symbol;
-            const galleryItems = symbolRow.querySelectorAll('.gallery-item');
             
-            // Убираем предыдущие утверждения для этого символа
-            galleryItems.forEach(item => {
-                item.classList.remove('approved');
-                const indicator = item.querySelector('.approved-indicator');
-                if (indicator) indicator.remove();
-            });
+            console.log(`📁 Найдено ${symbolFiles.length} подходящих файлов`);
             
-            // Утверждаем кликнутое изображение
-            imageElement.classList.add('approved');
-            const indicator = document.createElement('div');
-            indicator.className = 'approved-indicator';
-            imageElement.appendChild(indicator);
-            
-            // Сохраняем в localStorage
-            saveApprovedSymbol(symbolId, imageElement.dataset.image);
-        }
-
-        // Сохраняем утвержденный символ
-        function saveApprovedSymbol(symbolId, imagePath) {
-            let approved = localStorage.getItem('approved_symbols');
-            if (!approved) {
-                approved = {};
-            } else {
-                approved = JSON.parse(approved);
-            }
-            approved[symbolId] = imagePath;
-            localStorage.setItem('approved_symbols', JSON.stringify(approved));
-        }
-
-        // Открываем модальное окно с изображением
-        function openModal(element) {
-            const modal = document.getElementById('imageModal');
-            const modalImage = document.getElementById('modalImage');
-            modalImage.src = element.dataset.image;
-            modal.style.display = 'flex';
-        }
-
-        // Закрываем модальное окно
-        function closeModal() {
-            document.getElementById('imageModal').style.display = 'none';
-        }
-
-        // 🔹 ПРОСТАЯ АВТОПОДГРУЗКА - ИЩЕТ ВСЕ ФАЙЛЫ ПО ПРЕФИКСУ element_id_
-        function autoLoadAllFiles() {
-            const rows = document.querySelectorAll('tr[data-symbol]');
-
-            rows.forEach(row => {
-                const symbolId = row.dataset.symbol;
-                if (!symbolId) return;
-
-                // Извлекаем элемент и ID из symbolId
-                const parts = symbolId.split('_');
-                if (parts.length < 3) {
-                    console.log(`⚠️ Неправильный формат symbolId: ${symbolId}`);
-                    return;
-                }
-                
-                const element = parts[0]; // "air", "water", etc.
-                const id = parts[1]; // "01", "12", etc.
-                
-                const gallery = row.querySelector('.gallery-grid');
-                if (!gallery) return;
-
-                const existingSrcs = new Set(
-                    Array.from(gallery.querySelectorAll('img')).map(img =>
-                        img.getAttribute('src')
-                    )
-                );
-
-                // Функция добавления изображения
-                function addImage(src) {
-                    if (existingSrcs.has(src)) return;
-
-                    console.log(`🔍 ${element}_${id}: Пробуем ${src}`);
-
-                    const img = new Image();
-                    img.onload = () => {
-                        console.log(`✅ ${element}_${id}: Успешно загружен ${src}`);
-                        const item = document.createElement('div');
-                        item.className = 'gallery-item';
-                        item.dataset.image = src;
-                        item.onclick = function () { openModal(item); };
-
-                        const imageEl = document.createElement('img');
-                        imageEl.src = src;
-                        imageEl.alt = symbolId;
-
-                        item.appendChild(imageEl);
-                        gallery.appendChild(item);
-                        
-                        const noPhotoMsg = gallery.querySelector('.no-photo-message');
-                        if (noPhotoMsg) {
-                            noPhotoMsg.remove();
+            let loadedCount = 0;
+            for (const { filename, parsed } of symbolFiles) {
+                try {
+                    const fileUrl = repositoryUrl + filename;
+                    const response = await fetch(fileUrl, { method: 'HEAD' });
+                    
+                    if (response.ok) {
+                        const cell = document.querySelector(`[data-symbol="${parsed.element}-${parsed.number}"]`);
+                        if (cell) {
+                            loadImageIntoCell(cell, fileUrl, `${parsed.element}-${parsed.number}`);
+                            console.log(`✅ ${filename} → ${parsed.element}-${parsed.number}`);
+                            loadedCount++;
                         }
-                    };
-                    img.onerror = () => {
-                        // Не логируем ошибки для всех попыток, чтобы не засорять консоль
-                    };
-                    img.src = src;
-                }
-
-                console.log(`🎯 ${symbolId} -> ищем все файлы с префиксом ${element}_${id}_`);
-
-                // Специальные паттерны для разных диапазонов
-                const searchPatterns = [];
-
-                // Основные варианты с _correct
-                searchPatterns.push(
-                    `pure_symbols/${element}_${id}_correct.svg`,
-                    `pure_symbols/${element}_${id}_correct.png`
-                );
-
-                // Варианты без суффикса
-                searchPatterns.push(
-                    `pure_symbols/${element}_${id}.svg`,
-                    `pure_symbols/${element}_${id}.png`
-                );
-
-                // Варианты с _final и _final_v2
-                searchPatterns.push(
-                    `pure_symbols/${element}_${id}_final.svg`,
-                    `pure_symbols/${element}_${id}_final.png`,
-                    `pure_symbols/${element}_${id}_final_v2.svg`,
-                    `pure_symbols/${element}_${id}_final_v2.png`
-                );
-
-                // Варианты с номерами кадров (для сложных символов)
-                for (let frame = 1; frame <= 6; frame++) {
-                    const frameStr = frame.toString().padStart(2, '0');
-                    searchPatterns.push(
-                        `pure_symbols/${element}_${id}_${frameStr}.svg`,
-                        `pure_symbols/${element}_${id}_${frameStr}.png`
-                    );
-                }
-
-                // Варианты с названиями (для тех, что не попадают в _correct)
-                if (element === 'air') {
-                    const airVariants = [
-                        'diagonal_tool', 'ripple_waves', 'tempest', 'feather_plume', 'hurricane',
-                        'glowing_feather', 'sky', 'stellar_feather', 'wind_beacon_5', 'wind_beacon_6',
-                        'aerial_threads_1', 'aerial_threads_2', 'aerial_threads_3', 'aerial_threads_4', 
-                        'aerial_threads_5', 'aerial_threads_6', 'storm_resonance_1', 'storm_resonance_2',
-                        'storm_resonance_3', 'storm_resonance_4', 'whisper_spiral_1', 'whisper_spiral_2',
-                        'whisper_spiral_3', 'celestial_dance_1', 'celestial_dance_2', 'celestial_dance_3',
-                        'cosmic_flow_1', 'cosmic_flow_2', 'cosmic_flow_3', 'veil_1', 'veil_2', 'veil_3',
-                        'twin_winds_1', 'twin_winds_2', 'twin_winds_3', 'twin_winds_4'
-                    ];
-                    airVariants.forEach(variant => {
-                        searchPatterns.push(
-                            `pure_symbols/${element}_${id}_${variant}.svg`,
-                            `pure_symbols/${element}_${id}_${variant}.png`
-                        );
-                    });
-                }
-
-                if (element === 'aether') {
-                    const aetherVariants = [
-                        'cosmic_threading', 'luminous_x', 'cosmic_glyph', 'cosmic_glyph_2', 'star',
-                        'moon', 'void', 'soul', 'spirit', 'aura', 'echo', 'dream', 'memory', 'infinity'
-                    ];
-                    aetherVariants.forEach(variant => {
-                        searchPatterns.push(
-                            `pure_symbols/${element}_${id}_${variant}.svg`,
-                            `pure_symbols/${element}_${id}_${variant}.png`
-                        );
-                    });
-                }
-
-                if (element === 'earth') {
-                    const earthVariants = ['root', 'stone_gate', 'harvest_line', 'shelter', 'architect'];
-                    earthVariants.forEach(variant => {
-                        searchPatterns.push(
-                            `pure_symbols/${element}_${id}_${variant}.svg`,
-                            `pure_symbols/${element}_${id}_${variant}.png`
-                        );
-                    });
-                }
-
-                if (element === 'water') {
-                    const waterVariants = ['deep_tide', 'mirror_water_2', 'heartstream_2', 'heartstream_3'];
-                    waterVariants.forEach(variant => {
-                        searchPatterns.push(
-                            `pure_symbols/${element}_${id}_${variant}.svg`,
-                            `pure_symbols/${element}_${id}_${variant}.png`
-                        );
-                    });
-                }
-
-                // Специальные сопоставления для weaving символов (используют aether файлы)
-                if (element === 'weaving') {
-                    const weavingToAether = {
-                        '56': 'cosmic_threading',
-                        '57': 'star', 
-                        '58': 'moon',
-                        '59': 'void',
-                        '60': 'soul',
-                        '61': 'spirit',
-                        '62': 'aura',
-                        '63': 'echo',
-                        '64': 'dream',
-                        '65': 'memory',
-                        '66': 'infinity'
-                    };
-                    
-                    if (weavingToAether[id]) {
-                        const aetherFile = weavingToAether[id];
-                        searchPatterns.push(
-                            `pure_symbols/aether_${id}_${aetherFile}.svg`,
-                            `pure_symbols/aether_${id}_${aetherFile}.png`
-                        );
                     }
+                } catch (error) {
+                    // Игнорируем ошибки для недоступных файлов
                 }
-
-                // Загружаем все файлы
-                searchPatterns.forEach(src => addImage(src));
-
-                // Показываем "нет фото" если ничего не загрузилось
-                setTimeout(() => {
-                    const currentImages = gallery.querySelectorAll('img');
-                    const existingNoPhoto = gallery.querySelector('.no-photo-message');
-                    
-                    if (currentImages.length === 0 && !existingNoPhoto) {
-                        const noPhotoMsg = document.createElement('div');
-                        noPhotoMsg.className = 'no-photo-message';
-                        noPhotoMsg.textContent = 'нет фото';
-                        gallery.appendChild(noPhotoMsg);
-                        console.log(`🖼️ ${element}_${id}: Показано "нет фото"`);
-                    }
-                }, 500);
-            });
+            }
+            
+            updateStatus(loadedCount);
+            applyFilters(); // Применяем фильтры после загрузки
         }
 
-        // Двойной клик для утверждения
-        document.addEventListener('dblclick', function(e) {
-            const galleryItem = e.target.closest('.gallery-item');
-            if (galleryItem) {
-                e.preventDefault();
-                e.stopPropagation();
-                approveImage(galleryItem);
+        // Обновление статуса
+        function updateStatus(loadedCount) {
+            const totalSymbols = 66;
+            const progress = Math.round((loadedCount / totalSymbols) * 100);
+            const statusText = document.getElementById('status-text');
+            
+            if (loadedCount > 0) {
+                statusText.innerHTML = `✅ Загружено ${loadedCount} из ${totalSymbols} символов (${progress}%)`;
+                statusText.style.color = '#4caf50';
+            } else {
+                statusText.innerHTML = '⚠️ Символы не найдены в репозитории';
+                statusText.style.color = '#ff9800';
             }
+        }
+
+        // Глобальные переменные для состояния фильтров
+        let currentElementFilter = 'all';
+        let currentFileTypeFilter = 'all';
+
+        // Функции фильтрации по стихиям
+        function showAllElements() {
+            document.querySelectorAll('.element-section').forEach(section => {
+                section.classList.remove('hidden');
+            });
+            
+            // Сбрасываем активные кнопки стихий
+            document.querySelectorAll('.filter-button:not(.file-type)').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector('.filter-button').classList.add('active');
+            
+            currentElementFilter = 'all';
+            applyFilters();
+        }
+
+        function showElement(element) {
+            document.querySelectorAll('.element-section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            
+            // Сбрасываем активные кнопки стихий
+            document.querySelectorAll('.filter-button:not(.file-type)').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            const targetSection = document.querySelector(`[data-element="${element}"]`);
+            if (targetSection) {
+                targetSection.classList.remove('hidden');
+            }
+            
+            event.target.classList.add('active');
+            currentElementFilter = element;
+            applyFilters();
+        }
+
+        // Функции фильтрации по типу файлов
+        function filterByFileType(fileType) {
+            // Сбрасываем активные кнопки типов файлов
+            document.querySelectorAll('.filter-button.file-type').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            event.target.classList.add('active');
+            currentFileTypeFilter = fileType;
+            applyFilters();
+        }
+
+        // Применение комбинированных фильтров
+        function applyFilters() {
+            const allPlaceholders = document.querySelectorAll('.image-placeholder');
+            
+            allPlaceholders.forEach(placeholder => {
+                const img = placeholder.querySelector('img');
+                if (!img) return; // Пропускаем пустые placeholder'ы
+                
+                const imgSrc = img.src;
+                const imgAlt = img.alt;
+                
+                let shouldShow = true;
+                
+                // Фильтр по типу файла
+                if (currentFileTypeFilter !== 'all') {
+                    const isSVG = imgSrc.toLowerCase().includes('.svg') || imgAlt.toLowerCase().includes('svg');
+                    const isPNG = imgSrc.toLowerCase().includes('.png') || imgAlt.toLowerCase().includes('png');
+                    
+                    if (currentFileTypeFilter === 'svg' && !isSVG) {
+                        shouldShow = false;
+                    } else if (currentFileTypeFilter === 'png' && !isPNG) {
+                        shouldShow = false;
+                    }
+                }
+                
+                // Показываем/скрываем изображение
+                if (shouldShow) {
+                    img.style.display = 'block';
+                } else {
+                    img.style.display = 'none';
+                }
+            });
+            
+            // Обновляем счетчик
+            updateFileTypeStats();
+        }
+
+        // Обновление статистики по типам файлов
+        function updateFileTypeStats() {
+            const allImages = document.querySelectorAll('.symbol-image');
+            let svgCount = 0;
+            let pngCount = 0;
+            let otherCount = 0;
+            
+            allImages.forEach(img => {
+                const src = img.src.toLowerCase();
+                if (src.includes('.svg')) {
+                    svgCount++;
+                } else if (src.includes('.png')) {
+                    pngCount++;
+                } else {
+                    otherCount++;
+                }
+            });
+            
+            const statusText = document.getElementById('status-text');
+            if (svgCount > 0 || pngCount > 0) {
+                statusText.innerHTML = `📊 Отображено: ${svgCount} SVG, ${pngCount} PNG${otherCount > 0 ? `, ${otherCount} других` : ''}`;
+                statusText.style.color = '#4caf50';
+            }
+        }
+
+        // Плавная прокрутка к секциям
+        document.querySelectorAll('.element-header').forEach(header => {
+            header.addEventListener('click', function() {
+                this.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
         });
 
-        // Функция добавления столбика ауры
-        function addAuraColumn() {
-            const rows = document.querySelectorAll('tr[data-symbol]');
-            
-            rows.forEach(row => {
-                const symbolId = row.dataset.symbol;
-                const auraColor = auraColors[symbolId];
-                const parts = symbolId.split('_');
-                const element = parts[0];
-                
-                // Найдем ячейку стихии
-                const elementCell = row.querySelector('.element-cell');
-                if (!elementCell) return;
-                
-                // Создаем новую ячейку ауры
-                const auraCell = document.createElement('td');
-                auraCell.className = 'aura-cell';
-                
-                // Определяем CSS класс для цвета
-                let auraClass = 'aura-gray';
-                switch(auraColor) {
-                    case 'Голубая': auraClass = 'aura-blue'; break;
-                    case 'Аква-сине-зелёная':
-                    case 'Аква': auraClass = 'aura-cyan'; break;
-                    case 'Оранжевая': auraClass = 'aura-orange'; break;
-                    case 'Золотисто-оливковая':
-                    case 'Оливковая': auraClass = 'aura-yellow'; break;
-                    case 'Бело-золотая': auraClass = 'aura-gold'; break;
-                    case 'Нейтральная лёгкая': auraClass = 'aura-light'; break;
-                    case 'Тёмная мягкая': auraClass = 'aura-dark'; break;
-                    case 'Белая': auraClass = 'aura-white'; break;
-                    case 'Золотистая': auraClass = 'aura-yellow'; break;
-                    case 'Нейтральная': auraClass = 'aura-neutral'; break;
-                    case 'Холодная': auraClass = 'aura-blue'; break;
-                    case 'Яркая': auraClass = 'aura-bright'; break;
-                }
-                
-                auraCell.innerHTML = `<span class="aura-badge ${auraClass}">${auraColor}</span>`;
-                
-                // Вставляем ячейку после ячейки стихии
-                elementCell.parentNode.insertBefore(auraCell, elementCell.nextSibling);
-            });
-        }
-
-        // Инициализация фильтров цветов ауры
-        function initAuraFilters() {
-            const container = document.getElementById('aura-colors-filters');
-            const uniqueColors = [...new Set(Object.values(auraColors))];
-            
-            uniqueColors.forEach(color => {
-                const id = `filter-aura-${color.replace(/\s+/g, '-').toLowerCase()}`;
-                const checkbox = document.createElement('div');
-                checkbox.className = 'filter-checkbox';
-                checkbox.innerHTML = `
-                    <input type="checkbox" id="${id}" checked>
-                    <label for="${id}">${color}</label>
-                `;
-                container.appendChild(checkbox);
-            });
-        }
-
-        // Инициализация обработчиков фильтров
-        function initFilters() {
-            // Обработчики для фильтров стихий
-            const elementFilters = ['air', 'water', 'fire', 'earth', 'aether', 'weaving'];
-            elementFilters.forEach(element => {
-                const checkbox = document.getElementById(`filter-${element}`);
-                if (checkbox) {
-                    checkbox.addEventListener('change', () => {
-                        filters.elements[element] = checkbox.checked;
-                        applyFilters();
-                    });
-                }
-            });
-
-            // Обработчик для фильтра SVG
-            const svgCheckbox = document.getElementById('filter-svg');
-            if (svgCheckbox) {
-                svgCheckbox.addEventListener('change', () => {
-                    filters.hideSVG = svgCheckbox.checked;
-                    applyFilters();
-                });
-            }
-
-            // Обработчики для фильтров цветов ауры
-            const uniqueColors = [...new Set(Object.values(auraColors))];
-            uniqueColors.forEach(color => {
-                const id = `filter-aura-${color.replace(/\s+/g, '-').toLowerCase()}`;
-                const checkbox = document.getElementById(id);
-                if (checkbox) {
-                    checkbox.addEventListener('change', () => {
-                        filters.auraColors[color] = checkbox.checked;
-                        applyFilters();
-                    });
-                }
-            });
-        }
-
-        // Загрузка при старте страницы
-        window.addEventListener('load', () => {
-            autoLoadAllFiles();      // Сначала автоподгрузка
-            loadApprovedSymbols();   // Потом одобренные символы
-            addAuraColumn();         // Добавляем столбик ауры
-            initAuraFilters();       // Инициализируем фильтры цветов
-            initFilters();           // Инициализируем обработчики
-            applyFilters();          // Применяем фильтры
+        // Автозагрузка при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Автозагрузка символов при старте...');
+            setTimeout(autoLoadSymbols, 500);
         });
     </script>
 </body>
