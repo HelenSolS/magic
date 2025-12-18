@@ -988,12 +988,17 @@
         // Массив для хранения нераспознанных файлов
         let unrecognizedFiles = [];
 
-        // Супер простой поиск - каждый файл только в один символ
+        // ПРАВИЛЬНЫЙ поиск - только в начале имени файла
         function findImagesByNumber(files, number) {
             return files.filter(filename => {
                 const lowerName = filename.toLowerCase();
-                // Ищем только начало файла - номер между подчеркиваниями
-                return lowerName.includes(`_${number}_`);
+                // Ищем ТОЛЬКО в начале файла: element_number_
+                return lowerName.startsWith(`air_${number}_`) ||
+                       lowerName.startsWith(`water_${number}_`) ||
+                       lowerName.startsWith(`fire_${number}_`) ||
+                       lowerName.startsWith(`earth_${number}_`) ||
+                       lowerName.startsWith(`aether_${number}_`) ||
+                       lowerName.startsWith(`weaving_${number}_`);
             });
         }
 
@@ -1261,7 +1266,73 @@
             applyFilters();
         }
 
-        // Функция для определения стихии по номеру символа
+        // Проверяем все чипы и заменяем на правильные цвета из оригинальной таблицы
+        function fixAllChips() {
+            // Air - Голубая (ВСЕ символы)
+            const airTags = document.querySelectorAll('.element-tag.air');
+            airTags.forEach(tag => {
+                tag.textContent = 'Air (Голубая)';
+            });
+            
+            // Water - специальные цвета
+            const waterTags = document.querySelectorAll('.element-tag.water');
+            waterTags.forEach(tag => {
+                const parentRow = tag.closest('tr');
+                const symbolNumber = parentRow.querySelector('.symbol-number');
+                if (symbolNumber && symbolNumber.textContent.trim() === '12') {
+                    tag.textContent = 'Water (Аква-сине-зелёная)';
+                } else {
+                    tag.textContent = 'Water (Аква)';
+                }
+            });
+            
+            // Fire - Оранжевая (ВСЕ символы)
+            const fireTags = document.querySelectorAll('.element-tag.fire');
+            fireTags.forEach(tag => {
+                tag.textContent = 'Fire (Оранжевая)';
+            });
+            
+            // Earth - специальные цвета
+            const earthTags = document.querySelectorAll('.element-tag.earth');
+            earthTags.forEach(tag => {
+                const parentRow = tag.closest('tr');
+                const symbolNumber = parentRow.querySelector('.symbol-number');
+                if (symbolNumber && symbolNumber.textContent.trim() === '34') {
+                    tag.textContent = 'Earth (Золотисто-оливковая)';
+                } else {
+                    tag.textContent = 'Earth (Оливковая)';
+                }
+            });
+            
+            // Aether - Бело-золотая (ВСЕ символы)
+            const aetherTags = document.querySelectorAll('.element-tag.aether');
+            aetherTags.forEach(tag => {
+                tag.textContent = 'Aether (Бело-золотая)';
+            });
+            
+            // Weaving - специальные цвета для каждого символа
+            const weavingTags = document.querySelectorAll('.element-tag.weaving');
+            weavingTags.forEach(tag => {
+                const parentRow = tag.closest('tr');
+                const symbolNumber = parentRow.querySelector('.symbol-number');
+                const num = symbolNumber ? symbolNumber.textContent.trim() : '';
+                
+                switch(num) {
+                    case '56': tag.textContent = 'Weaving (Нейтральная лёгкая)'; break;
+                    case '57': tag.textContent = 'Weaving (Тёмная мягкая)'; break;
+                    case '58': tag.textContent = 'Weaving (Белая)'; break;
+                    case '59': tag.textContent = 'Weaving (Золотистая)'; break;
+                    case '60': tag.textContent = 'Weaving (Нейтральная)'; break;
+                    case '61': tag.textContent = 'Weaving (Холодная)'; break;
+                    case '62': tag.textContent = 'Weaving (Яркая)'; break;
+                    case '63': tag.textContent = 'Weaving (Нейтральная)'; break;
+                    case '64': tag.textContent = 'Weaving (Нейтральная)'; break;
+                    case '65': tag.textContent = 'Weaving (Нейтральная)'; break;
+                    case '66': tag.textContent = 'Weaving (Яркая)'; break;
+                    default: tag.textContent = 'Weaving';
+                }
+            });
+        }
         function getElementByNumber(number) {
             if (number >= 1 && number <= 11) return 'air';
             if (number >= 12 && number <= 22) return 'water';
@@ -1463,6 +1534,7 @@
             createModal(); // Создаем модальное окно
             setupImageClickHandlers(); // Настраиваем обработчики кликов
             setTimeout(autoLoadSymbols, 500);
+            setTimeout(fixAllChips, 1000); // Исправляем все чипы после загрузки
         });
     </script>
 </body>
