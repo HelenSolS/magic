@@ -361,6 +361,10 @@
         <div class="header">
             <h1>Каталог 66 Символов Стихий</h1>
             <p>Полная коллекция символов для визуализации и дальнейшего использования</p>
+            <div  class="header">
+                <strong> 💥Ссылка на коллекцию "широких" символов✨</strong>
+              <button onclick="openFullWindow('https://disk.yandex.ru/d/QzRujyl7oI3_og')" class="header">Посмотреть коллекцию</button>
+            </div>
         </div>
 
         <div class="status-bar">
@@ -1561,6 +1565,9 @@
             setTimeout(autoLoadSymbols, 500);
             setTimeout(fixAllChips, 1000); // Исправляем все чипы после загрузки
         });
+ function openFullWindow(url) {
+    window.open(url, '_blank', 'fullscreen=yes,scrollbars=yes,menubar=no,toolbar=no,location=no,status=no,resizable=yes');
+  }
     </script>
 </body>
 </html>
