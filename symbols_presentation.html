@@ -96,16 +96,66 @@
             color: #000;
         }
 
-        .filter-button.file-type {
-            background: rgba(255, 255, 255, 0.08);
-            font-size: 0.8em;
-            padding: 8px 16px;
+        .header-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
         }
-
-        .filter-button.file-type.active {
-            background: linear-gradient(45deg, #ab47bc, #8e24aa);
+        
+        .glow-button {
+            background: transparent;
+            color: #4fc3f7;
+            padding: 12px 28px;
+            border: 1px solid rgba(79, 195, 247, 0.6);
+            border-radius: 25px;
+            font-size: 0.95em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .glow-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(79, 195, 247, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .glow-button:hover::before {
+            left: 100%;
+        }
+        
+        .glow-button:hover {
+            background: rgba(79, 195, 247, 0.15);
+            border-color: #4fc3f7;
+            box-shadow: 0 0 20px rgba(79, 195, 247, 0.5), 0 0 40px rgba(79, 195, 247, 0.3), 0 0 60px rgba(79, 195, 247, 0.1);
+            transform: translateY(-2px);
+            color: #ffffff;
+        }
+        
+        .glow-button.secondary {
+            color: #ab47bc;
+            border-color: rgba(171, 71, 188, 0.6);
+        }
+        
+        .glow-button.secondary:hover {
+            background: rgba(171, 71, 188, 0.15);
             border-color: #ab47bc;
-            color: #fff;
+            box-shadow: 0 0 20px rgba(171, 71, 188, 0.5), 0 0 40px rgba(171, 71, 188, 0.3), 0 0 60px rgba(171, 71, 188, 0.1);
+        }
+        
+        .glow-button.secondary::before {
+            background: linear-gradient(90deg, transparent, rgba(171, 71, 188, 0.3), transparent);
         }
 
         .checkbox-container {
@@ -153,13 +203,6 @@
             border-color: #4fc3f7;
             color: #000;
         }
-
-        .checkbox-item input[type="checkbox"]:checked + label.file-type-label {
-            background: linear-gradient(45deg, #ab47bc, #8e24aa);
-            border-color: #ab47bc;
-            color: #fff;
-        }
-
 
 
         .element-section {
@@ -253,6 +296,9 @@
             font-weight: 500;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            margin-bottom: 4px;
+            float: left;
+            clear: both;
         }
 
         .air { background: linear-gradient(45deg, #81d4fa, #4fc3f7); color: #000; }
@@ -361,9 +407,9 @@
         <div class="header">
             <h1>Каталог 66 Символов Стихий</h1>
             <p>Полная коллекция символов для визуализации и дальнейшего использования</p>
-            <div  class="header">
-                <strong> 💥Ссылка на коллекцию "широких" символов✨</strong>
-              <button onclick="openFullWindow('https://disk.yandex.ru/d/QzRujyl7oI3_og')" class="header">Посмотреть коллекцию</button>
+            <div class="header-buttons">
+                <button onclick="openFullWindow('https://disk.yandex.ru/d/QzRujyl7oI3_og')" class="glow-button">✨ Посмотреть коллекцию!</button>
+                <button onclick="openFullWindow('https://disk.yandex.ru/d/example2')" class="glow-button secondary">✨ Посмотреть коллекцию 2</button>
             </div>
         </div>
 
@@ -403,33 +449,6 @@
                         <label for="filter-weaving">🌐 Переплетение (56-66)</label>
                     </div>
                 </div>
-            </div>
-            
-            <!-- Фильтры по типу файлов -->
-            <div class="filter-group">
-                <div class="filter-group-title">📁 Тип файлов (можно выбрать несколько)</div>
-                <div class="checkbox-container">
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="filter-svg" class="file-type-filter" onchange="applyFileTypeFilters()">
-                        <label for="filter-svg" class="file-type-label">📐 SVG файлы</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="filter-png" class="file-type-filter" onchange="applyFileTypeFilters()">
-                        <label for="filter-png" class="file-type-label">🖼️ PNG файлы</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="filter-all-files" class="file-type-filter" onchange="applyFileTypeFilters()" checked>
-                        <label for="filter-all-files" class="file-type-label">🗂️ Все файлы</label>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Кнопка сброса -->
-            <div class="filter-group">
-                <div class="checkbox-container">
-                    <button class="filter-button" onclick="resetAllFilters()" style="background: rgba(255, 87, 34, 0.2); border-color: #ff5722;">🔄 Сбросить все фильтры</button>
-                </div>
-            </div>
         </div>
 
         <!-- AIR Section -->
@@ -1079,7 +1098,7 @@
                     const files = await response.json();
                     
                     allFiles = files
-                        .filter(file => file.type === 'file' && file.name.match(/\.(png|svg|jpg|jpeg|webp)$/i))
+                        .filter(file => file.type === 'file' && file.name.match(/\.(png|jpg|jpeg|webp)$/i) && !file.name.endsWith('.svg'))
                         .map(file => ({
                             name: file.name,
                             url: repositoryUrl + file.name
@@ -1088,19 +1107,13 @@
             } catch (error) {
                 console.log('GitHub API недоступен, используем резервный список...');
                 
-                // Резервный список приоритетных файлов
+                // Резервный список приоритетных файлов (только PNG)
                 const priorityFiles = [
-                    'air_01_whisper_final_v2.svg', 'air_02_gate_of_winds_final_v2.svg', 'air_03_signal_final_v2.svg',
                     'air_1_whisper.png', 'air_2_gates.png', 'air_3_signal.png',
-                    'water_12_ripple_final_v2.svg', 'water_13_river_path_final_v2.svg', 'water_14_ocean_wave_final_v2.svg',
                     'water_12_ripple.png', 'water_13_tide.png', 'water_14_mirror.png',
-                    'fire_23_spark_final_v2.svg', 'fire_24_flame_dance_final_v2.svg', 'fire_25_ember_core_final_v2.svg',
                     'fire_23_spark.png', 'fire_24_strike.png', 'fire_25_ember.png',
-                    'earth_34_rootmark_final_v2.svg', 'earth_35_stone_circle_final_v2.svg', 'earth_36_mountain_peak_final_v2.svg',
                     'earth_34_root.png', 'earth_35_gates.png', 'earth_36_harvest.png',
-                    'aether_45_thread_of_fate_final_v2.svg', 'aether_46_celestial_gate_final_v2.svg', 'aether_47_star_crown_final_v2.svg',
                     'aether_45_thread.png', 'aether_46_convergence.png', 'aether_47_chrono.png',
-                    'weaving_56_mirror_key_final_v2.svg', 'weaving_60_spiral_loom_final_v2.svg', 'weaving_66_eternal_knot_final_v2.svg',
                     'weaving_56_mirror.png', 'weaving_60_divider.png', 'weaving_66_catalyst.png'
                 ];
                 
@@ -1231,7 +1244,6 @@
 
         // Глобальные переменные для состояния фильтров
         let selectedElements = new Set();
-        let selectedFileTypes = new Set(['all']); // По умолчанию показываем все
 
         // Функции фильтрации по стихиям
         function applyElementFilters() {
@@ -1248,29 +1260,6 @@
             applyFilters();
         }
 
-        // Функции фильтрации по типу файлов
-        function applyFileTypeFilters() {
-            selectedFileTypes.clear();
-            
-            // Проверяем какие типы файлов выбраны
-            const svgCheckbox = document.getElementById('filter-svg');
-            const pngCheckbox = document.getElementById('filter-png');
-            const allCheckbox = document.getElementById('filter-all-files');
-            
-            if (allCheckbox && allCheckbox.checked) {
-                selectedFileTypes.add('all');
-            } else {
-                if (svgCheckbox && svgCheckbox.checked) {
-                    selectedFileTypes.add('svg');
-                }
-                if (pngCheckbox && pngCheckbox.checked) {
-                    selectedFileTypes.add('png');
-                }
-            }
-            
-            applyFilters();
-        }
-
         // Сброс всех фильтров
         function resetAllFilters() {
             // Сбрасываем все чекбоксы стихий
@@ -1279,18 +1268,7 @@
                 if (checkbox) checkbox.checked = false;
             });
             
-            // Сбрасываем типы файлов
-            const svgCheckbox = document.getElementById('filter-svg');
-            const pngCheckbox = document.getElementById('filter-png');
-            const allCheckbox = document.getElementById('filter-all-files');
-            
-            if (svgCheckbox) svgCheckbox.checked = false;
-            if (pngCheckbox) pngCheckbox.checked = false;
-            if (allCheckbox) allCheckbox.checked = true;
-            
             selectedElements.clear();
-            selectedFileTypes.clear();
-            selectedFileTypes.add('all');
             
             applyFilters();
         }
@@ -1372,7 +1350,7 @@
             return null;
         }
 
-        // Применение комбинированных фильтров (упрощенная версия)
+        // Применение комбинированных фильтров (упрощенная версия - только по стихиям)
         function applyFilters() {
             // Скрываем/показываем секции стихий
             document.querySelectorAll('.element-section[data-element]').forEach(section => {
@@ -1400,23 +1378,6 @@
                     }
                 }
                 
-                // Фильтр по типам файлов
-                if (selectedFileTypes.size > 0 && !selectedFileTypes.has('all') && shouldShow) {
-                    const hasSVG = Array.from(images).some(img => img.src.toLowerCase().includes('.svg'));
-                    const hasPNG = Array.from(images).some(img => img.src.toLowerCase().includes('.png'));
-                    
-                    const needsSVG = selectedFileTypes.has('svg');
-                    const needsPNG = selectedFileTypes.has('png');
-                    
-                    if (needsSVG && !hasSVG && needsPNG && !hasPNG) {
-                        shouldShow = false;
-                    } else if (needsSVG && !hasSVG && !needsPNG) {
-                        shouldShow = false;
-                    } else if (needsPNG && !hasPNG && !needsSVG) {
-                        shouldShow = false;
-                    }
-                }
-                
                 // Показываем/скрываем ячейку
                 cell.style.display = shouldShow ? 'table-cell' : 'none';
             });
@@ -1425,9 +1386,8 @@
             updateFileTypeStats();
         }
 
-        // Обновление статистики по типам файлов (упрощенная версия)
+        // Обновление статистики (только PNG файлы)
         function updateFileTypeStats() {
-            let svgCount = 0;
             let pngCount = 0;
             let visibleSymbols = 0;
             
@@ -1441,11 +1401,9 @@
                 
                 visibleSymbols++;
                 
-                // Считаем файлы по src изображений
+                // Считаем только PNG файлы
                 images.forEach(img => {
-                    if (img.src.toLowerCase().includes('.svg')) {
-                        svgCount++;
-                    } else if (img.src.toLowerCase().includes('.png')) {
+                    if (img.src.toLowerCase().includes('.png')) {
                         pngCount++;
                     }
                 });
@@ -1453,8 +1411,7 @@
             
             const statusText = document.getElementById('status-text');
             if (visibleSymbols > 0) {
-                const totalFiles = svgCount + pngCount;
-                statusText.innerHTML = `📊 Показано ${visibleSymbols} символов с ${totalFiles} файлами: ${svgCount} SVG, ${pngCount} PNG`;
+                statusText.innerHTML = `📊 Показано ${visibleSymbols} символов с ${pngCount} PNG файлами`;
                 statusText.style.color = '#4caf50';
             } else {
                 statusText.innerHTML = '⚠️ Символы не найдены в репозитории';
